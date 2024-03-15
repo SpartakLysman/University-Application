@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a th:href="@{/courses}">Courses</a></li>
+            <li><a th:href="@{/students}">Students</a></li>
+            <li><a th:href="@{/groups}">Groups</a></li>
+            <li><a th:href="@{/teacher}">Teacher</a></li>
+            <li><a th:href="@{/admin}">Admin</a></li>
+            <!-- Add links for other entities as needed -->
+        </ul>
+    </nav>
+    
+</body>
+</html>
