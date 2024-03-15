@@ -1,0 +1,12 @@
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="teacher : ${teacher}">
+			<td th:text="${teacher.id}">ID</td>
+		</tr>
+	</tbody>
+</table>

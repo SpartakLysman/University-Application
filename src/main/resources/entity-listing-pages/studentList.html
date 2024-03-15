@@ -1,0 +1,22 @@
+<table>
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Group_id</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Login</th>
+			<th>Password</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr th:each="student : ${students}">
+			<td th:text="${student.id}">ID</td>
+			<td th:text="${student.group_id}">Group_id</td>
+			<td th:text="${student.name}">Name</td>
+			<td th:text="${student.surname}">Surname</td>
+			<td th:text="${student.login}">Login</td>
+			<td th:text="${student.password}">Password</td>
+		</tr>
+	</tbody>
+</table>
