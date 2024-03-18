@@ -1,12 +1,27 @@
-<table>
-	<thead>
-		<tr>
-			<th>ID</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr th:each="teacher : ${teacher}">
-			<td th:text="${teacher.id}">ID</td>
-		</tr>
-	</tbody>
-</table>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Teachers List</title>
+</head>
+<body>
+	<h1>Teachers List</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Login</th>
+				<th>Name</th>
+				<th>Password</th>
+				<th>Surname</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="teacher : ${teachers}">
+				<td th:text="${teacher.id}">ID</td>
+				<td th:text="${teacher.name}">Name</td>
+				<td th:text="${teacher.surname}">Surname</td>
+				<td th:text="${teacher.login}">Login</td>
+				<td th:text="${teacher.password}">Password</td>
+			</tr>
+		</tbody>
+	</table>

@@ -17,6 +17,10 @@ public class Teacher extends User implements Serializable {
 	@JoinColumn(name = "teacher_id")
 	private List<Course> courses;
 
+	public Teacher(Long id, String name, String surname, String login, String password) {
+		super(id, name, surname, login, password);
+	}
+
 	public Teacher() {
 
 	}

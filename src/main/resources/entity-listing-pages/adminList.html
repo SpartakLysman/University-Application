@@ -1,16 +1,29 @@
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Description</th>            
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="course : ${courses}">
-            <td th:text="${course.id}">ID</td>
-            <td th:text="${course.title}">Title</td>
-            <td th:text="${course.description}">Description</td>
-        </tr>
-    </tbody>
-</table>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admins List</title>
+</head>
+<body>
+	<h1>Admins List</h1>
+	<table>
+
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+				<th>Password</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="admin : ${admins}">
+				<td th:text="${admin.id}">ID</td>
+				<td th:text="${admin.name}">Name</td>
+				<td th:text="${admin.surname}">Surname</td>
+				<td th:text="${admin.login}">Login</td>
+				<td th:text="${admin.password}">Password</td>
+			</tr>
+		</tbody>
+	</table>

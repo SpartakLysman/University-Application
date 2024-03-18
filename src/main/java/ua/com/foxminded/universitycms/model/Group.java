@@ -18,12 +18,12 @@ public class Group extends Entity<Long> implements Serializable {
 	private String title;
 
 	@ManyToMany
-	@JoinTable(name = "groups_courses", schema = "application", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@JoinTable(name = "groups_courses", schema = "public", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses = new ArrayList<>();
 
 	private static final long serialVersionUID = -7353719263354063173L;
 
-	public Group(long id, String title) {
+	public Group(Long id, String title) {
 		super(id);
 		this.title = title;
 	}
