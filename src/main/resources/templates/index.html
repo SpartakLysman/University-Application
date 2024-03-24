@@ -19,16 +19,18 @@
 
 		<div sec:authorize="isAuthenticated()">This content is only
 			shown to authenticated users.</div>
-		<div sec:authorize="hasRole('ROLE_ADMIN')">This content is only
-			shown to administrators.</div>
-		<div sec:authorize="hasRole('ROLE_USER')">This content is only
+		<div sec:authorize="hasRole('ADMIN')">This content is only shown
+			to administrators.</div>
+		<div sec:authorize="hasRole('TEACHER')">This content is only
+			shown to users.</div>
+		<div sec:authorize="hasRole('STUDENT')">This content is only
 			shown to users.</div>
 
-		Logged user: <span sec:authentication="name">Bob</span> 
-		Roles: <span sec:authentication="principal.authorities">[ROLE_USER,
-			ROLE_ADMIN]</span>
-			
-			
+		Logged user: <span sec:authentication="name">Bob</span> Roles: <span
+			sec:authentication="principal.authorities">[ADMIN,
+			 TEACHER, STUDENT]</span>
+
+
 		<!-- Include the menu fragment -->
 		<div th:replace="~{menu.html :: body}"></div>
 	</div>

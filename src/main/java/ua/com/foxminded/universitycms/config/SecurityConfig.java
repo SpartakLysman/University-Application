@@ -16,6 +16,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
 	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.authorizeRequests(requests -> requests.requestMatchers("/css/**", "/webjars/**", "/assets/**", "/",
+				"/admins", "/courses", "/groups", "/students", "/teachers").permitAll().anyRequest().authenticated())
+				.formLogin(form -> form.loginPage("/login.html").loginProcessingUrl("/perform_login")
+						.defaultSuccessUrl("/homepage.html", true).failureUrl("/login.html?error=true").permitAll())
+				.logout(logout -> logout.permitAll().logoutSuccessUrl("/"));
+
+		return http.build();
+	}
+
+	@Bean
 	public InMemoryUserDetailsManager userDetailsService() {
 		UserDetails student = User.withUsername("student").password(passwordEncoder().encode("studentPass"))
 				.roles("STUDENT").build();
@@ -24,14 +35,6 @@ public class SecurityConfig {
 		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("adminPass"))
 				.roles("ADMIN", "TEACHER", "STUDENT").build();
 		return new InMemoryUserDetailsManager(student, teacher, admin);
-	}
-
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.formLogin().loginPage("/login.html").loginProcessingUrl("/perform_login")
-				.defaultSuccessUrl("/homepage.html", true).failureUrl("/login.html?error=true");
-
-		return http.build();
 	}
 
 	@Bean
