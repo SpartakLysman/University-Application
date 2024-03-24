@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
-import ua.com.foxminded.universitycms.util.LoggingController;
 
 @Service
 public class GroupService {
 
 	private final GroupRepository groupRepository;
-	public final static Logger LOGGER = LoggerFactory.getLogger(LoggingController.class);
+	public final static Logger LOGGER = LoggerFactory.getLogger(GroupService.class);
 
 	@Autowired
 	public GroupService(GroupRepository groupRepository) {

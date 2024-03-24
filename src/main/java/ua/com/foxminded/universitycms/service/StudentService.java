@@ -13,7 +13,6 @@ import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
-import ua.com.foxminded.universitycms.util.LoggingController;
 
 @Service
 public class StudentService {
@@ -22,7 +21,7 @@ public class StudentService {
 
 	private final CourseRepository courseRepository;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(LoggingController.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
