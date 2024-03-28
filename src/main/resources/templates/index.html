@@ -26,9 +26,12 @@
 		<div sec:authorize="hasRole('STUDENT')">This content is only
 			shown to users.</div>
 
-		Logged user: <span sec:authentication="name">Bob</span> Roles: <span
+
+			<span sec:authorize="isAuthenticated()" sec:authentication="principal.authorities">
+			
+	<!--	Logged user: <span sec:authentication="name">Bob</span> Roles: <span
 			sec:authentication="principal.authorities">[ADMIN,
-			 TEACHER, STUDENT]</span>
+			 TEACHER, STUDENT]</span>   -->
 
 
 		<!-- Include the menu fragment -->

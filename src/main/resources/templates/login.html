@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <title>Login page</title>
-  </head>
-  <body>
-    <h1>Login page</h1>
-    <p th:if="${loginError}" class="error">Wrong user or password</p>
-    <form th:action="@{/login.html}" method="post">
-      <label for="username">Username</label>:
-      <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-      <label for="password">Password</label>:
-      <input type="password" id="password" name="password" /> <br />
-      <input type="submit" value="Log in" />
-    </form>
-  </body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Please, Log In</title>
+</head>
+<body>
+	<h1>Please, Log In</h1>
+
+	<div th:if="${param.error}">Invalid username and password.</div>
+	<div th:if="${param.login}">You have been logging in.</div>
+	<div th:if="${param.logout}">You have been logged out.</div>
+
+	<form th:action="@{/process-login}" method="post">
+
+		<div>
+			<input name="username" placeholder="Username" type="text" />
+		</div>
+		<div>
+			<input name="password" placeholder="Password" type="password" />
+		</div>
+		<input type="submit" value="Log in" />
+	</form>
+</body>
 </html>

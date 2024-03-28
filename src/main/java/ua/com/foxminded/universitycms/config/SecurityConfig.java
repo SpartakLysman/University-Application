@@ -1,14 +1,20 @@
 package ua.com.foxminded.universitycms.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -17,11 +23,12 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeRequests(requests -> requests.requestMatchers("/css/**", "/webjars/**", "/assets/**", "/",
+		http.authorizeHttpRequests(requests -> requests.requestMatchers("/css/**", "/webjars/**", "/assets/**", "/",
 				"/admins", "/courses", "/groups", "/students", "/teachers").permitAll().anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/login.html").loginProcessingUrl("/perform_login")
-						.defaultSuccessUrl("/homepage.html", true).failureUrl("/login.html?error=true").permitAll())
-				.logout(logout -> logout.permitAll().logoutSuccessUrl("/"));
+				.formLogin(form -> form.loginPage("/login.html").loginProcessingUrl("/process-login")
+						.defaultSuccessUrl("/menu.html").failureUrl("/login.html?error=true").permitAll())
+				.logout(logout -> logout.logoutSuccessUrl("/login?logout=true").invalidateHttpSession(true)
+						.permitAll());
 
 		return http.build();
 	}
@@ -35,6 +42,16 @@ public class SecurityConfig {
 		UserDetails admin = User.withUsername("admin").password(passwordEncoder().encode("adminPass"))
 				.roles("ADMIN", "TEACHER", "STUDENT").build();
 		return new InMemoryUserDetailsManager(student, teacher, admin);
+	}
+
+	@Bean
+	public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+		return http.getSharedObject(AuthenticationManagerBuilder.class).build();
+	}
+
+	@Bean
+	public UserDetailsService jdbcUserDetailsService(DataSource dataSource) {
+		return new JdbcUserDetailsManager(dataSource);
 	}
 
 	@Bean
