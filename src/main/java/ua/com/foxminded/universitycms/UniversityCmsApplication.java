@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class UniversityCmsApplication {
 
 	public static void main(String[] args) {
+		// System.out.println(new BCryptPasswordEncoder().encode("admin"));
 		SpringApplication.run(UniversityCmsApplication.class, args);
 	}
 }
