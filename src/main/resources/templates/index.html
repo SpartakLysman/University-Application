@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,23 +17,21 @@
 			<strong>Success!</strong> Hello, It is working as we expected.
 		</div>
 
-
+		<!-- Content for authenticated users -->
 		<div sec:authorize="isAuthenticated()">This content is only
 			shown to authenticated users.</div>
+
+		<!-- Content for administrators -->
 		<div sec:authorize="hasRole('ADMIN')">This content is only shown
 			to administrators.</div>
+
+		<!-- Content for teachers -->
 		<div sec:authorize="hasRole('TEACHER')">This content is only
-			shown to users.</div>
+			shown to teachers.</div>
+
+		<!-- Content for students -->
 		<div sec:authorize="hasRole('STUDENT')">This content is only
-			shown to users.</div>
-
-
-			<span sec:authorize="isAuthenticated()" sec:authentication="principal.authorities">
-			
-	<!--	Logged user: <span sec:authentication="name">Bob</span> Roles: <span
-			sec:authentication="principal.authorities">[ADMIN,
-			 TEACHER, STUDENT]</span>   -->
-
+			shown to students.</div>
 
 		<!-- Include the menu fragment -->
 		<div th:replace="~{menu.html :: body}"></div>

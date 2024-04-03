@@ -1,21 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu</title>
-    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu</title>
 </head>
 <body th:fragment="body">
-<nav>
+    <!-- Content for authenticated users -->
+    <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.
+    </div>
+   
+    <!-- Content for administrators -->
+    <div sec:authorize="hasRole('ADMIN')">
+        This content is only shown to administrators.
+    </div>
+   
+    <!-- Content for teachers -->
+    <div sec:authorize="hasRole('TEACHER')">
+        This content is only shown to teachers.
+         <h2>Welcome, Teacher!</h2>
+    <p>Here are some resources for teachers:</p>
     <ul>
-        <li><a th:href="@{/courses}">Courses</a></li>
-        <li><a th:href="@{/students}">Students</a></li>
-        <li><a th:href="@{/groups}">Groups</a></li>
-        <li><a th:href="@{/teachers}">Teacher</a></li>
-        <li><a th:href="@{/admins}">Admin</a></li>
-        <!-- Add links for other entities as needed -->
+        <!-- links and resources for teachers -->
     </ul>
-</nav>
+    </div>
+   
+    <!-- Content for students -->
+    <div sec:authorize="hasRole('STUDENT')">
+        This content is only shown to students.
+    </div>
+   
+    <!-- Content for the menu -->
+    <form method="post" th:action="@{/menu}" role="form">
+        <nav>
+            <ul>
+                <li><a th:href="@{/courses}">Courses</a></li>
+                <li><a th:href="@{/students}">Students</a></li>
+                <li><a th:href="@{/groups}">Groups</a></li>
+                <li><a th:href="@{/teachers}">Teacher</a></li>
+                <li><a th:href="@{/admins}">Admin</a></li>
+                <!-- Add links for other entities as needed -->
+            </ul>
+        </nav>
+    </form>
 </body>
 </html>
