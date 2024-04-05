@@ -18,6 +18,17 @@ public abstract class User extends Entity<Long> {
 	@Column(name = "password")
 	private String password;
 
+	private UserRole role;
+
+	public User(Long key, String name, String surname, String login, String password, UserRole role) {
+		super(key);
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+	}
+
 	public User(Long key, String name, String surname, String login, String password) {
 		super(key);
 		this.name = name;
@@ -67,6 +78,14 @@ public abstract class User extends Entity<Long> {
 
 	public void setPassword(String newPassword) {
 		this.password = newPassword;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
 	public String toString() {

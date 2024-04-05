@@ -16,6 +16,11 @@ public class AuthController {
 		return "menu";
 	}
 
+	@GetMapping("/logout")
+	public String logout() {
+		return "logout";
+	}
+
 	@GetMapping("/error")
 	public String error() {
 		return "error";

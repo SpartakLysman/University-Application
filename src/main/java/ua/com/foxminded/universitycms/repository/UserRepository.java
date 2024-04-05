@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import ua.com.foxminded.universitycms.model.Teacher;
+import ua.com.foxminded.universitycms.model.User;
 
 @Repository
-public interface TeacherRepository extends JpaRepository<Teacher, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-	Optional<Teacher> findByLogin(String login);
+	Optional<User> save(Optional<User> user);
 }

@@ -111,10 +111,10 @@ public class CourseService {
 		return coursesList;
 	}
 
-	public Optional<Course> findById(long key) {
-		LOGGER.debug("Course finding - " + key);
-		Optional<Course> course = courseRepository.findById(key);
-		LOGGER.info("Course was successfully found by id - " + key);
+	public Optional<Course> findById(long id) {
+		LOGGER.debug("Course finding - " + id);
+		Optional<Course> course = courseRepository.findById(id);
+		LOGGER.info("Course was successfully found by id - " + id);
 
 		return course;
 	}

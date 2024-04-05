@@ -65,10 +65,10 @@ public class GroupService {
 		return groupsList;
 	}
 
-	public Optional<Group> findById(long key) {
+	public Optional<Group> findById(long id) {
 		LOGGER.debug("Group findind by id");
-		Optional<Group> group = groupRepository.findById(key);
-		LOGGER.info("Group was successfully found by id - " + key);
+		Optional<Group> group = groupRepository.findById(id);
+		LOGGER.info("Group was successfully found by id - " + id);
 
 		return group;
 	}

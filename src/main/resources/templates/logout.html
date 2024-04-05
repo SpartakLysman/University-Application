@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logout</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.container {
+	text-align: center;
+}
+
+.logout-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+	background-color: #c82333;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h1>Logout</h1>
+		<p>You have been successfully logged out.</p>
+		<br>
+		<br>
+		<a href="/login" class="logout-btn">Log In Again</a>
+	</div>
+</body>
+</html>

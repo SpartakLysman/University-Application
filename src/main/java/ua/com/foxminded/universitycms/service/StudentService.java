@@ -31,16 +31,14 @@ public class StudentService {
 
 	public Student create(Student student) {
 		LOGGER.debug("Student creating...");
-
 		Student newStudent = studentRepository.save(student);
-		LOGGER.info("Students was successfully created" + student.toString());
+		LOGGER.info("Student was successfully created" + student.toString());
 
 		return newStudent;
 	}
 
 	public List<Student> createAll(List<Student> studentsList) {
 		LOGGER.debug("Student creating...");
-
 		List<Student> newStudents = studentRepository.saveAll(studentsList);
 		LOGGER.info("All students were successfully created" + studentsList.toString());
 
@@ -82,7 +80,6 @@ public class StudentService {
 				Course course = courseOptional.get();
 				Student updatedStudent = studentOptional.get();
 
-				// Remove the student from the course and save the changes
 				course.deleteStudent(updatedStudent);
 				courseRepository.save(course);
 
@@ -100,7 +97,6 @@ public class StudentService {
 
 	public boolean delete(Student student) {
 		LOGGER.debug("Student deleting - " + student.toString());
-
 		boolean deleted = studentRepository.deleteStudent(student);
 		LOGGER.info("Student was successfully deleted with id - " + student.getId());
 
@@ -109,7 +105,6 @@ public class StudentService {
 
 	public Student update(Student student) {
 		LOGGER.debug("Student updating - " + student.toString());
-
 		Student newStudent = studentRepository.save(student);
 		LOGGER.info("Student was successfully updated with id - " + student.getId());
 
@@ -132,11 +127,10 @@ public class StudentService {
 		return latestId;
 	}
 
-	public Optional<Student> findById(long key) {
-
+	public Optional<Student> findById(long id) {
 		LOGGER.debug("Student finding by id");
-		Optional<Student> student = studentRepository.findById(key);
-		LOGGER.info("Student was successfully found by id - " + key);
+		Optional<Student> student = studentRepository.findById(id);
+		LOGGER.info("Student was successfully found by id - " + id);
 
 		return student;
 	}
