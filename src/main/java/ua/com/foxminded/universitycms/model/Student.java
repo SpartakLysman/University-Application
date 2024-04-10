@@ -12,8 +12,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "students")
+@jakarta.persistence.Entity
 public class Student extends User implements Serializable {
 
 	// @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

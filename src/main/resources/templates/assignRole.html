@@ -8,7 +8,7 @@
 <body th:fragment="body">
 	<h1>Role Assigning</h1>
 
-	<form method="post" th:action="@{/assignRole}"> 
+	<form method="post" th:action="@{/admin/assignRole}"> 
 		<label for="id">User:</label> <select id="id" name="id">
 			<option th:each="user : ${users}" th:value="${user.id}"
 				th:text="${user.username}"></option>

@@ -10,8 +10,8 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "groups")
+@jakarta.persistence.Entity
 public class Group extends Entity<Long> implements Serializable {
 
 	@Column(name = "title")

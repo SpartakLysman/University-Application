@@ -30,8 +30,7 @@ public class CourseService {
 	}
 
 	public Course create(Course course) {
-		LOGGER.debug("Course creating - " + course.toString());
-
+		LOGGER.debug("Course creating... " + course.toString());
 		Course newCourse = courseRepository.save(course);
 		LOGGER.info("Course was created successfully with id - " + course.getId());
 
@@ -39,8 +38,7 @@ public class CourseService {
 	}
 
 	public List<Course> createAll(List<Course> coursesList) {
-		LOGGER.debug("All courses creating...");
-
+		LOGGER.debug("All courses creating... ");
 		List<Course> newCourses = courseRepository.saveAll(coursesList);
 		LOGGER.info("All courses were successfully created - " + coursesList.toString());
 
@@ -87,16 +85,15 @@ public class CourseService {
 	}
 
 	public boolean delete(Course course) {
-		LOGGER.debug("Course deleting - " + course.toString());
+		LOGGER.debug("Course deleting... " + course.toString());
 		boolean deleted = courseRepository.deleteCourse(course);
-		LOGGER.info("Course successfully deleted with id - " + course.getId());
+		LOGGER.info("Course was successfully deleted with id - " + course.getId());
 
 		return deleted;
 	}
 
 	public Course update(Course course) {
-		LOGGER.debug("Course updating - " + course.toString());
-
+		LOGGER.debug("Course updating... " + course.toString());
 		Course newCourse = courseRepository.save(course);
 		LOGGER.info("Course was successfully updated with id - " + course.getId());
 
@@ -104,7 +101,7 @@ public class CourseService {
 	}
 
 	public List<Course> findByTitle(String title) {
-		LOGGER.debug("Courses finding by title");
+		LOGGER.debug("Courses finding by title... ");
 		List<Course> coursesList = courseRepository.findByTitle(title);
 		LOGGER.info("Courses were successfully found by title - " + title);
 
@@ -112,7 +109,7 @@ public class CourseService {
 	}
 
 	public Optional<Course> findById(long id) {
-		LOGGER.debug("Course finding - " + id);
+		LOGGER.debug("Course finding... " + id);
 		Optional<Course> course = courseRepository.findById(id);
 		LOGGER.info("Course was successfully found by id - " + id);
 
@@ -120,7 +117,7 @@ public class CourseService {
 	}
 
 	public List<Course> findAll() {
-		LOGGER.debug("All courses finding...");
+		LOGGER.debug("All courses finding... ");
 		List<Course> coursesList = courseRepository.findAll();
 		LOGGER.info("All courses were successfully found");
 

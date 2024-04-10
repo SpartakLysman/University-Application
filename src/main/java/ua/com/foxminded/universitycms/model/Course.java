@@ -14,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "courses")
+@jakarta.persistence.Entity
 public class Course extends Entity<Long> implements Serializable {
 
 	@Column(name = "title")

@@ -7,16 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import ua.com.foxminded.universitycms.model.Admin;
-import ua.com.foxminded.universitycms.model.User;
 import ua.com.foxminded.universitycms.model.UserRole;
+import ua.com.foxminded.universitycms.model.UserTable;
 import ua.com.foxminded.universitycms.repository.AdminRepository;
-import ua.com.foxminded.universitycms.repository.UserRepository;
+import ua.com.foxminded.universitycms.repository.UserTableRepository;
 
 @Controller
 public class AdminController {
@@ -25,12 +23,12 @@ public class AdminController {
 	private final AdminRepository adminRepository;
 
 	@Autowired
-	private final UserRepository userRepository;
+	private final UserTableRepository userTableRepository;
 
 	@Autowired
-	public AdminController(AdminRepository adminRepository, UserRepository userRepository) {
+	public AdminController(AdminRepository adminRepository, UserTableRepository userTableRepository) {
 		this.adminRepository = adminRepository;
-		this.userRepository = userRepository;
+		this.userTableRepository = userTableRepository;
 	}
 
 	@GetMapping("/admin/admins")
@@ -42,23 +40,27 @@ public class AdminController {
 
 	@GetMapping("/admin/users")
 	public String showUserManagementPage(Model model) {
-		List<User> users = userRepository.findAll();
+		List<Admin> users = adminRepository.findAll();
 		model.addAttribute("users", users);
 		return "usersProfile";
 	}
 
-//	@PostMapping("/admin/assignRole")
-//  @RequestMapping(value = "/admin/assignRole", method = RequestMethod.POST)
-	@RequestMapping(value = "/admin/assignRole", method = { RequestMethod.GET, RequestMethod.POST })
-	@ResponseBody
+	@GetMapping("/admin/assignRole")
+	public String showAssignRolePage(Model model) {
+		List<UserTable> users = userTableRepository.findAll();
+		model.addAttribute("users", users);
+		return "assignRole";
+	}
+
+	@PostMapping("/admin/assignRole")
 	public String assignRole(@RequestParam long id, @RequestParam UserRole role) {
-		Optional<User> user = userRepository.findById(id);
-		if (user != null) {
+		Optional<UserTable> user = userTableRepository.findById(id);
+		if (user.isPresent()) {
 			user.get().setRole(role);
-			userRepository.save(user);
+			userTableRepository.save(user.get());
 		} else {
-			System.out.println("User id is not availible");
+			System.out.println("User id is not available");
 		}
-		return "assingRole";
+		return "redirect:/admin/admins";
 	}
 }
