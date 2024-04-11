@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
-import ua.com.foxminded.universitycms.util.LoggingController;
 
 @Service
 public class GroupService {
 
 	private final GroupRepository groupRepository;
-	public final static Logger LOGGER = LoggerFactory.getLogger(LoggingController.class);
+	public final static Logger LOGGER = LoggerFactory.getLogger(GroupService.class);
 
 	@Autowired
 	public GroupService(GroupRepository groupRepository) {
@@ -24,8 +23,7 @@ public class GroupService {
 	}
 
 	public Group create(Group group) {
-		LOGGER.debug("Group creating - " + group.toString());
-
+		LOGGER.debug("Group creating... " + group.toString());
 		Group newGroup = groupRepository.save(group);
 		LOGGER.info("Group was successfully created with id - " + group.getId());
 
@@ -33,8 +31,7 @@ public class GroupService {
 	}
 
 	public List<Group> createAll(List<Group> groupsList) {
-		LOGGER.debug("All groups creating...");
-
+		LOGGER.debug("All groups creating... ");
 		List<Group> newGroups = groupRepository.saveAll(groupsList);
 		LOGGER.info("All groups were successfully created " + groupsList.toString());
 
@@ -42,7 +39,7 @@ public class GroupService {
 	}
 
 	public boolean delete(Group group) {
-		LOGGER.debug("Group deleting - " + group.toString());
+		LOGGER.debug("Group deleting... " + group.toString());
 		boolean deleted = groupRepository.deleteGroup(group);
 		LOGGER.info("Group was successfully removed with id - " + group.getId());
 
@@ -50,7 +47,7 @@ public class GroupService {
 	}
 
 	public Group update(Group group) {
-		LOGGER.debug("Group updating - " + group.toString());
+		LOGGER.debug("Group updating... " + group.toString());
 
 		Group newGroup = groupRepository.save(group);
 		LOGGER.info("Group was successfully updated with id - " + group.getId());
@@ -59,23 +56,23 @@ public class GroupService {
 	}
 
 	public List<Group> findByTitle(String title) {
-		LOGGER.debug("Group finding by title");
+		LOGGER.debug("Groups finding by title... ");
 		List<Group> groupsList = groupRepository.findByTitle(title);
 		LOGGER.info("Groups were successfully found by title - " + title);
 
 		return groupsList;
 	}
 
-	public Optional<Group> findById(long key) {
-		LOGGER.debug("Group findind by id");
-		Optional<Group> group = groupRepository.findById(key);
-		LOGGER.info("Group was successfully found by id - " + key);
+	public Optional<Group> findById(long id) {
+		LOGGER.debug("Group findind by id... ");
+		Optional<Group> group = groupRepository.findById(id);
+		LOGGER.info("Group was successfully found by id - " + id);
 
 		return group;
 	}
 
 	public List<Group> findAll() {
-		LOGGER.debug("All groups findind...");
+		LOGGER.debug("All groups findind... ");
 		List<Group> groupsList = groupRepository.findAll();
 		LOGGER.info("All groups were successfully found ");
 

@@ -1,0 +1,32 @@
+/* Reset default margin and padding */
+body, h1, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Apply styles to the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Style the header */
+h1 {
+    color: #333;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Style the paragraphs */
+p {
+    color: #666;
+    line-height: 1.5;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style the links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}

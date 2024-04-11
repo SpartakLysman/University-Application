@@ -5,42 +5,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "students")
+@jakarta.persistence.Entity
 public class Student extends User implements Serializable {
 
-	@Column(name = "groups_group_id")
-	private Group group_id;
+	// @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	// @JoinTable(name = "groups", schema = "public", joinColumns = @JoinColumn(name
+	// = "group_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "group_id")
+	private Group group;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	@JoinTable(name = "students_courses", schema = "application", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses = new ArrayList<>();
 
 	private static final long serialVersionUID = -7353839263354063175L;
 
-	public Student(long key, Group newGroup_id, String name, String surname, String login, String password) {
-		super(key, name, surname, login, password);
-		this.group_id = newGroup_id;
+	public Student(Long id, Group newGroup, String name, String surname, String login, String password) {
+		super(id, name, surname, login, password);
+		this.group = newGroup;
 		this.courses = new ArrayList<>();
 	}
 
-	public Student(Group newGroup_id, String name, String surname, String login, String password,
-			List<Course> courses) {
+	public Student(Group newGroup, String name, String surname, String login, String password, List<Course> courses) {
 		super(name, surname, login, password);
-		this.group_id = newGroup_id;
+		this.group = newGroup;
 		this.courses = new ArrayList<>();
 	}
 
-	public Student(Group newGroup_id, String name, String surname, String login, String passsword) {
+	public Student(Group newGroup, String name, String surname, String login, String passsword) {
 		super(name, surname, login, passsword);
-		this.group_id = newGroup_id;
+		this.group = newGroup;
 		this.courses = new ArrayList<>();
 	}
 
@@ -80,15 +83,15 @@ public class Student extends User implements Serializable {
 		return 4;
 	}
 
-	public Group getGroupId() {
-		return group_id;
+	public Group getGroup() {
+		return group;
 	}
 
-	public void setGroupId(Group newGroup_id) {
-		this.group_id = newGroup_id;
+	public void setGroup(Group newGroup) {
+		this.group = newGroup;
 	}
 
 	public String toString() {
-		return "Group id: " + group_id;
+		return "Group id: " + group.getId();
 	}
 }

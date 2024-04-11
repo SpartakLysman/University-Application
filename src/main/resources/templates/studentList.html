@@ -1,0 +1,27 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Students List</title>
+</head>
+<body>
+	<h1>Students List</h1>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Group_id</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="student : ${students}">
+				<td th:text="${student.id}">ID</td>
+				<td th:text="${student.group.id}">Group_id</td>
+				<td th:text="${student.name}">Name</td>
+				<td th:text="${student.surname}">Surname</td>
+				<td th:text="${student.login}">Login</td>
+			</tr>
+		</tbody>
+	</table>

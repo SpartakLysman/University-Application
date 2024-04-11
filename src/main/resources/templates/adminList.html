@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admins List</title>
+<style>
+.assingRole-btn {
+	background-color: #dc7935;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.assingRole-btn:hover {
+	background-color: #c82333;
+}
+
+#assingRole-item {
+	list-style-type: none;
+}
+</style>
+</head>
+<body>
+	<h1>Admins List</h1>
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="admin : ${admins}">
+				<td th:text="${admin.id}">ID</td>
+				<td th:text="${admin.name}">Name</td>
+				<td th:text="${admin.surname}">Surname</td>
+				<td th:text="${admin.login}">Login</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<br>
+	<br>
+
+	<!-- 	<form method="post" th:action="@{/assingRole}" id="assingRole-item">
+ -->
+	<nav>
+		<ul>
+			<li id="assingRole-item"><a href="/admin/assignRole"
+				class="assingRole-btn">Assign Role</a></li>
+		</ul>
+	</nav>
+	<!-- </form> -->
+</body>
+</html>
+

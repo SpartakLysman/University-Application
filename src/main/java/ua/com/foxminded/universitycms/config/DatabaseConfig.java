@@ -1,4 +1,4 @@
-package ua.com.foxminded.universitycms.util;
+package ua.com.foxminded.universitycms.config;
 
 import javax.sql.DataSource;
 

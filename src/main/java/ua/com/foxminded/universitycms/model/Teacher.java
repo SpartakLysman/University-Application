@@ -7,8 +7,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "teacher")
+@jakarta.persistence.Entity
 public class Teacher extends User implements Serializable {
 
 	private static final long serialVersionUID = 3335155961633998707L;
@@ -16,6 +16,10 @@ public class Teacher extends User implements Serializable {
 	@OneToMany
 	@JoinColumn(name = "teacher_id")
 	private List<Course> courses;
+
+	public Teacher(Long id, String name, String surname, String login, String password) {
+		super(id, name, surname, login, password);
+	}
 
 	public Teacher() {
 

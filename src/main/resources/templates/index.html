@@ -1,24 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome</title>
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" />
 </head>
 <body>
-    <h1>Welcome to Your Application</h1>
-    <div class="container">
-        <br/>
-        <div class="alert alert-success">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <strong>Success!</strong> Hello, It is working as we expected.
-        </div>
-        <!-- Include the menu fragment -->
-        <div th:replace="fragments/menu :: menu"></div>
+	<h1>Welcome to Your Application</h1>
+	<div class="container">
+		<br />
+		<div class="alert alert-success">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+			<strong>Success!</strong> Hello, It is working as we expected.
+		</div>
 
-    </div>
-    <script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+		<!-- Content for authenticated users -->
+		<div sec:authorize="isAuthenticated()">This content is only
+			shown to authenticated users.</div>
+
+		<!-- Content for administrators -->
+		<div sec:authorize="hasRole('ADMIN')">This content is only shown
+			to administrators.</div>
+
+		<!-- Content for teachers -->
+		<div sec:authorize="hasRole('TEACHER')">This content is only
+			shown to teachers.</div>
+
+		<!-- Content for students -->
+		<div sec:authorize="hasRole('STUDENT')">This content is only
+			shown to students.</div>
+
+		<!-- Include the menu fragment -->
+		<div th:replace="~{menu.html :: body}"></div>
+	</div>
+	<script th:src="@{/webjars/jquery/3.1.1/jquery.min.js}"></script>
+	<script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
 </body>
 </html>

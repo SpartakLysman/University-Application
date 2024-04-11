@@ -13,7 +13,6 @@ import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
-import ua.com.foxminded.universitycms.util.LoggingController;
 
 @Service
 public class StudentService {
@@ -22,7 +21,7 @@ public class StudentService {
 
 	private final CourseRepository courseRepository;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(LoggingController.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
@@ -31,19 +30,17 @@ public class StudentService {
 	}
 
 	public Student create(Student student) {
-		LOGGER.debug("Student creating...");
-
+		LOGGER.debug("Student creating... ");
 		Student newStudent = studentRepository.save(student);
-		LOGGER.info("Students was successfully created" + student.toString());
+		LOGGER.info("Student was successfully created: " + student.toString());
 
 		return newStudent;
 	}
 
 	public List<Student> createAll(List<Student> studentsList) {
-		LOGGER.debug("Student creating...");
-
+		LOGGER.debug("Students creating... ");
 		List<Student> newStudents = studentRepository.saveAll(studentsList);
-		LOGGER.info("All students were successfully created" + studentsList.toString());
+		LOGGER.info("All students were successfully created: " + studentsList.toString());
 
 		return newStudents;
 	}
@@ -61,14 +58,14 @@ public class StudentService {
 				course.addStudent(updatedStudent);
 				courseRepository.save(course);
 
-				LOGGER.info("Student added to the course successfully.");
+				LOGGER.info("Student added to the course successfully");
 				return true;
 			} else {
-				LOGGER.error("Course or student not found.");
+				LOGGER.error("Course or student not found");
 				return false;
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error adding student to the course.", e);
+			LOGGER.error("Error adding student to the course ", e);
 			return false;
 		}
 	}
@@ -83,25 +80,23 @@ public class StudentService {
 				Course course = courseOptional.get();
 				Student updatedStudent = studentOptional.get();
 
-				// Remove the student from the course and save the changes
 				course.deleteStudent(updatedStudent);
 				courseRepository.save(course);
 
-				LOGGER.info("Student removed from the course successfully.");
+				LOGGER.info("Student removed from the course successfully");
 				return true;
 			} else {
-				LOGGER.error("Course or student not found.");
+				LOGGER.error("Course or student not found");
 				return false;
 			}
 		} catch (Exception e) {
-			LOGGER.error("Error removing student from the course.", e);
+			LOGGER.error("Error removing student from the course ", e);
 			return false;
 		}
 	}
 
 	public boolean delete(Student student) {
-		LOGGER.debug("Student deleting - " + student.toString());
-
+		LOGGER.debug("Student deleting... " + student.toString());
 		boolean deleted = studentRepository.deleteStudent(student);
 		LOGGER.info("Student was successfully deleted with id - " + student.getId());
 
@@ -109,8 +104,7 @@ public class StudentService {
 	}
 
 	public Student update(Student student) {
-		LOGGER.debug("Student updating - " + student.toString());
-
+		LOGGER.debug("Student updating... " + student.toString());
 		Student newStudent = studentRepository.save(student);
 		LOGGER.info("Student was successfully updated with id - " + student.getId());
 
@@ -118,7 +112,7 @@ public class StudentService {
 	}
 
 	public List<Student> findByName(String name) {
-		LOGGER.debug("Student findind by name");
+		LOGGER.debug("Students finding by name... ");
 		List<Student> studentsList = studentRepository.findByName(name);
 		LOGGER.info("Students were successfully found by name - " + name);
 
@@ -126,24 +120,23 @@ public class StudentService {
 	}
 
 	public Optional<Student> findStudentWithMaxKey() {
-		LOGGER.debug("The latest student id findind...");
+		LOGGER.debug("The latest student id findind... ");
 		Optional<Student> latestId = studentRepository.findFirstByOrderByIdDesc();
 		LOGGER.info("The latest student id was found");
 
 		return latestId;
 	}
 
-	public Optional<Student> findById(long key) {
-
-		LOGGER.debug("Student finding by id");
-		Optional<Student> student = studentRepository.findById(key);
-		LOGGER.info("Student was successfully found by id - " + key);
+	public Optional<Student> findById(long id) {
+		LOGGER.debug("Student finding by id... ");
+		Optional<Student> student = studentRepository.findById(id);
+		LOGGER.info("Student was successfully found by id - " + id);
 
 		return student;
 	}
 
 	public List<Student> findAll() {
-		LOGGER.debug("All student findind...");
+		LOGGER.debug("All student findind... ");
 		List<Student> studentsList = studentRepository.findAll();
 		LOGGER.info("All students were successfully found");
 

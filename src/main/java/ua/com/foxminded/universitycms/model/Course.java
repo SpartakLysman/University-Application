@@ -14,8 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "courses")
+@jakarta.persistence.Entity
 public class Course extends Entity<Long> implements Serializable {
 
 	@Column(name = "title")
@@ -29,7 +29,7 @@ public class Course extends Entity<Long> implements Serializable {
 	private Teacher teacher_id;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "students_courses", schema = "application", joinColumns = @JoinColumn(name = "courses_id"), inverseJoinColumns = @JoinColumn(name = "students_id"))
+	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private List<Student> students = new ArrayList<>();
 
 	@OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
@@ -37,8 +37,8 @@ public class Course extends Entity<Long> implements Serializable {
 
 	private static final long serialVersionUID = -7353139263354063173L;
 
-	public Course(Long key, String title, String description) {
-		super(key);
+	public Course(Long id, String title, String description) {
+		super(id);
 		this.title = title;
 		this.description = description;
 	}
