@@ -31,10 +31,24 @@ public class AdminService {
 		return newAdmin;
 	}
 
-	public void delete(long userId) {
-		LOGGER.debug("Admin deleting with id... " + userId);
-		adminRepository.deleteById(userId);
-		LOGGER.info("Admin was successfully deleted with id - " + userId);
+	public List<Admin> createAll(List<Admin> adminsList) {
+		LOGGER.debug("Admins creating... ");
+		List<Admin> newAdmins = adminRepository.saveAll(adminsList);
+		LOGGER.info("All admins were successfully created: " + adminsList.toString());
+
+		return newAdmins;
+	}
+
+	public boolean delete(Admin admin) {
+		LOGGER.debug("Admin deleting... " + admin.toString());
+		try {
+			adminRepository.delete(admin);
+			LOGGER.info("Admin was successfully deleted with id - " + admin.getId());
+			return true;
+		} catch (Exception e) {
+			LOGGER.error("Failed to delete admin with id - " + admin.getId(), e);
+			return false;
+		}
 	}
 
 	public Admin update(Admin user) {
@@ -45,19 +59,51 @@ public class AdminService {
 		return newAdmin;
 	}
 
+	public List<Admin> findByName(String name) {
+		LOGGER.debug("Admins finding by name... ");
+		List<Admin> adminsList = adminRepository.findByName(name);
+		LOGGER.info("Admins were successfully found by name - " + name);
+
+		return adminsList;
+	}
+
 	public Optional<Admin> findById(long id) {
 		LOGGER.debug("Admin finding by id... ");
-		Optional<Admin> user = adminRepository.findById(id);
+		Optional<Admin> admin = adminRepository.findById(id);
 		LOGGER.info("Admin was successfully found by id - " + id);
 
-		return user;
+		return admin;
+	}
+
+	public Optional<Admin> findByLogin(String login) {
+		LOGGER.debug("Admin finding by login... ");
+		Optional<Admin> admin = adminRepository.findByLogin(login);
+		LOGGER.info("Admin was successfully found by login - " + login);
+
+		return admin;
+	}
+
+	public Optional<Admin> findByLoginAndPassword(String login, String password) {
+		LOGGER.debug("Admin finding by login and password... ");
+		Optional<Admin> admin = adminRepository.findByLoginAndPassword(login, password);
+		LOGGER.info("Admin was successfully founded by login and password - " + login);
+
+		return admin;
+	}
+
+	public Optional<Admin> findAdminWithMaxKey() {
+		LOGGER.debug("Admin with max key findind... ");
+		Optional<Admin> adminWithMaxKey = adminRepository.findFirstByOrderByIdDesc();
+		LOGGER.info("Admin with max key was found- " + adminWithMaxKey.toString());
+
+		return adminWithMaxKey;
 	}
 
 	public List<Admin> findAll() {
 		LOGGER.debug("All admins findind... ");
-		List<Admin> usersList = adminRepository.findAll();
+		List<Admin> adminsList = adminRepository.findAll();
 		LOGGER.info("All admins were successfully found");
 
-		return usersList;
+		return adminsList;
 	}
 }

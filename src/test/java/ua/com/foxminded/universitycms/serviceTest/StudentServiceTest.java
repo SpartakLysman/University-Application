@@ -3,6 +3,7 @@ package ua.com.foxminded.universitycms.serviceTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -138,7 +139,7 @@ class StudentServiceTest {
 		groupOne.setId(5L);
 		studentTest = new Student(50L, groupOne, "Anton", "Gorodnuk", "StudentFifty", "gHs29*&");
 
-		Student updated = studentService.update(studentTest);
+		studentService.update(studentTest);
 
 		assertNotEquals(studentForCheck, studentTest);
 
@@ -171,14 +172,56 @@ class StudentServiceTest {
 	}
 
 	@Test
+	void findStudentByLoginTest() {
+		String login = "StudentFive";
+
+		when(studentService.findByLogin(login)).thenReturn(Optional.of(studentTest));
+
+		Optional<Student> foundStudent = studentService.findByLogin(login);
+
+		assertTrue(foundStudent.isPresent());
+		assertEquals(studentTest.getLogin(), foundStudent.get().getLogin());
+
+		verify(studentService).findByLogin(login);
+	}
+
+	@Test
+	void findStudentByLoginAndPasswordTest() {
+		String login = "StudentFive";
+		String password = "DdH3&hs";
+
+		when(studentService.findByLoginAndPassword(login, password)).thenReturn(Optional.of(studentTest));
+
+		Optional<Student> foundStudent = studentService.findByLoginAndPassword(login, password);
+
+		assertTrue(foundStudent.isPresent());
+		assertEquals(studentTest.getLogin(), foundStudent.get().getLogin());
+		assertEquals(studentTest.getPassword(), foundStudent.get().getPassword());
+
+		verify(studentService).findByLoginAndPassword(login, password);
+	}
+
+	@Test
+	void findStudentWithMaxKeyTest() {
+		Student studentWithMaxKey = new Student(20L, new Group(), "Nikolay", "Sertilatov", "StudentTwenty", "D72xQ&");
+
+		when(studentService.findStudentWithMaxKey()).thenReturn(Optional.of(studentWithMaxKey));
+
+		Optional<Student> foundStudent = studentService.findStudentWithMaxKey();
+
+		assertTrue(foundStudent.isPresent());
+		assertEquals(studentWithMaxKey.getId(), foundStudent.get().getId());
+
+		verify(studentService).findStudentWithMaxKey();
+	}
+
+	@Test
 	void findAllStudentsTest() {
 		List<Student> studentsEntity = new ArrayList<>();
 
 		for (int i = 1; i < studentsList.size(); i++) {
 			studentsEntity.add(studentsList.get(i));
 		}
-
-		Student studentFirst = studentsEntity.get(0);
 
 		when(studentService.findAll()).thenReturn(studentsEntity);
 

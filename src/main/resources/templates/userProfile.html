@@ -6,7 +6,7 @@
 </head>
 <body>
 	<h1>User Profile</h1>
-	<form method="get" th:action="@{/users}">
+	<form method="get" th:action="@{/admin/users}">
 		<div>
 			<p th:text="'Name: ' + ${user.name}"></p>
 			<p th:text="'Surname ' + ${user.surname}"></p>

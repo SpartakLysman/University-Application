@@ -121,7 +121,7 @@ class GroupServiceTest {
 		when(groupService.update(groupTest)).thenReturn(groupTest);
 
 		groupTest = new Group(50L, "1050");
-		Group updated = groupService.update(groupTest);
+		groupService.update(groupTest);
 
 		assertNotEquals(groupForCheck, groupTest);
 

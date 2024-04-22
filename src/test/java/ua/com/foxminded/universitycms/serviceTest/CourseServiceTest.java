@@ -110,7 +110,7 @@ class CourseServiceTest {
 		when(courseService.update(courseTest)).thenReturn(courseTest);
 
 		courseTest = new Course(50L, "Swimming", "Fast");
-		Course updated = courseService.update(courseTest);
+		courseService.update(courseTest);
 
 		assertNotEquals(courseForCheck, courseTest);
 

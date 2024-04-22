@@ -119,14 +119,6 @@ public class StudentService {
 		return studentsList;
 	}
 
-	public Optional<Student> findStudentWithMaxKey() {
-		LOGGER.debug("The latest student id findind... ");
-		Optional<Student> latestId = studentRepository.findFirstByOrderByIdDesc();
-		LOGGER.info("The latest student id was found");
-
-		return latestId;
-	}
-
 	public Optional<Student> findById(long id) {
 		LOGGER.debug("Student finding by id... ");
 		Optional<Student> student = studentRepository.findById(id);
@@ -135,8 +127,32 @@ public class StudentService {
 		return student;
 	}
 
+	public Optional<Student> findByLogin(String login) {
+		LOGGER.debug("Student finding by login... ");
+		Optional<Student> student = studentRepository.findByLogin(login);
+		LOGGER.info("Student was successfully founded by login - " + login);
+
+		return student;
+	}
+
+	public Optional<Student> findByLoginAndPassword(String login, String password) {
+		LOGGER.debug("Student finding by login and password... ");
+		Optional<Student> student = studentRepository.findByLoginAndPassword(login, password);
+		LOGGER.info("Student was successfully founded by login and password - " + login);
+
+		return student;
+	}
+
+	public Optional<Student> findStudentWithMaxKey() {
+		LOGGER.debug("Student with max key findind... ");
+		Optional<Student> studentWithMaxKey = studentRepository.findFirstByOrderByIdDesc();
+		LOGGER.info("Student with max key was found");
+
+		return studentWithMaxKey;
+	}
+
 	public List<Student> findAll() {
-		LOGGER.debug("All student findind... ");
+		LOGGER.debug("All students findind... ");
 		List<Student> studentsList = studentRepository.findAll();
 		LOGGER.info("All students were successfully found");
 

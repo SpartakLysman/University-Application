@@ -16,7 +16,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests(
 				requests -> requests.requestMatchers("static/css/**", "/?continue", "/webjars/**", "/assets/**")
-						.permitAll().requestMatchers("/admin/**").hasAnyAuthority("ADMIN").requestMatchers("menu")
+						.permitAll().requestMatchers("assignRole").hasAnyAuthority("ADMIN").requestMatchers("menu")
 						.hasAnyAuthority("ADMIN", "TEACHER", "STUDENT").anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/menu")
 						.permitAll())

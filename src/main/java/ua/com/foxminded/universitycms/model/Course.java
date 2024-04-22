@@ -18,6 +18,8 @@ import jakarta.persistence.Table;
 @jakarta.persistence.Entity
 public class Course extends Entity<Long> implements Serializable {
 
+	private static final long serialVersionUID = -7353139263354063173L;
+
 	@Column(name = "title")
 	private String title;
 
@@ -34,8 +36,6 @@ public class Course extends Entity<Long> implements Serializable {
 
 	@OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
 	private List<Group> groups = new ArrayList<>();
-
-	private static final long serialVersionUID = -7353139263354063173L;
 
 	public Course(Long id, String title, String description) {
 		super(id);

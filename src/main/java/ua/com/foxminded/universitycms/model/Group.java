@@ -14,14 +14,14 @@ import jakarta.persistence.Table;
 @jakarta.persistence.Entity
 public class Group extends Entity<Long> implements Serializable {
 
+	private static final long serialVersionUID = -7353719263354063173L;
+
 	@Column(name = "title")
 	private String title;
 
 	@ManyToMany
 	@JoinTable(name = "groups_courses", schema = "public", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses = new ArrayList<>();
-
-	private static final long serialVersionUID = -7353719263354063173L;
 
 	public Group(Long id, String title) {
 		super(id);

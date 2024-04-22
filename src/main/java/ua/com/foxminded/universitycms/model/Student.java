@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -14,41 +15,63 @@ import jakarta.persistence.Table;
 
 @Table(name = "students")
 @jakarta.persistence.Entity
-public class Student extends User implements Serializable {
+public class Student extends Entity<Long> implements Serializable {
 
-	// @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-	// @JoinTable(name = "groups", schema = "public", joinColumns = @JoinColumn(name
-	// = "group_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+	private static final long serialVersionUID = -7353839263354063175L;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "group_id")
 	private Group group;
+
+	@Column(name = "name")
+	private String name;
+
+	@Column(name = "surname")
+	private String surname;
+
+	@Column(name = "login")
+	private String login;
+
+	@Column(name = "password")
+	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses = new ArrayList<>();
 
-	private static final long serialVersionUID = -7353839263354063175L;
-
 	public Student(Long id, Group newGroup, String name, String surname, String login, String password) {
-		super(id, name, surname, login, password);
+		super(id);
 		this.group = newGroup;
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
 		this.courses = new ArrayList<>();
 	}
 
 	public Student(Group newGroup, String name, String surname, String login, String password, List<Course> courses) {
-		super(name, surname, login, password);
 		this.group = newGroup;
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
 		this.courses = new ArrayList<>();
 	}
 
-	public Student(Group newGroup, String name, String surname, String login, String passsword) {
-		super(name, surname, login, passsword);
+	public Student(Group newGroup, String name, String surname, String login, String password) {
 		this.group = newGroup;
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
 		this.courses = new ArrayList<>();
 	}
 
 	public Student(String name, String surname, String login, String password) {
-		super(name, surname, login, password);
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
 	}
 
 	public Student() {
@@ -71,8 +94,48 @@ public class Student extends User implements Serializable {
 			course.deleteStudent(this);
 		} else {
 
-			System.out.println("The course not faund");
+			System.out.println("The course not found");
 		}
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public String getLogin() {
+		return login;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setGroup(Group newGroup) {
+		this.group = newGroup;
+	}
+
+	public void setName(String newName) {
+		this.name = newName;
+	}
+
+	public void setSurname(String newSurname) {
+		this.surname = newSurname;
+	}
+
+	public void setLogin(String newLogin) {
+		this.login = newLogin;
+	}
+
+	public void setPassword(String newPassword) {
+		this.password = newPassword;
 	}
 
 	public List<Course> getCourses() {
@@ -83,15 +146,8 @@ public class Student extends User implements Serializable {
 		return 4;
 	}
 
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(Group newGroup) {
-		this.group = newGroup;
-	}
-
 	public String toString() {
-		return "Group id: " + group.getId();
+		return "Group id: " + group.getId() + ", Name: " + name + ",  Surname: " + surname + ",  Login: " + login
+				+ ",  Password: " + password;
 	}
 }

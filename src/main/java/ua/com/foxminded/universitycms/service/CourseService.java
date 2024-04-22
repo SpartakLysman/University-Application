@@ -109,7 +109,7 @@ public class CourseService {
 	}
 
 	public Optional<Course> findById(long id) {
-		LOGGER.debug("Course finding... " + id);
+		LOGGER.debug("Course finding... ");
 		Optional<Course> course = courseRepository.findById(id);
 		LOGGER.info("Course was successfully found by id - " + id);
 
