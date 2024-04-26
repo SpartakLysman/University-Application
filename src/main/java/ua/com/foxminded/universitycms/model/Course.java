@@ -92,6 +92,10 @@ public class Course extends Entity<Long> implements Serializable {
 		return groups;
 	}
 
+	public void setGroups(List<Group> newGroups) {
+		groups = newGroups;
+	}
+
 	public Teacher getTeacher_id() {
 		return teacher_id;
 	}

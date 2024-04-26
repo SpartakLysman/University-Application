@@ -2,6 +2,7 @@ package ua.com.foxminded.universitycms.controllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -12,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +30,7 @@ import ua.com.foxminded.universitycms.service.TeacherService;
 import ua.com.foxminded.universitycms.service.UserService;
 
 @RunWith(MockitoJUnitRunner.class)
+//@SpringBootTest(classes = { AdminController.class })
 public class AdminControllerTest {
 
 	@InjectMocks
@@ -52,7 +53,14 @@ public class AdminControllerTest {
 
 	@Before
 	public void setUp() {
-		MockitoAnnotations.initMocks(this);
+		userService = mock(UserService.class);
+		groupService = mock(GroupService.class);
+		courseService = mock(CourseService.class);
+		teacherService = mock(TeacherService.class);
+		studentService = mock(StudentService.class);
+
+		adminController = new AdminController(null, null, userService, groupService, courseService, teacherService,
+				studentService);
 	}
 
 	@Test
@@ -66,8 +74,6 @@ public class AdminControllerTest {
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 		assertEquals(user, response.getBody());
 	}
-
-	// Write similar tests for other methods in AdminController
 
 	// User Management Tests
 

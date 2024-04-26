@@ -4,40 +4,37 @@
 <head>
 <title>Please, Log In</title>
 <style>
-/* Center the form */
+
 body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh; /* Set the height of the body to fill the viewport */
-	margin: 0; /* Remove default margin */
-	flex-direction: column; /* Align items in a column layout */
+	height: 100vh; 
+	margin: 0;
+	flex-direction: column; 
 }
 
 form {
-	width: 300px; /* Set the width of the form */
-	padding: 20px; /* Add some padding */
-	border: 1px solid #ccc; /* Add a border for visibility */
-	border-radius: 5px; /* Add border radius for rounded corners */
-	background-color: #f9f9f9; /* Add a background color */
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
+	width: 300px;
+	padding: 20px;
+	border: 1px solid #ccc; 
+	border-radius: 5px; 
+	background-color: #f9f9f9;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
 }
 
-/* Center the form elements */
 form>div {
 	margin-bottom: 10px;
 	text-align: center;
 }
 
-/* Center the submit button */
 input[type="submit"] {
 	display: block;
 	margin: 0 auto;
 }
 </style>
 </head>
-<!-- <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" /> -->
-<body>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" /><body>
 	<h1>Please, Log In</h1>
 
 	<div th:if="${param.login}">You are logged in.</div>

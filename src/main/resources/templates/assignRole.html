@@ -4,14 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Role Assigning</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 </head>
 <body th:fragment="body">
 	<h1>Role Assigning</h1>
 
-	<form method="post" th:action="@{/admin/assignRole}"> 
+	<form method="post" th:action="@{/assignRole}"> 
 		<label for="id">User:</label> <select id="id" name="id">
 			<option th:each="user : ${users}" th:value="${user.id}"
-				th:text="${user.username}"></option>
+				th:text="${user.name}"></option>
 		</select> <label for="role">Role:</label> <select id="role" name="role">
 			<option value="ADMIN">Admin</option>
 			<option value="TEACHER">Teacher</option>

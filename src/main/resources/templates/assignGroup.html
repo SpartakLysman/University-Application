@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Groups to Course</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Assign Groups to Course</h1>
+    <form action="/courses/assignGroups/{courseId}" method="post">
+        <input type="hidden" name="courseId" th:value="${course.id}">
+        
+        <label for="groupIds">Select Groups:</label>
+        <select id="groupIds" name="groupIds" multiple="multiple" required>
+            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
+        </select><br>
+        
+        <button type="submit">Assign Groups</button>
+    </form>
+</body>
+</html>

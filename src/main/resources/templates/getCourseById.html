@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Details</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Course Details</h1>
+    <div th:if="${course != null}">
+        <p><strong>ID:</strong> <span th:text="${course.id}"></span></p>
+        <p><strong>Title:</strong> <span th:text="${course.title}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${course.description}"></span></p>
+    </div>
+    <div th:if="${course == null}">
+        <p>Course not found.</p>
+    </div>
+</body>
+</html>

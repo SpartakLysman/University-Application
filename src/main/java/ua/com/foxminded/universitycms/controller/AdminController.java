@@ -32,7 +32,7 @@ import ua.com.foxminded.universitycms.service.TeacherService;
 import ua.com.foxminded.universitycms.service.UserService;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admins")
 public class AdminController {
 
 	private final UserService userService;
@@ -61,28 +61,28 @@ public class AdminController {
 		this.studentService = studentService;
 	}
 
-	@GetMapping("/admin/admins")
+	@GetMapping
 	public String showAdmins(Model model) {
 		List<Admin> admins = adminRepository.findAll();
 		model.addAttribute("admins", admins);
 		return "adminList";
 	}
 
-	@GetMapping("/admin/users")
+	@GetMapping("admins/users")
 	public String showUserManagementPage(Model model) {
 		List<Admin> users = adminRepository.findAll();
 		model.addAttribute("users", users);
-		return "usersProfile";
+		return "userProfile";
 	}
 
-	@GetMapping("/admin/assignRole")
+	@GetMapping("/assignRole")
 	public String showAssignRolePage(Model model) {
 		List<User> users = userRepository.findAll();
 		model.addAttribute("users", users);
 		return "assignRole";
 	}
 
-	@PostMapping("/admin/assignRole")
+	@PostMapping("/assignRole")
 	public String assignRole(@RequestParam long id, @RequestParam UserRole role) {
 		Optional<User> user = userRepository.findById(id);
 		if (user.isPresent()) {

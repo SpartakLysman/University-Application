@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assign Teacher to Course</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+	<h1>Assign Teacher to Course</h1>
+	<form action="/courses/assignTeacher/{courseId}" method="post">
+		<input type="hidden" name="courseId" th:value="${courseId}"> <label
+			for="teacherId">Select Teacher:</label> <select id="teacherId"
+			name="teacherId" required>
+			<option th:each="teacher : ${teachers}" th:value="${teacher.id}"
+				th:text="${teacher.name}"></option>
+		</select><br>
+
+		<button type="submit">Assign Teacher</button>
+	</form>
+</body>
+</html>

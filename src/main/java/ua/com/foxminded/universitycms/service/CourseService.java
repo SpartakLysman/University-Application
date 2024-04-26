@@ -1,5 +1,6 @@
 package ua.com.foxminded.universitycms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,11 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
+import ua.com.foxminded.universitycms.model.Teacher;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
+import ua.com.foxminded.universitycms.repository.TeacherRepository;
 
 @Service
 public class CourseService {
@@ -21,12 +25,16 @@ public class CourseService {
 
 	private final GroupRepository groupRepository;
 
+	private final TeacherRepository teacherRepository;
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(GroupService.class);
 
 	@Autowired
-	public CourseService(CourseRepository courseRepository, GroupRepository groupRepository) {
+	public CourseService(CourseRepository courseRepository, GroupRepository groupRepository,
+			TeacherRepository teacherRepository) {
 		this.courseRepository = courseRepository;
 		this.groupRepository = groupRepository;
+		this.teacherRepository = teacherRepository;
 	}
 
 	public Course create(Course course) {
@@ -122,5 +130,45 @@ public class CourseService {
 		LOGGER.info("All courses were successfully found");
 
 		return coursesList;
+	}
+
+	public void deleteById(Long id) {
+		LOGGER.debug("Course with id deleteng... ");
+		courseRepository.deleteById(id);
+		LOGGER.info("Course with id- " + id + " was successfully deleted");
+	}
+
+	public void assignTeacher(Long courseId, Long teacherId) {
+		Optional<Course> optionalCourse = courseRepository.findById(courseId);
+		Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
+
+		if (optionalCourse.isPresent() && optionalTeacher.isPresent()) {
+			Course course = optionalCourse.get();
+			Teacher teacher = optionalTeacher.get();
+
+			course.setTeacher_id(teacher);
+			courseRepository.save(course);
+		} else {
+			throw new EntityNotFoundException("Course or Teacher not found");
+		}
+	}
+
+	public void assignGroups(Long courseId, List<Long> groupIds) {
+		Optional<Course> optionalCourse = courseRepository.findById(courseId);
+
+		if (optionalCourse.isPresent()) {
+			Course course = optionalCourse.get();
+
+			List<Group> groups = new ArrayList<>();
+			for (Long groupId : groupIds) {
+				Optional<Group> optionalGroup = groupRepository.findById(groupId);
+				optionalGroup.ifPresent(groups::add);
+			}
+			course.setGroups(groups);
+
+			courseRepository.save(course);
+		} else {
+			throw new EntityNotFoundException("Course not found");
+		}
 	}
 }

@@ -17,5 +17,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	@Query("DELETE FROM Course c WHERE c = :course")
 	boolean deleteCourse(@Param("course") Course course);
 
+	void deleteById(@Param("id") Long id);
+
 	List<Course> findByTitle(String title);
 }
