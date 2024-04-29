@@ -12,11 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ua.com.foxminded.universitycms.model.Course;
+import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.service.CourseService;
 
 @SpringBootTest(classes = { CourseService.class })
@@ -25,6 +27,9 @@ class CourseServiceTest {
 	@MockBean
 	@Autowired
 	CourseService courseService;
+
+	@Mock
+	private CourseRepository courseRepository;
 
 	private List<Course> coursesList;
 	private Course courseTest;
@@ -102,6 +107,17 @@ class CourseServiceTest {
 
 		verify(courseService).delete(courseTest);
 	}
+
+//	@Test
+//	void testDeleteById() {
+//		Course courseOne = new Course(123L, "Biology", "Animals");
+//
+//		// When
+//		courseService.deleteById(courseOne.getId());
+//
+//		// Then
+//		verify(courseRepository, times(1)).deleteById(courseOne.getId());
+//	}
 
 	@Test
 	void updateCourseTest() {

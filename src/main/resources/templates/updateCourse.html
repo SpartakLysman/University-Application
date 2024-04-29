@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 </head>
 <body>
-    <h1>Update Course</h1>
+    <h1>Edit Course</h1>
     <form action="/courses/update/{id}" method="post">
         <input type="hidden" name="id" th:value="${course.id}">
         

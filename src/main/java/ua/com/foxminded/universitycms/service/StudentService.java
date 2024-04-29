@@ -103,6 +103,12 @@ public class StudentService {
 		return deleted;
 	}
 
+	public void deleteById(Long id) {
+		LOGGER.debug("Student with id deleteng... ");
+		studentRepository.deleteById(id);
+		LOGGER.info("Student with id- " + id + " was successfully deleted");
+	}
+
 	public Student update(Student student) {
 		LOGGER.debug("Student updating... " + student.toString());
 		Student newStudent = studentRepository.save(student);
@@ -158,4 +164,5 @@ public class StudentService {
 
 		return studentsList;
 	}
+
 }

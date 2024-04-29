@@ -100,6 +100,12 @@ public class CourseService {
 		return deleted;
 	}
 
+	public void deleteById(Long id) {
+		LOGGER.debug("Course with id deleteng... ");
+		courseRepository.deleteById(id);
+		LOGGER.info("Course with id- " + id + " was successfully deleted");
+	}
+
 	public Course update(Course course) {
 		LOGGER.debug("Course updating... " + course.toString());
 		Course newCourse = courseRepository.save(course);
@@ -132,12 +138,6 @@ public class CourseService {
 		return coursesList;
 	}
 
-	public void deleteById(Long id) {
-		LOGGER.debug("Course with id deleteng... ");
-		courseRepository.deleteById(id);
-		LOGGER.info("Course with id- " + id + " was successfully deleted");
-	}
-
 	public void assignTeacher(Long courseId, Long teacherId) {
 		Optional<Course> optionalCourse = courseRepository.findById(courseId);
 		Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
@@ -153,7 +153,7 @@ public class CourseService {
 		}
 	}
 
-	public void assignGroups(Long courseId, List<Long> groupIds) {
+	public void assignGroup(Long courseId, List<Long> groupIds) {
 		Optional<Course> optionalCourse = courseRepository.findById(courseId);
 
 		if (optionalCourse.isPresent()) {

@@ -1,0 +1,22 @@
+<!-- getStudentById.html -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Student Details</h1>
+    <div th:if="${student != null}">
+        <p><strong>ID:</strong> <span th:text="${student.id}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${student.name}"></span></p>
+        <p><strong>Surname:</strong> <span th:text="${student.surname}"></span></p>
+        <p><strong>Login:</strong> <span th:text="${student.login}"></span></p>
+    </div>
+    <div th:if="${student == null}">
+        <p>Student not found.</p>
+    </div>
+</body>
+</html>

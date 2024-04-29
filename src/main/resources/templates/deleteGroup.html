@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delete Course Confirmation</title>
+    <title>Delete Group Confirmation</title>
     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 </head>
 <body>
-    <h2>Delete Course Confirmation</h2>
+    <h1>Delete Group Confirmation</h1>
     <p>Are you sure you want to delete the following course?</p>
-    <p th:text="${course.title}"></p>
-    
-    <form action="/courses/delete" method="post">
-        <input type="hidden" name="id" th:value="${course.id}" />
-        <button type="submit">Yes, Delete Course</button>
+     <p th:text="${group.title}"></p>
+     
+    <form action="/groups/delete" method="post">
+        <input type="hidden" name="id" th:value="${group.id}">
+        <button type="submit">Yes, Delete Group</button>
     </form>
-     <br> 
-     <br>
-    <a href="/courses">Cancel</a>
+    <br>
+    <br>
+     <a href="/groups">Cancel</a>
 </body>
 </html>

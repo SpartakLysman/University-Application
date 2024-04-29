@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Student Confirmation</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Delete Student Confirmation</h1>
+    <p>Are you sure you want to delete the following student?</p>
+    <p>ID: <span th:text="${student.id}"></span></p>
+    <p>Name: <span th:text="${student.name}"></span></p>
+    <p>Surname: <span th:text="${student.surname}"></span></p>
+    <p>Login: <span th:text="${student.login}"></span></p>
+    
+    <form action="/students/delete" method="post">
+        <input type="hidden" name="id" th:value="${student.id}">
+        <button type="submit">Yes, Delete Student</button>
+    </form>
+     <br> 
+     <br>
+    <a href="/students">Cancel</a>
+</body>
+</html>

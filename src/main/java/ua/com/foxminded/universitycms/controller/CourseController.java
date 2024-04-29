@@ -84,6 +84,17 @@ public class CourseController {
 		}
 	}
 
+	@GetMapping("/getById/{id}")
+	public String getCourseById(@PathVariable Long id, Model model) {
+		Optional<Course> course = courseService.findById(id);
+		if (course.isPresent()) {
+			model.addAttribute("course", course.get());
+			return "getCourseById";
+		} else {
+			return "error";
+		}
+	}
+
 	@GetMapping("/assignTeacher/{courseId}")
 	public String showAssignTeacherForm(@PathVariable Long courseId, Model model) {
 		Optional<Course> courseOptional = courseService.findById(courseId);
@@ -108,8 +119,8 @@ public class CourseController {
 		return "redirect:/courses/{courseId}";
 	}
 
-	@GetMapping("/assignGroups/{courseId}")
-	public String showAssignGroupsForm(@PathVariable Long courseId, Model model) {
+	@GetMapping("/assignGroup/{courseId}")
+	public String showAssignGroupForm(@PathVariable Long courseId, Model model) {
 		Optional<Course> courseOptional = courseService.findById(courseId);
 
 		if (courseOptional.isPresent()) {
@@ -126,20 +137,9 @@ public class CourseController {
 		}
 	}
 
-	@PostMapping("/assignGroups/{courseId}")
-	public String assignGroupsToCourse(@PathVariable Long courseId, @RequestParam List<Long> groupIds) {
-		courseService.assignGroups(courseId, groupIds);
+	@PostMapping("/assignGroup/{courseId}")
+	public String assignGroupToCourse(@PathVariable Long courseId, @RequestParam List<Long> groupIds) {
+		courseService.assignGroup(courseId, groupIds);
 		return "redirect:/courses/{courseId}";
-	}
-
-	@GetMapping("/getById/{id}")
-	public String getCourseById(@PathVariable Long id, Model model) {
-		Optional<Course> course = courseService.findById(id);
-		if (course.isPresent()) {
-			model.addAttribute("course", course.get());
-			return "getCourseById";
-		} else {
-			return "error";
-		}
 	}
 }

@@ -17,19 +17,15 @@
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
-
 .btn:hover {
 	background-color: #0056b3;
 }
-
 .btn.findById {
 	background-color: #28a745;
 }
-
 .btn.update {
 	background-color: #ffc107;
 }
-
 .btn.delete {
 	background-color: #dc3545;
 }
@@ -46,9 +42,7 @@
 		<button class="btn findById" onclick="findById()">Find by ID</button>
 		<input type="text" id="courseIdInput" placeholder="Enter Course ID">
 		
-		
-		<br>
-		<!-- <a th:href="@{/courses/{id}(id=${course.id})}" class="btn findById">Find by id</a> -->
+	<br>
 	<table>
 		<thead>
 			<tr>
@@ -66,7 +60,7 @@
 					<a th:href="@{/courses/update/{id}(id=${course.id})}" class="btn update">Update</a>
 					<a th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn delete">Delete</a>		
 					<a th:href="@{/courses/assignTeacher/{id}(id=${course.id})}" class="btn assignT">Assign Teacher</a> 
-					<a th:href="@{/courses/assignGroups/{id}(id=${course.id})}" class="btn assignG">Assign Groups</a>			
+					<a th:href="@{/courses/assignGroup/{id}(id=${course.id})}" class="btn assignG">Assign Groups</a>			
 				</td>
 			</tr>
 		</tbody>

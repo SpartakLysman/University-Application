@@ -8,18 +8,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import ua.com.foxminded.universitycms.model.Group;
+import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
+import ua.com.foxminded.universitycms.repository.StudentRepository;
 
 @Service
 public class GroupService {
 
 	private final GroupRepository groupRepository;
+
+	private final StudentRepository studentRepository;
+
 	public final static Logger LOGGER = LoggerFactory.getLogger(GroupService.class);
 
 	@Autowired
-	public GroupService(GroupRepository groupRepository) {
+	public GroupService(GroupRepository groupRepository, StudentRepository studentRepository) {
 		this.groupRepository = groupRepository;
+		this.studentRepository = studentRepository;
 	}
 
 	public Group create(Group group) {
@@ -44,6 +52,12 @@ public class GroupService {
 		LOGGER.info("Group was successfully removed with id - " + group.getId());
 
 		return deleted;
+	}
+
+	public void deleteById(Long id) {
+		LOGGER.debug("Group with id deleteng... ");
+		groupRepository.deleteById(id);
+		LOGGER.info("Group with id- " + id + " was successfully deleted");
 	}
 
 	public Group update(Group group) {
@@ -77,5 +91,43 @@ public class GroupService {
 		LOGGER.info("All groups were successfully found ");
 
 		return groupsList;
+	}
+
+	public void assignStudent(Long groupId, Long studentId) {
+		Optional<Group> optionalGroup = groupRepository.findById(groupId);
+		Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+		if (optionalGroup.isPresent() && optionalStudent.isPresent()) {
+			Group group = optionalGroup.get();
+			Student student = optionalStudent.get();
+
+			if (!group.getStudents().contains(student)) {
+				group.addStudent(student);
+				groupRepository.save(group);
+			} else {
+				throw new EntityExistsException("Student is already assigned to the group");
+			}
+		} else {
+			throw new EntityNotFoundException("Group or Student not found");
+		}
+	}
+
+	public void removeStudent(Long groupId, Long studentId) {
+		Optional<Group> optionalGroup = groupRepository.findById(groupId);
+		Optional<Student> optionalStudent = studentRepository.findById(studentId);
+
+		if (optionalGroup.isPresent() && optionalStudent.isPresent()) {
+			Group group = optionalGroup.get();
+			Student student = optionalStudent.get();
+
+			if (group.getStudents().contains(student)) {
+				group.removeStudent(student);
+				groupRepository.save(group);
+			} else {
+				throw new EntityNotFoundException("Student is not assigned to the group");
+			}
+		} else {
+			throw new EntityNotFoundException("Group or Student not found");
+		}
 	}
 }
