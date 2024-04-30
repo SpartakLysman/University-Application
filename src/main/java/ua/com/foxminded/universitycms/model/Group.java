@@ -62,6 +62,32 @@ public class Group extends Entity<Long> implements Serializable {
 		title = newTitle;
 	}
 
+	public List<Student> getStudents() {
+		List<Student> students = new ArrayList<>();
+		for (Course course : courses) {
+			students.addAll(course.getStudents());
+		}
+		return students;
+	}
+
+	public void removeStudent(Student student) {
+		for (Course course : courses) {
+			if (course.getStudents().contains(student)) {
+				course.deleteStudent(student);
+				return;
+			}
+		}
+		System.out.println("The student not found in any course of this group");
+	}
+
+	public void addStudent(Student student) {
+		for (Course course : courses) {
+			if (!course.getStudents().contains(student)) {
+				course.addStudent(student);
+			}
+		}
+	}
+
 	public String toString() {
 		return "Title" + title;
 	}

@@ -51,6 +51,13 @@ public class TeacherService {
 		}
 	}
 
+	public void deleteById(Long id) {
+		LOGGER.debug("Teacher with id deleteng... ");
+		teacherRepository.deleteById(id);
+		LOGGER.info("Teacher with id- " + id + " was successfully deleted");
+
+	}
+
 	public Teacher update(Teacher teacher) {
 		LOGGER.debug("Teacher updating... " + teacher.toString());
 		Teacher newStudent = teacherRepository.save(teacher);
@@ -106,4 +113,5 @@ public class TeacherService {
 
 		return teachersList;
 	}
+
 }
