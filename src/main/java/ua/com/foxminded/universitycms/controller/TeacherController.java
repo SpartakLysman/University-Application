@@ -47,11 +47,19 @@ public class TeacherController {
 		return "createTeacher";
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/update")
 	public String updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
-		Teacher updatedTeacher = teacherService.update(teacher);
-		if (updatedTeacher != null) {
-			return "redirect:/teachers/update/" + id;
+		teacherService.update(teacher);
+		return "redirect:/teachers";
+	}
+
+	@GetMapping("/update/{id}")
+	public String showUpdateTeacherForm(@PathVariable Long id, Model model) {
+		Optional<Teacher> teacherOptional = teacherService.findById(id);
+		if (teacherOptional.isPresent()) {
+			Teacher teacher = teacherOptional.get();
+			model.addAttribute("teacher", teacher);
+			return "updateTeacher";
 		} else {
 			return "redirect:/teachers";
 		}

@@ -57,6 +57,8 @@
 </head>
 <body>
 	<h1>Admins List</h1>
+		<button class="btn findById" onclick="getUserById()">Find by ID</button>
+		<input type="text" id="userIdInput" placeholder="Enter User ID">
 
 	<table>
 		<thead>
@@ -74,7 +76,6 @@
 				<td th:text="${admin.surname}">Surname</td>
 				<td th:text="${admin.login}">Login</td>
 				<td>
-				<a th:href="@{/admins/{id}(id=${admin.id})}" class="btn view">View</a>
 				<a th:href="@{/admins/update/{id}(id=${admin.id})}" class="btn update">Update</a>
 				<a th:href="@{/admins/delete/{id}(id=${admin.id})}" class="btn delete">Delete</a></td>
 			</tr>
@@ -97,5 +98,15 @@
 	<br>
 	<br>
 	<a href="/admins/create" class="btn">Create Admin</a>
-	
+	<br>
+	<br>
+	<br>
+	<a href="/courses/create" class="btn">Create new course</a>
+	<script>
+        function getUserById() {
+            var userId = document.getElementById("userIdInput").value;
+            window.location.href = "/admins/users/getById/" + userId;
+        }
+    </script>
 </body>
+

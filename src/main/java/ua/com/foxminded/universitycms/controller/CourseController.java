@@ -57,11 +57,19 @@ public class CourseController {
 		return "createCourse";
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/update")
 	public String updateCourse(@PathVariable Long id, @RequestBody Course course) {
-		Course updatedCourse = courseService.update(course);
-		if (updatedCourse != null) {
-			return "redirect:/courses/update/" + id;
+		courseService.update(course);
+		return "redirect:/courses";
+	}
+
+	@GetMapping("/update/{id}")
+	public String showUpdateCourseForm(@PathVariable Long id, Model model) {
+		Optional<Course> courseOptional = courseService.findById(id);
+		if (courseOptional.isPresent()) {
+			Course course = courseOptional.get();
+			model.addAttribute("course", course);
+			return "updateCourse";
 		} else {
 			return "redirect:/courses";
 		}

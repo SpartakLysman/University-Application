@@ -96,7 +96,7 @@ public class AdminController {
 
 	// User Management Endpoints
 
-	@PostMapping("/users")
+	@PostMapping("/users/create")
 	public ResponseEntity<User> createUser(@RequestBody User user) {
 		User createdUser = userService.create(user);
 		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
@@ -108,7 +108,7 @@ public class AdminController {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 
-	@GetMapping("/users/{id}")
+	@GetMapping("/users/getById/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable Long id) {
 		Optional<User> user = userService.findById(id);
 		if (user != null) {
@@ -118,7 +118,7 @@ public class AdminController {
 		}
 	}
 
-	@PutMapping("/users/{id}")
+	@PutMapping("/users/update{id}")
 	public ResponseEntity<User> updateUser(@RequestBody User user) {
 		User updatedUser = userService.update(user);
 		if (updatedUser != null) {

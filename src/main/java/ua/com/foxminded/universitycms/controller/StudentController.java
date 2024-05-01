@@ -47,11 +47,19 @@ public class StudentController {
 		return "createStudent";
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/update")
 	public String updateStudent(@PathVariable Long id, @RequestBody Student student) {
-		Student updatedStudent = studentService.update(student);
-		if (updatedStudent != null) {
-			return "redirect:/students/update/" + id;
+		studentService.update(student);
+		return "redirect:/students";
+	}
+
+	@GetMapping("/update/{id}")
+	public String showUpdateStudentForm(@PathVariable Long id, Model model) {
+		Optional<Student> studentOptional = studentService.findById(id);
+		if (studentOptional.isPresent()) {
+			Student student = studentOptional.get();
+			model.addAttribute("student", student);
+			return "updateStudent";
 		} else {
 			return "redirect:/students";
 		}

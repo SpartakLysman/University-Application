@@ -52,11 +52,19 @@ public class GroupController {
 		return "createGroup";
 	}
 
-	@PostMapping("/update/{id}")
+	@PostMapping("/update")
 	public String updateGroup(@PathVariable Long id, @RequestBody Group group) {
-		Group updatedGroup = groupService.update(group);
-		if (updatedGroup != null) {
-			return "redirect:/groups/update/" + id;
+		groupService.update(group);
+		return "redirect:/groups";
+	}
+
+	@GetMapping("/update/{id}")
+	public String showUpdateGroupForm(@PathVariable Long id, Model model) {
+		Optional<Group> groupOptional = groupService.findById(id);
+		if (groupOptional.isPresent()) {
+			Group group = groupOptional.get();
+			model.addAttribute("group", group);
+			return "updateGroup";
 		} else {
 			return "redirect:/groups";
 		}
