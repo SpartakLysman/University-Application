@@ -188,7 +188,7 @@ public class CourseControllerTest {
 		Long teacherId = 1L;
 		String result = courseController.assignTeacherToCourse(courseId, teacherId);
 
-		assertEquals("redirect:/courses/{courseId}", result);
+		assertEquals("redirect:/courses", result);
 		verify(courseService, times(1)).assignTeacher(courseId, teacherId);
 	}
 
@@ -232,7 +232,7 @@ public class CourseControllerTest {
 
 		String result = courseController.assignGroupToCourse(courseId, groupIds);
 
-		assertEquals("redirect:/courses/{courseId}", result);
+		assertEquals("redirect:/courses", result);
 		verify(courseService, times(1)).assignGroup(courseId, groupIds);
 	}
 }
