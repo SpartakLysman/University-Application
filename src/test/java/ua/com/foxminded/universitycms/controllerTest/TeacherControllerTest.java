@@ -1,6 +1,9 @@
 package ua.com.foxminded.universitycms.controllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,13 +65,14 @@ public class TeacherControllerTest {
 
 	@Test
 	public void testShowCreateTeacherForm() {
+		Model model = mock(Model.class);
 		Teacher teacher = new Teacher();
-		teacher.setId(1L);
+		teacher.setId(30L);
 
 		String result = teacherController.showCreateTeacherForm(model);
 
 		assertEquals("createTeacher", result);
-		verify(model, times(1)).addAttribute("teacher", teacher);
+		verify(model, times(1)).addAttribute(eq("teacher"), any(Teacher.class));
 	}
 
 	@Test
@@ -82,13 +86,31 @@ public class TeacherControllerTest {
 	}
 
 	@Test
-	public void testUpdateTeacher() {
-		Teacher teacher = new Teacher(1L, "John", "Doe", "loggJohn", "pass");
+	void testUpdateTeacher() {
+		Long teacherId = 1L;
+		Teacher teacher = new Teacher();
+		teacher.setId(teacherId);
+		teacher.setName("John Doe");
 
-		String result = teacherController.updateTeacher(1L, teacher);
+		String result = teacherController.updateTeacher(teacher);
 
-		assertEquals("redirect:/teachers/update/1", result);
+		assertEquals("redirect:/teachers", result);
 		verify(teacherService, times(1)).update(teacher);
+	}
+
+	@Test
+	void testShowUpdateTeacherForm() {
+		Long teacherId = 1L;
+		Teacher teacher = new Teacher();
+		teacher.setId(teacherId);
+		Optional<Teacher> optionalTeacher = Optional.of(teacher);
+		Model model = mock(Model.class);
+		when(teacherService.findById(teacherId)).thenReturn(optionalTeacher);
+
+		String result = teacherController.showUpdateTeacherForm(teacherId, model);
+
+		assertEquals("updateTeacher", result);
+		verify(model, times(1)).addAttribute("teacher", teacher);
 	}
 
 	@Test

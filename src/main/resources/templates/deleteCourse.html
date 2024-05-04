@@ -10,8 +10,7 @@
     <h2>Delete Course Confirmation</h2>
     <p>Are you sure you want to delete the following course?</p>
     <p th:text="${course.title}"></p>
-    
-    <form action="/courses/delete" method="post">
+          <form th:action="@{/courses/{id}/delete(id=${course.id})}" th:object="${course}" method="post">
         <input type="hidden" name="id" th:value="${course.id}" />
         <button type="submit">Yes, Delete Course</button>
     </form>

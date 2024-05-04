@@ -8,23 +8,22 @@
 </head>
 <body>
     <h1>Edit Student</h1>
-    <form action="/students/update/{id}" method="post">
-        <input type="hidden" name="id" th:value="${student.id}">
+      <form th:action="@{/students/{id}/update(id=${student.id})}" th:object="${student}" method="post">
         
-       <label for="group_id">Group id:</label>
-        <input type="number" id="group_id" name="group_id" required><br>
+        <label for="group_id">Group id:</label>
+        <input type="number" id="group_id" name="group_id" th:value="${student.group_id}"><br>
         
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="name" name="name" th:value="${student.name}"><br>
         
         <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" required><br>
+        <input type="text" id="surname" name="surname" th:value="${student.surname}"><br>
         
         <label for="login">Login:</label>
-        <input type="text" id="login" name="login" required><br>
+        <input type="text" id="login" name="login" th:value="${student.login}"><br>
         
         <label for="password">Password:</label>
-        <input type="text" id="password" name="password" required><br>
+        <input type="text" id="password" name="password" th:value="${student.password}"><br>
       
         <button type="submit">Save Changes</button>
     </form>

@@ -1,6 +1,8 @@
 package ua.com.foxminded.universitycms.controllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -76,29 +78,43 @@ public class StudentControllerTest {
 
 	@Test
 	public void testShowCreateStudentForm() {
+		Model model = mock(Model.class);
 		Student student = new Student();
-		student.setId(1L); // Set the id property
+		student.setId(30L);
 
-		String result = studentController.showCreateStudentForm(model);
+		String viewName = studentController.showCreateStudentForm(model);
 
-		assertEquals("createStudent", result);
-		verify(model, times(1)).addAttribute("student", student);
+		assertEquals("createStudent", viewName);
+
+		verify(model, times(1)).addAttribute(eq("student"), any(Student.class));
 	}
 
 	@Test
-	public void testUpdateStudent() {
+	void testUpdateStudent() {
 		Long studentId = 1L;
 		Student student = new Student();
 		student.setId(studentId);
-		student.setName("Jamila");
+		student.setName("John Doe");
 
-		when(studentService.update(student)).thenReturn(student);
+		String result = studentController.updateStudent(student);
 
-		String viewName = studentController.updateStudent(studentId, student);
-
-		assertEquals("redirect:/students/update/" + studentId, viewName);
-
+		assertEquals("redirect:/students", result);
 		verify(studentService, times(1)).update(student);
+	}
+
+	@Test
+	void testShowUpdateStudentForm() {
+		Long studentId = 1L;
+		Student student = new Student();
+		student.setId(studentId);
+		Optional<Student> optionalStudent = Optional.of(student);
+		Model model = mock(Model.class);
+		when(studentService.findById(studentId)).thenReturn(optionalStudent);
+
+		String result = studentController.showUpdateStudentForm(studentId, model);
+
+		assertEquals("updateStudent", result);
+		verify(model, times(1)).addAttribute("student", student);
 	}
 
 	@Test

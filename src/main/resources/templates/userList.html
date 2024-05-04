@@ -1,7 +1,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Students List</title>
+<title>Users List</title>
 <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 <style>
 .btn {
@@ -46,12 +46,12 @@
 <body class="content">
 <br>
 <h4>Logged in as:</h4>
-	<h1>Students List</h1>
-		<a href="/students/scheduleView" class="btn viewSchedule">View your schedule</a>
-		<a href="/students/coursesAvailableView" class="btn coursesAvailableView">View Available Courses</a>
+	<h1>Users List</h1>
+		<!-- <a href="/students/scheduleView" class="btn viewSchedule">View your schedule</a>
+		<a href="/students/coursesAvailableView" class="btn coursesAvailableView">View Available Courses</a> -->
 		
 		<button class="btn findById" onclick="findById()">Find by ID</button>
-		<input type="text" id="studentIdInput" placeholder="Enter Student ID">	
+		<input type="text" id="userIdInput" placeholder="Enter User ID">	
 	<br>
 	<table>
 		<thead>
@@ -61,18 +61,20 @@
 				<th>Name</th>
 				<th>Surname</th>
 				<th>Login</th>
+				<th>Role</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr th:each="student : ${students}">
-				<td th:text="${student.id}">ID</td>
-				<td th:text="${student.group.id}">Group_id</td>
-				<td th:text="${student.name}">Name</td>
-				<td th:text="${student.surname}">Surname</td>
-				<td th:text="${student.login}">Login</td>
+			<tr th:each="user : ${users}">
+				<td th:text="${user.id}">ID</td>
+				<td th:text="${user.group.id}">Group_id</td>
+				<td th:text="${user.name}">Name</td>
+				<td th:text="${user.surname}">Surname</td>
+				<td th:text="${user.login}">Login</td>
+				<td th:text="${user.role}">Role</td>
 				<td>
-				    <a th:href= "@{/students/{id}/update(id=${student.id})}" class="btn update"> Update</a>
-				    <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn delete">Delete</a>
+				    <a th:href= "@{/users/{id}/update(id=${user.id})}" class="btn update"> Update</a>
+				    <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn delete">Delete</a>
 				 </td>
 			</tr> 
 		</tbody>
@@ -81,10 +83,10 @@
 	---------------------------------------------------------------------------------------------------------------
 	<br>
 	<br>
-	<a href="/students/create" class="btn">Create new Student</a>
+	<a href="/users/create" class="btn">Create new User</a>
 	<script>
         function findById() {
-            var studentId = document.getElementById("studentIdInput").value;
-            window.location.href = "/students/getById/" + studentId;
+            var userId = document.getElementById("userIdInput").value;
+            window.location.href = "/users/getById/" + userId;
         }
     </script>

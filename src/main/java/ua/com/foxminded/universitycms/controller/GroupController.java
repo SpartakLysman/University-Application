@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -52,14 +51,14 @@ public class GroupController {
 		return "createGroup";
 	}
 
-	@PostMapping("/update")
-	public String updateGroup(@PathVariable Long id, @RequestBody Group group) {
+	@PostMapping("/{id}/update")
+	public String updateGroup(@ModelAttribute("group") Group group) {
 		groupService.update(group);
 		return "redirect:/groups";
 	}
 
-	@GetMapping("/update/{id}")
-	public String showUpdateGroupForm(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/update")
+	public String showUpdateGroupForm(@PathVariable("id") Long id, Model model) {
 		Optional<Group> groupOptional = groupService.findById(id);
 		if (groupOptional.isPresent()) {
 			Group group = groupOptional.get();

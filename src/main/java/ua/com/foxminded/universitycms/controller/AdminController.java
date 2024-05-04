@@ -3,32 +3,21 @@ package ua.com.foxminded.universitycms.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.universitycms.model.Admin;
-import ua.com.foxminded.universitycms.model.Course;
-import ua.com.foxminded.universitycms.model.Group;
-import ua.com.foxminded.universitycms.model.Student;
-import ua.com.foxminded.universitycms.model.Teacher;
 import ua.com.foxminded.universitycms.model.User;
 import ua.com.foxminded.universitycms.model.UserRole;
 import ua.com.foxminded.universitycms.repository.AdminRepository;
 import ua.com.foxminded.universitycms.repository.UserRepository;
-import ua.com.foxminded.universitycms.service.CourseService;
-import ua.com.foxminded.universitycms.service.GroupService;
-import ua.com.foxminded.universitycms.service.StudentService;
-import ua.com.foxminded.universitycms.service.TeacherService;
+import ua.com.foxminded.universitycms.service.AdminService;
 import ua.com.foxminded.universitycms.service.UserService;
 
 @Controller
@@ -37,28 +26,18 @@ public class AdminController {
 
 	private final UserService userService;
 
-	private final GroupService groupService;
-
-	private final CourseService courseService;
-
-	private final TeacherService teacherService;
-
-	private final StudentService studentService;
-
 	private final UserRepository userRepository;
+
+	private final AdminService adminService;
 
 	private final AdminRepository adminRepository;
 
 	public AdminController(AdminRepository adminRepository, UserRepository userRepository, UserService userService,
-			GroupService groupService, CourseService courseService, TeacherService teacherService,
-			StudentService studentService) {
+			AdminService adminService) {
 		this.adminRepository = adminRepository;
 		this.userRepository = userRepository;
 		this.userService = userService;
-		this.groupService = groupService;
-		this.courseService = courseService;
-		this.teacherService = teacherService;
-		this.studentService = studentService;
+		this.adminService = adminService;
 	}
 
 	@GetMapping
@@ -93,126 +72,239 @@ public class AdminController {
 		}
 		return "redirect:/admin/admins";
 	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@PostMapping("/{id}/update")
+	public String updateAdmin(@ModelAttribute("admin") Admin admin) {
+		adminService.update(admin);
+		return "redirect:/admins";
+	}
+
+	@GetMapping("/{id}/update")
+	public String showUpdateAdminForm(@PathVariable("id") Long id, Model model) {
+		Optional<Admin> adminOptional = adminService.findById(id);
+		if (adminOptional.isPresent()) {
+			Admin admin = adminOptional.get();
+			model.addAttribute("admin", admin);
+			return "updateAdmin";
+		} else {
+			return "redirect:/admins";
+		}
+	}
+
+	@PostMapping("/delete")
+	public String deleteAdmin(@RequestParam Long id) {
+		adminService.deleteById(id);
+		return "redirect:/admins";
+	}
+
+	@GetMapping("/delete/{id}")
+	public String showDeleteAdminConfirmation(@PathVariable Long id, Model model) {
+		Optional<Admin> admin = adminService.findById(id);
+		if (admin.isPresent()) {
+			model.addAttribute("admin", admin.get());
+			return "deleteAdmin";
+		} else {
+			return "redirect:/admins";
+		}
+	}
+
+	@GetMapping("/getById/{id}")
+	public String getAdminById(@PathVariable Long id, Model model) {
+		Optional<Admin> admin = adminService.findById(id);
+		if (admin.isPresent()) {
+			model.addAttribute("admin", admin.get());
+			return "getAdminById";
+		} else {
+			return "error";
+		}
+	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// User Management Endpoints
-
 	@PostMapping("/users/create")
-	public ResponseEntity<User> createUser(@RequestBody User user) {
-		User createdUser = userService.create(user);
-		return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+	public String createUser(@ModelAttribute("user") User user) {
+		userService.create(user);
+		return "redirect:/users";
+	}
+
+	@GetMapping("/users/create")
+	public String showCreateUserForm(Model model) {
+		model.addAttribute("user", new User());
+		return "createUser";
+	}
+
+	@PostMapping("/users/{id}/update")
+	public String updateUser(@ModelAttribute("user") User user) {
+		userService.update(user);
+		return "redirect:/users";
+	}
+
+	@GetMapping("/users/{id}/update")
+	public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
+		Optional<User> userOptional = userService.findById(id);
+		if (userOptional.isPresent()) {
+			User user = userOptional.get();
+			model.addAttribute("user", user);
+			return "updateUser";
+		} else {
+			return "redirect:/users";
+		}
+	}
+
+	@PostMapping("/users/delete")
+	public String deleteUser(@RequestParam Long id) {
+		userService.deleteById(id);
+		return "redirect:/users";
+	}
+
+	@GetMapping("/users/delete/{id}")
+	public String showDeleteUserConfirmation(@PathVariable Long id, Model model) {
+		Optional<User> user = userService.findById(id);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "deleteUser";
+		} else {
+			return "redirect:/users";
+		}
 	}
 
 	@GetMapping("/users")
-	public ResponseEntity<List<User>> getAllUsers() {
-		List<User> users = userService.findAll();
-		return new ResponseEntity<>(users, HttpStatus.OK);
+	public String showUsers(Model model) {
+		List<User> users = userRepository.findAll();
+		model.addAttribute("users", users);
+		return "userList";
 	}
 
 	@GetMapping("/users/getById/{id}")
-	public ResponseEntity<User> getUserById(@PathVariable Long id) {
+	public String getUserById(@PathVariable Long id, Model model) {
 		Optional<User> user = userService.findById(id);
-		if (user != null) {
-			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+		if (user.isPresent()) {
+			model.addAttribute("user", user.get());
+			return "getUserById";
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return "error";
 		}
 	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@PutMapping("/users/update{id}")
-	public ResponseEntity<User> updateUser(@RequestBody User user) {
-		User updatedUser = userService.update(user);
-		if (updatedUser != null) {
-			return new ResponseEntity<>(updatedUser, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	@DeleteMapping("/users/{id}")
-	public ResponseEntity<Void> deleteUser(@RequestBody User user) {
-		userService.delete(user);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	// Group Management Endpoints
-
-	@PostMapping("/groups")
-	public ResponseEntity<Group> createGroup(@RequestBody Group group) {
-		Group createdGroup = groupService.create(group);
-		return new ResponseEntity<>(createdGroup, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/groups")
-	public ResponseEntity<List<Group>> getAllGroups() {
-		List<Group> groups = groupService.findAll();
-		return new ResponseEntity<>(groups, HttpStatus.OK);
-	}
-
-	// Course Management Endpoints (Admin only)
-
-	@PostMapping("/courses")
-	public ResponseEntity<Course> createCourse(@RequestBody Course course) {
-		Course createdCourse = courseService.create(course);
-		return new ResponseEntity<>(createdCourse, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/courses")
-	public ResponseEntity<List<Course>> getAllCourses() {
-		List<Course> courses = courseService.findAll();
-		return new ResponseEntity<>(courses, HttpStatus.OK);
-	}
-
-	@GetMapping("/courses/{id}")
-	public ResponseEntity<Course> getCourseById(@PathVariable Long id) {
-		Optional<Course> course = courseService.findById(id);
-		if (course != null) {
-			return new ResponseEntity<>(course.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@PutMapping("/courses/{id}")
-	public ResponseEntity<Course> updateCourse(@RequestBody Course course) {// @PathVariable Long id,
-		Course updatedCourse = courseService.update(course);
-		if (updatedCourse != null) {
-			return new ResponseEntity<>(updatedCourse, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-
-	@DeleteMapping("/courses/{id}")
-	public ResponseEntity<Void> deleteCourse(@RequestBody Course course) {
-		courseService.delete(course);
-		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	}
-
-	// Teacher Management Endpoints
-
-	@PostMapping("/teachers")
-	public ResponseEntity<Teacher> createTeacher(@RequestBody Teacher teacher) {
-		Teacher createdTeacher = teacherService.create(teacher);
-		return new ResponseEntity<>(createdTeacher, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/teachers")
-	public ResponseEntity<List<Teacher>> getAllTeachers() {
-		List<Teacher> teachers = teacherService.findAll();
-		return new ResponseEntity<>(teachers, HttpStatus.OK);
-	}
-
-	// Student Management Endpoints
-
-	@PostMapping("/students")
-	public ResponseEntity<Student> createStudent(@RequestBody Student student) {
-		Student createdStudent = studentService.create(student);
-		return new ResponseEntity<>(createdStudent, HttpStatus.CREATED);
-	}
-
-	@GetMapping("/students")
-	public ResponseEntity<List<Student>> getAllStudents() {
-		List<Student> students = studentService.findAll();
-		return new ResponseEntity<>(students, HttpStatus.OK);
-	}
+//	// Group Management Endpoints
+//	@PostMapping("/create")
+//	public String createGroup(@ModelAttribute("group") Group group) {
+//		groupService.create(group);
+//		return "redirect:/groups";
+//	}
+//
+//	@GetMapping("/create")
+//	public String showCreateGroupForm(Model model) {
+//		model.addAttribute("group", new Group());
+//		return "createGroup";
+//	}
+//
+//	@PostMapping("/update")
+//	public String updateGroup(@RequestBody Group group) {
+//		groupService.update(group);
+//		return "redirect:/groups";
+//	}
+//
+//	@GetMapping("/update/{id}")
+//	public String showUpdateGroupForm(@PathVariable Long id, Model model) {
+//		Optional<Group> groupOptional = groupService.findById(id);
+//		if (groupOptional.isPresent()) {
+//			Group group = groupOptional.get();
+//			model.addAttribute("group", group);
+//			return "updateGroup";
+//		} else {
+//			return "redirect:/groups";
+//		}
+//	}
+//
+//	@PostMapping("/delete")
+//	public String deleteGroup(@RequestParam Long id) {
+//		groupService.deleteById(id);
+//		return "redirect:/groups";
+//	}
+//
+//	@GetMapping("/delete/{id}")
+//	public String showDeleteGroupConfirmation(@PathVariable Long id, Model model) {
+//		Optional<Group> group = groupService.findById(id);
+//		if (group.isPresent()) {
+//			model.addAttribute("group", group.get());
+//			return "deleteGroup";
+//		} else {
+//			return "redirect:/groups";
+//		}
+//	}
+//
+//	@GetMapping("/getById/{id}")
+//	public String getGroupById(@PathVariable Long id, Model model) {
+//		Optional<Group> group = groupService.findById(id);
+//		if (group.isPresent()) {
+//			model.addAttribute("group", group.get());
+//			return "getGroupById";
+//		} else {
+//			return "error";
+//		}
+//	}
+//
+//	// Course Management Endpoints (Admin only)
+//	@PostMapping("/create")
+//	public String createCourse(@ModelAttribute("course") Course course) {
+//		courseService.create(course);
+//		return "redirect:/courses";
+//	}
+//
+//	@GetMapping("/create")
+//	public String showCreateCourseForm(Model model) {
+//		model.addAttribute("course", new Course());
+//		return "createCourse";
+//	}
+//
+//	@PostMapping("/update")
+//	public String updateCourse(@RequestBody Course course) {
+//		courseService.update(course);
+//		return "redirect:/courses";
+//	}
+//
+//	@GetMapping("/update/{id}")
+//	public String showUpdateCourseForm(@PathVariable Long id, Model model) {
+//		Optional<Course> courseOptional = courseService.findById(id);
+//		if (courseOptional.isPresent()) {
+//			Course course = courseOptional.get();
+//			model.addAttribute("course", course);
+//			return "updateCourse";
+//		} else {
+//			return "redirect:/courses";
+//		}
+//	}
+//
+//	@PostMapping("/delete")
+//	public String deleteCourse(@RequestParam Long id) {
+//		courseService.deleteById(id);
+//		return "redirect:/courses";
+//	}
+//
+//	@GetMapping("/delete/{id}")
+//	public String showDeleteCourseConfirmation(@PathVariable Long id, Model model) {
+//		Optional<Course> course = courseService.findById(id);
+//		if (course.isPresent()) {
+//			model.addAttribute("course", course.get());
+//			return "deleteCourse";
+//		} else {
+//			return "redirect:/courses";
+//		}
+//	}
+//
+//	@GetMapping("/getById/{id}")
+//	public String getCourseById(@PathVariable Long id, Model model) {
+//		Optional<Course> course = courseService.findById(id);
+//		if (course.isPresent()) {
+//			model.addAttribute("course", course.get());
+//			return "getCourseById";
+//		} else {
+//			return "error";
+//		}
+//	}
 }

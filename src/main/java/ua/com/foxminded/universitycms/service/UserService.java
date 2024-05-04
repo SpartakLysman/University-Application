@@ -52,6 +52,12 @@ public class UserService {
 		}
 	}
 
+	public void deleteById(Long id) {
+		LOGGER.debug("User with id deleteng... ");
+		userRepository.deleteById(id);
+		LOGGER.info("User with id- " + id + " was successfully deleted");
+	}
+
 	public User update(User user) {
 		LOGGER.debug("User updating... " + user.toString());
 		User newUser = userRepository.save(user);

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -47,14 +46,14 @@ public class TeacherController {
 		return "createTeacher";
 	}
 
-	@PostMapping("/update")
-	public String updateTeacher(@PathVariable Long id, @RequestBody Teacher teacher) {
+	@PostMapping("/{id}/update")
+	public String updateTeacher(@ModelAttribute("teacher") Teacher teacher) {
 		teacherService.update(teacher);
 		return "redirect:/teachers";
 	}
 
-	@GetMapping("/update/{id}")
-	public String showUpdateTeacherForm(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/update")
+	public String showUpdateTeacherForm(@PathVariable("id") Long id, Model model) {
 		Optional<Teacher> teacherOptional = teacherService.findById(id);
 		if (teacherOptional.isPresent()) {
 			Teacher teacher = teacherOptional.get();

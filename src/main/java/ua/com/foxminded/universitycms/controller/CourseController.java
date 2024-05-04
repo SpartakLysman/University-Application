@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -38,6 +37,14 @@ public class CourseController {
 	@Autowired
 	private GroupService groupService;
 
+	public CourseController(CourseRepository courseRepository, CourseService courseService,
+			TeacherService teacherService, GroupService groupService) {
+		this.courseRepository = courseRepository;
+		this.courseService = courseService;
+		this.teacherService = teacherService;
+		this.groupService = groupService;
+	}
+
 	@GetMapping
 	public String showCourses(Model model) {
 		List<Course> courses = courseRepository.findAll();
@@ -57,14 +64,14 @@ public class CourseController {
 		return "createCourse";
 	}
 
-	@PostMapping("/update")
-	public String updateCourse(@PathVariable Long id, @RequestBody Course course) {
+	@PostMapping("/{id}/update")
+	public String updateCourse(@ModelAttribute("course") Course course) {
 		courseService.update(course);
 		return "redirect:/courses";
 	}
 
-	@GetMapping("/update/{id}")
-	public String showUpdateCourseForm(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/update")
+	public String showUpdateCourseForm(@PathVariable("id") Long id, Model model) {
 		Optional<Course> courseOptional = courseService.findById(id);
 		if (courseOptional.isPresent()) {
 			Course course = courseOptional.get();
@@ -75,14 +82,14 @@ public class CourseController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@PostMapping("/{id}/delete")
 	public String deleteCourse(@RequestParam Long id) {
 		courseService.deleteById(id);
 		return "redirect:/courses";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String showDeleteCourseConfirmation(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/delete")
+	public String showDeleteCourseConfirmation(@PathVariable("id") Long id, Model model) {
 		Optional<Course> course = courseService.findById(id);
 		if (course.isPresent()) {
 			model.addAttribute("course", course.get());
@@ -93,7 +100,7 @@ public class CourseController {
 	}
 
 	@GetMapping("/getById/{id}")
-	public String getCourseById(@PathVariable Long id, Model model) {
+	public String getCourseById(@PathVariable("id") Long id, Model model) {
 		Optional<Course> course = courseService.findById(id);
 		if (course.isPresent()) {
 			model.addAttribute("course", course.get());
@@ -103,8 +110,8 @@ public class CourseController {
 		}
 	}
 
-	@GetMapping("/assignTeacher/{courseId}")
-	public String showAssignTeacherForm(@PathVariable Long courseId, Model model) {
+	@GetMapping("/{id}/assignTeacher")
+	public String showAssignTeacherForm(@PathVariable("id") Long courseId, Model model) {
 		Optional<Course> courseOptional = courseService.findById(courseId);
 
 		if (courseOptional.isPresent()) {
@@ -121,14 +128,14 @@ public class CourseController {
 		}
 	}
 
-	@PostMapping("/assignTeacher/{courseId}")
-	public String assignTeacherToCourse(@PathVariable Long courseId, @RequestParam Long teacherId) {
+	@PostMapping("/{id}/assignTeacher")
+	public String assignTeacherToCourse(@PathVariable("id") Long courseId, @RequestParam Long teacherId) {
 		courseService.assignTeacher(courseId, teacherId);
-		return "redirect:/courses/{courseId}";
+		return "redirect:/courses";
 	}
 
-	@GetMapping("/assignGroup/{courseId}")
-	public String showAssignGroupForm(@PathVariable Long courseId, Model model) {
+	@GetMapping("/{id}/assignGroup")
+	public String showAssignGroupForm(@PathVariable("id") Long courseId, Model model) {
 		Optional<Course> courseOptional = courseService.findById(courseId);
 
 		if (courseOptional.isPresent()) {
@@ -145,9 +152,9 @@ public class CourseController {
 		}
 	}
 
-	@PostMapping("/assignGroup/{courseId}")
-	public String assignGroupToCourse(@PathVariable Long courseId, @RequestParam List<Long> groupIds) {
+	@PostMapping("/{id}/assignGroup")
+	public String assignGroupToCourse(@PathVariable("id") Long courseId, @RequestParam List<Long> groupIds) {
 		courseService.assignGroup(courseId, groupIds);
-		return "redirect:/courses/{courseId}";
+		return "redirect:/courses";
 	}
 }

@@ -95,7 +95,7 @@ public class CourseControllerTest {
 	}
 
 	@Test
-	public void testUpdateCourse() {
+	void testUpdateCourse() {
 		Long courseId = 1L;
 		Course course = new Course();
 		course.setId(courseId);
@@ -104,10 +104,25 @@ public class CourseControllerTest {
 
 		when(courseService.update(course)).thenReturn(course);
 
-		String result = courseController.updateCourse(courseId, course);
+		String result = courseController.updateCourse(course);
 
-		assertEquals("redirect:/courses/update/" + courseId, result);
+		assertEquals("redirect:/courses", result);
 		verify(courseService, times(1)).update(course);
+	}
+
+	@Test
+	void testShowUpdateCourseForm() {
+		Long courseId = 1L;
+		Course course = new Course();
+		course.setId(courseId);
+		Optional<Course> optionalCourse = Optional.of(course);
+		Model model = mock(Model.class);
+		when(courseService.findById(courseId)).thenReturn(optionalCourse);
+
+		String result = courseController.showUpdateCourseForm(courseId, model);
+
+		assertEquals("updateCourse", result);
+		verify(model, times(1)).addAttribute("course", course);
 	}
 
 	@Test

@@ -3,14 +3,12 @@ package ua.com.foxminded.universitycms.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,11 +20,14 @@ import ua.com.foxminded.universitycms.service.StudentService;
 @RequestMapping("/students")
 public class StudentController {
 
-	@Autowired
-	private StudentRepository studentRepository;
+	private final StudentRepository studentRepository;
 
-	@Autowired
-	private StudentService studentService;
+	private final StudentService studentService;
+
+	public StudentController(StudentRepository studentRepository, StudentService studentService) {
+		this.studentRepository = studentRepository;
+		this.studentService = studentService;
+	}
 
 	@GetMapping
 	public String showStudents(Model model) {
@@ -47,14 +48,14 @@ public class StudentController {
 		return "createStudent";
 	}
 
-	@PostMapping("/update")
-	public String updateStudent(@PathVariable Long id, @RequestBody Student student) {
+	@PostMapping("/{id}/update")
+	public String updateStudent(@ModelAttribute("student") Student student) {
 		studentService.update(student);
 		return "redirect:/students";
 	}
 
-	@GetMapping("/update/{id}")
-	public String showUpdateStudentForm(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/update")
+	public String showUpdateStudentForm(@PathVariable("id") Long id, Model model) {
 		Optional<Student> studentOptional = studentService.findById(id);
 		if (studentOptional.isPresent()) {
 			Student student = studentOptional.get();

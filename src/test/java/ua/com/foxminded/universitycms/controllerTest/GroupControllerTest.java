@@ -88,19 +88,31 @@ public class GroupControllerTest {
 	}
 
 	@Test
-	public void testUpdateGroup() {
+	void testUpdateGroup() {
 		Long groupId = 1L;
 		Group group = new Group();
 		group.setId(groupId);
-		group.setTitle("First");
+		group.setTitle("Group 1");
 
-		when(groupService.update(group)).thenReturn(group);
+		String result = groupController.updateGroup(group);
 
-		String viewName = groupController.updateGroup(groupId, group);
-
-		assertEquals("redirect:/groups/update/" + groupId, viewName);
-
+		assertEquals("redirect:/groups", result);
 		verify(groupService, times(1)).update(group);
+	}
+
+	@Test
+	void testShowUpdateGroupForm() {
+		Long groupId = 1L;
+		Group group = new Group();
+		group.setId(groupId);
+		Optional<Group> optionalGroup = Optional.of(group);
+		Model model = mock(Model.class);
+		when(groupService.findById(groupId)).thenReturn(optionalGroup);
+
+		String result = groupController.showUpdateGroupForm(groupId, model);
+
+		assertEquals("updateGroup", result);
+		verify(model, times(1)).addAttribute("group", group);
 	}
 
 	@Test

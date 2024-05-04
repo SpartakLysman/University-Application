@@ -8,8 +8,8 @@
 </head>
 <body>
     <h1>Assign Group to Course</h1>
-    <form action="/courses/assignGroup/{courseId}" method="post">
-        <input type="hidden" name="courseId" th:value="${course.id}">
+	<form th:action="@{/courses/{id}/assignGroup(id=${course.id})}" th:object="${course}" method="post">
+        
         
         <label for="groupIds">Select Group:</label>
         <select id="groupIds" name="groupIds" multiple="multiple" required>

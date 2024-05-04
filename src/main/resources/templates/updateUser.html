@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Edit User</h1>
+      <form th:action="@{admins/users/{id}/update(id=${user.id})}" th:object="${user}" method="post">
+        
+        <label for="group_id">Group id:</label>
+        <input type="number" id="group_id" name="group_id" th:value="${user.group_id}"><br>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${user.name}"><br>
+        
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" th:value="${user.surname}"><br>
+        
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login" th:value="${user.login}"><br>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" th:value="${user.password}"><br>
+        
+        <label for="role">Role:</label>
+        <input type="text" id="role" name="role" th:value="${user.role}"><br>
+      
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

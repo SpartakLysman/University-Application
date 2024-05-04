@@ -8,7 +8,8 @@
 </head>
 <body>
 	<h1>Assign Teacher to Course</h1>
-	<form action="/courses/assignTeacher/{courseId}" method="post">
+	<form th:action="@{/courses/{id}/assignTeacher(id=${course.id})}" th:object="${course}" method="post">
+        
 		<input type="hidden" name="courseId" th:value="${courseId}"> <label
 			for="teacherId">Select Teacher:</label> <select id="teacherId"
 			name="teacherId" required>

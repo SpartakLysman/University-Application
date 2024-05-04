@@ -51,6 +51,12 @@ public class AdminService {
 		}
 	}
 
+	public void deleteById(Long id) {
+		LOGGER.debug("Admin with id deleteng... ");
+		adminRepository.deleteById(id);
+		LOGGER.info("Admin with id- " + id + " was successfully deleted");
+	}
+
 	public Admin update(Admin user) {
 		LOGGER.debug("Admin updating... " + user.toString());
 		Admin newAdmin = adminRepository.save(user);
@@ -106,4 +112,5 @@ public class AdminService {
 
 		return adminsList;
 	}
+
 }

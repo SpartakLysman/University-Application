@@ -8,16 +8,15 @@
 </head>
 <body>
     <h1>Edit Course</h1>
-    <form action="/courses/update/{id}" method="post">
-        <input type="hidden" name="id" th:value="${course.id}">
+    <form th:action="@{/courses/{id}/update(id=${course.id})}" th:object="${course}" method="post">
         
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title" th:value="${course.title}" required><br>
+        <input type="text" id="title" name="title" th:value="${course.title}" ><br><br>
         
         <label for="description">Description:</label>
-        <textarea id="description" name="description" rows="4" required th:text="${course.description}"></textarea><br>
+        <input type="text" id="description" name="description" th:value="${course.description}" ><br><br>
        
         <button type="submit">Save Changes</button>
-    </form>
+    </form> 
 </body>
 </html>

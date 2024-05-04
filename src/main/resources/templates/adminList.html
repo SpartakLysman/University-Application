@@ -16,11 +16,9 @@
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
-
 .assingRole-btn:hover {
 	background-color: #c82333;
 }
-
 #assingRole-item {
 	list-style-type: none;
 }
@@ -37,28 +35,29 @@
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
-
+ .content {
+    margin-left: 25px;
+}
 .btn:hover {
 	background-color: #0056b3;
 }
-
 .btn.view {
 	background-color: #28a745;
 }
-
 .btn.update {
 	background-color: #ffc107;
 }
-
 .btn.delete {
 	background-color: #dc3545;
 }
 </style>
 </head>
-<body>
+<body class="content">
+<br>
+<h4>Logged in as:</h4>
 	<h1>Admins List</h1>
-		<button class="btn findById" onclick="getUserById()">Find by ID</button>
-		<input type="text" id="userIdInput" placeholder="Enter User ID">
+		<button class="btn findById" onclick="getAdminById()">Find by ID</button>
+		<input type="text" id="adminIdInput" placeholder="Enter Admin ID">
 
 	<table>
 		<thead>
@@ -75,37 +74,55 @@
 				<td th:text="${admin.name}">Name</td>
 				<td th:text="${admin.surname}">Surname</td>
 				<td th:text="${admin.login}">Login</td>
-				<td>
-				<a th:href="@{/admins/update/{id}(id=${admin.id})}" class="btn update">Update</a>
-				<a th:href="@{/admins/delete/{id}(id=${admin.id})}" class="btn delete">Delete</a></td>
+				<td>				
+				<a th:href= "@{/admins/{id}/update(id=${admin.id})}" class="btn update"> Update</a>
+				<a th:href="@{/admins/delete/{id}(id=${admin.id})}" class="btn delete">Delete</a>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 	<br>
 	<br>
+	<a href="/admins/createUser" class="btn">Create User</a>
+	<a href="/admins/deleteUser" class="btn">Delete User</a>
+	<a href="/admins/updateUser" class="btn">Update User</a>
+	<a href="/admins/getAllUsers" class="btn">Get All Users</a>
+	<a href="/admins/getUserById" class="btn">Get User By Id</a>
 	<br>
+	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<br>
+	<br>
+	<h2>more actions:</h2>
 	<form method="post" th:action="@{/admins/assingRole}"
 		id="assingRole-item">
 		<nav>
 			<ul>
 				<li id="assingRole-item"><a href="/admins/assignRole"
-					class="assingRole-btn">Assign Role</a></li>
+					class="assingRole-btn">Assign Role To User</a></li>
 			</ul>
 		</nav>
 	</form>
  	<br>
-	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<h3>course actions</h3>
+	<a href="/courses/create" class="btn">Create course</a>
+	<a href="/courses/delete" class="btn">Delete course</a>
+	<a href="/courses/update" class="btn">Update course</a>
+	<a href="/courses/getById" class="btn">Find course by id</a>
 	<br>
 	<br>
-	<a href="/admins/create" class="btn">Create Admin</a>
+	<h3>group actions</h3>
+	<a href="/groups/create" class="btn">Create group</a>
+	<a href="/groups/delete" class="btn">Delete group</a>
+	<a href="/groups/update" class="btn">Update group</a>
+	<a href="/groups/getById" class="btn">Find group by id</a>
 	<br>
 	<br>
-	<br>
-	<a href="/courses/create" class="btn">Create new course</a>
 	<script>
         function getUserById() {
-            var userId = document.getElementById("userIdInput").value;
-            window.location.href = "/admins/users/getById/" + userId;
+            var adminId = document.getElementById("adminIdInput").value;
+            window.location.href = "/admins/getById/" + adminId;
         }
     </script>
 </body>
