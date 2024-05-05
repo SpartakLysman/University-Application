@@ -69,14 +69,14 @@ public class GroupController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@PostMapping("/{id}/delete")
 	public String deleteGroup(@RequestParam Long id) {
 		groupService.deleteById(id);
 		return "redirect:/groups";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String showDeleteGroupConfirmation(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/delete")
+	public String showDeleteGroupConfirmation(@PathVariable("id") Long id, Model model) {
 		Optional<Group> group = groupService.findById(id);
 		if (group.isPresent()) {
 			model.addAttribute("group", group.get());

@@ -7,13 +7,15 @@
 <body>
     <h1>Delete Teacher</h1>
     <p>Are you sure you want to delete the following teacher?</p>
+    <br>
     <p>ID: <span th:text="${teacher.id}"></span></p>
     <p>Name: <span th:text="${teacher.name}"></span></p>
     <p>Surname: <span th:text="${teacher.surname}"></span></p>
     <p>Login: <span th:text="${teacher.login}"></span></p>
     <p>Password: <span th:text="${teacher.password}"></span></p>
    
-    <form action="/teachers/delete" method="post">
+
+    <form th:action="@{/teachers/{id}/delete(id=${teacher.id})}" th:object="${teacher}" method="post">
         <input type="hidden" name="id" th:value="${teacher.id}">
         <button type="submit">Yes, Delete Teacher</button>
     </form>

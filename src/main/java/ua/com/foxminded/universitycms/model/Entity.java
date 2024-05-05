@@ -1,6 +1,8 @@
 package ua.com.foxminded.universitycms.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
@@ -9,6 +11,7 @@ public class Entity<K extends Comparable<K>> {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private K id;
 
 	public Entity(K id) {

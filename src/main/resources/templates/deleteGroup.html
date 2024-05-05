@@ -9,9 +9,9 @@
 <body>
     <h1>Delete Group Confirmation</h1>
     <p>Are you sure you want to delete the following course?</p>
-     <p th:text="${group.title}"></p>
-     
-    <form action="/groups/delete" method="post">
+    <br>
+    <p th:text="${group.title}"></p>
+     <form th:action="@{/groups/{id}/delete(id=${group.id})}" th:object="${group}" method="post">
         <input type="hidden" name="id" th:value="${group.id}">
         <button type="submit">Yes, Delete Group</button>
     </form>

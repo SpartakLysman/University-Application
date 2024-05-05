@@ -70,7 +70,7 @@ public class StudentControllerTest {
 		Group groupNew2 = new Group(1L, "Test Group");
 		Student student = new Student(2L, groupNew2, "Jamila", "Aliila", "loggJamila", "passJamila");
 
-		String result = studentController.createStudent(student);
+		String result = studentController.createStudent(student, groupNew2.getId());
 
 		assertEquals("redirect:/students", result);
 		verify(studentService, times(1)).create(student);

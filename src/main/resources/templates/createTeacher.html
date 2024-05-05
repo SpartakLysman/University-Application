@@ -25,21 +25,21 @@
 </head>
 <body>
     <h1>Create New Teacher</h1>
-    <form action="/teachers/create" method="post">
+    <form th:action="@{/teachers/create}" method="post">
+    	<br>
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br>
+        <input type="text" id="name" name="name"><br><br>
         
         <label for="surname">Surname:</label>
-        <input type="text" id="surname" name="surname" required><br>
+        <input type="text" id="surname" name="surname"><br><br>
         
-         <label for="login">Login:</label>
-        <input type="text" id="login" name="login" required><br>
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login"><br><br>
         
-         <label for="password">Password:</label>
-        <input type="text" id="password" name="password" required><br>
-        
-        <button type="submit">Create teacher</button>
-        <a href="/menu" class="create-btn">Create teacher</a>
-    </form>
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password"><br><br>
+        <br>     
+        <button type="submit" class="create-btn">Create New Teacher</button>
+     </form>
 </body>
 </html>

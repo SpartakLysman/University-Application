@@ -66,13 +66,13 @@
 		<tbody>
 			<tr th:each="student : ${students}">
 				<td th:text="${student.id}">ID</td>
-				<td th:text="${student.group.id}">Group_id</td>
+				<td th:text="${student.group != null ? student.group.id : 'N/A'}">Group_id</td>
 				<td th:text="${student.name}">Name</td>
 				<td th:text="${student.surname}">Surname</td>
 				<td th:text="${student.login}">Login</td>
 				<td>
 				    <a th:href= "@{/students/{id}/update(id=${student.id})}" class="btn update"> Update</a>
-				    <a th:href="@{/students/delete/{id}(id=${student.id})}" class="btn delete">Delete</a>
+				    <a th:href="@{/students/{id}/delete(id=${student.id})}" class="btn delete">Delete</a>
 				 </td>
 			</tr> 
 		</tbody>

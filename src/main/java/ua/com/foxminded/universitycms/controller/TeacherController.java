@@ -64,14 +64,14 @@ public class TeacherController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@PostMapping("/{id}/delete")
 	public String deleteTeacher(@RequestParam Long id) {
 		teacherService.deleteById(id);
 		return "redirect:/teachers";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String showDeleteTeacherConfirmation(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/delete")
+	public String showDeleteTeacherConfirmation(@PathVariable("id") Long id, Model model) {
 		Optional<Teacher> teacher = teacherService.findById(id);
 		if (teacher.isPresent()) {
 			model.addAttribute("teacher", teacher.get());

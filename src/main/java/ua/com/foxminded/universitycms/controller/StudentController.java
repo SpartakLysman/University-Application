@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
+import ua.com.foxminded.universitycms.service.GroupService;
 import ua.com.foxminded.universitycms.service.StudentService;
 
 @Controller
@@ -24,9 +26,13 @@ public class StudentController {
 
 	private final StudentService studentService;
 
-	public StudentController(StudentRepository studentRepository, StudentService studentService) {
+	private final GroupService groupService;
+
+	public StudentController(StudentRepository studentRepository, StudentService studentService,
+			GroupService groupService) {
 		this.studentRepository = studentRepository;
 		this.studentService = studentService;
+		this.groupService = groupService;
 	}
 
 	@GetMapping
@@ -37,7 +43,9 @@ public class StudentController {
 	}
 
 	@PostMapping("/create")
-	public String createStudent(@ModelAttribute("student") Student student) {
+	public String createStudent(@ModelAttribute("student") Student student, @RequestParam("group_id") Long groupId) {
+		Group group = groupService.findById(groupId).orElse(null);
+		student.setGroup(group);
 		studentService.create(student);
 		return "redirect:/students";
 	}
@@ -66,14 +74,14 @@ public class StudentController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@PostMapping("/{id}/delete")
 	public String deleteStudent(@RequestParam Long id) {
 		studentService.deleteById(id);
 		return "redirect:/students";
 	}
 
-	@GetMapping("/delete/{id}")
-	public String showDeleteStudentConfirmation(@PathVariable Long id, Model model) {
+	@GetMapping("/{id}/delete")
+	public String showDeleteStudentConfirmation(@PathVariable("id") Long id, Model model) {
 		Optional<Student> student = studentService.findById(id);
 		if (student.isPresent()) {
 			model.addAttribute("student", student.get());
