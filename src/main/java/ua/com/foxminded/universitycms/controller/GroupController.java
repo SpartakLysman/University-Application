@@ -97,18 +97,18 @@ public class GroupController {
 		}
 	}
 
-	@PostMapping("/assignStudent/{groupId}")
-	public String assignStudentToGroup(@PathVariable Long groupId, @RequestParam Long studentId) {
+	@PostMapping("/{id}/assignStudent")
+	public String assignStudentToGroup(@PathVariable("id") Long groupId, @RequestParam Long studentId) {
 		groupService.assignStudent(groupId, studentId);
-		return "redirect:/groups/{groupId}";
+		return "redirect:/groups";
 	}
 
-	@GetMapping("/assignStudent/{groupId}")
-	public String showAssignStudentForm(@PathVariable Long groupId, Model model) {
+	@GetMapping("/{id}/assignStudent")
+	public String showAssignStudentForm(@PathVariable("id") Long groupId, Model model) {
 		Optional<Group> groupOptional = groupService.findById(groupId);
 		if (groupOptional.isPresent()) {
 			Group group = groupOptional.get();
-			List<Student> students = studentService.findAll(); // Assuming you have a service for managing students
+			List<Student> students = studentService.findAll();
 			model.addAttribute("group", group);
 			model.addAttribute("students", students);
 			return "assignStudent";

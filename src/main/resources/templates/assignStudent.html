@@ -8,18 +8,16 @@
 </head>
 <body>
     <h1>Assign Student to Group</h1>
-    <form action="/groups/assignStudent/{groupId}" method="post">
-        <input type="hidden" name="groupId" th:value="${group.id}">
-        
-        <label for="student">Select Student:</label>
-        <select id="student" name="studentId" required>
-            <option value="">Select a student</option>
-            <th:block th:each="student : ${students}">
-                <option th:value="${student.id}" th:text="${student.name}"></option>
-            </th:block>
-        </select>
-        
-        <button type="submit">Assign Student</button>
-    </form>
+    	<form th:action="@{/groups/{id}/assignStudent(id=${group.id})}" method="post">
+   			 <input type="hidden" name="groupId" th:value="${group.id}">
+  			 <label for="studentId">Select Student:</label>
+   			 <select id="studentId" name="studentId" required>
+       		 <option value="">Select a student</option>
+       		 <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+    	</select>
+   		<br>
+   		<button type="submit">Assign Student</button>   
+</form>
+
 </body>
 </html>

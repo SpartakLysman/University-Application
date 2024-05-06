@@ -10,12 +10,12 @@
     <h1>Assign Group to Course</h1>
 	<form th:action="@{/courses/{id}/assignGroup(id=${course.id})}" th:object="${course}" method="post">
         
-        
         <label for="groupIds">Select Group:</label>
-        <select id="groupIds" name="groupIds" multiple="multiple" required>
+        <select id="groupIds" name="groupIds" required>
+         <option value="">Select a group</option>
             <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
-        </select><br>
-        
+        </select>
+        <br>
         <button type="submit">Assign Group</button>
     </form>
 </body>

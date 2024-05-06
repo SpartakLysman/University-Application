@@ -201,6 +201,6 @@ public class GroupControllerTest {
 
 		verify(groupService, times(1)).assignStudent(groupId, studentId);
 
-		assertEquals("redirect:/groups/{groupId}", viewName);
+		assertEquals("redirect:/groups", viewName);
 	}
 }

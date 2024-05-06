@@ -22,15 +22,15 @@
 			shown to authenticated users.</div>
 
 		<!-- Content for administrators -->
-		<div sec:authorize="hasRole('ADMIN')">This content is only shown
+		<div sec:authorize="hasAnyAuthority('ADMIN')">This content is only shown
 			to administrators.</div>
 
 		<!-- Content for teachers -->
-		<div sec:authorize="hasRole('TEACHER')">This content is only
+		<div sec:authorize="hasAnyAuthority('TEACHER')">This content is only
 			shown to teachers.</div>
 
 		<!-- Content for students -->
-		<div sec:authorize="hasRole('STUDENT')">This content is only
+		<div sec:authorize="hasAnyAuthority('STUDENT')">This content is only
 			shown to students.</div>
 
 		<!-- Include the menu fragment -->
