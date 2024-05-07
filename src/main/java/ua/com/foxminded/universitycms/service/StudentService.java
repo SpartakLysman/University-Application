@@ -46,24 +46,32 @@ public class StudentService {
 	}
 
 	@Transactional
-	public boolean addStudentToCourse(Student student, long courseId) {
+	public boolean enrollStudentInCourse(Student student, long courseId) {
 		try {
 			Optional<Course> courseOptional = courseRepository.findById(courseId);
-			Optional<Student> studentOptional = studentRepository.findById(student.getId());
-
-			if (courseOptional.isPresent() && studentOptional.isPresent()) {
-				Course course = courseOptional.get();
-				Student updatedStudent = studentOptional.get();
-
-				course.addStudent(updatedStudent);
-				courseRepository.save(course);
-
-				LOGGER.info("Student added to the course successfully");
-				return true;
-			} else {
-				LOGGER.error("Course or student not found");
+			if (courseOptional.isEmpty()) {
+				LOGGER.error("Course not found");
 				return false;
 			}
+			Course course = courseOptional.get();
+
+			if (course.getStudents().contains(student)) {
+				LOGGER.warn("Student is already enrolled in the course");
+				return false;
+			}
+
+			Optional<Student> studentOptional = studentRepository.findById(student.getId());
+			if (studentOptional.isEmpty()) {
+				LOGGER.error("Student not found");
+				return false;
+			}
+			Student managedStudent = studentOptional.get();
+
+			course.addStudent(managedStudent);
+			courseRepository.save(course);
+
+			LOGGER.info("Student added to the course successfully");
+			return true;
 		} catch (Exception e) {
 			LOGGER.error("Error adding student to the course ", e);
 			return false;
@@ -74,21 +82,24 @@ public class StudentService {
 	public boolean deleteStudentFromCourse(Student student, long courseId) {
 		try {
 			Optional<Course> courseOptional = courseRepository.findById(courseId);
-			Optional<Student> studentOptional = studentRepository.findById(student.getId());
-
-			if (courseOptional.isPresent() && studentOptional.isPresent()) {
-				Course course = courseOptional.get();
-				Student updatedStudent = studentOptional.get();
-
-				course.deleteStudent(updatedStudent);
-				courseRepository.save(course);
-
-				LOGGER.info("Student removed from the course successfully");
-				return true;
-			} else {
-				LOGGER.error("Course or student not found");
+			if (courseOptional.isEmpty()) {
+				LOGGER.error("Course not found");
 				return false;
 			}
+			Course course = courseOptional.get();
+
+			Optional<Student> studentOptional = studentRepository.findById(student.getId());
+			if (studentOptional.isEmpty()) {
+				LOGGER.error("Student not found");
+				return false;
+			}
+			Student managedStudent = studentOptional.get();
+
+			course.deleteStudent(managedStudent);
+			courseRepository.save(course);
+
+			LOGGER.info("Student removed from the course successfully");
+			return true;
 		} catch (Exception e) {
 			LOGGER.error("Error removing student from the course ", e);
 			return false;

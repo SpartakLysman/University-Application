@@ -3,6 +3,8 @@ package ua.com.foxminded.universitycms.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Student;
+import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
 import ua.com.foxminded.universitycms.service.GroupService;
 import ua.com.foxminded.universitycms.service.StudentService;
@@ -26,12 +30,17 @@ public class StudentController {
 
 	private final StudentService studentService;
 
+	private final CourseRepository courseRepository;
+
 	private final GroupService groupService;
 
+	private final static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
+
 	public StudentController(StudentRepository studentRepository, StudentService studentService,
-			GroupService groupService) {
+			CourseRepository courseRepository, GroupService groupService) {
 		this.studentRepository = studentRepository;
 		this.studentService = studentService;
+		this.courseRepository = courseRepository;
 		this.groupService = groupService;
 	}
 
@@ -101,4 +110,42 @@ public class StudentController {
 			return "error";
 		}
 	}
+
+	@PostMapping("/{studentId}/assignCourse")
+	public String assignCourseToStudent(@PathVariable("studentId") Long studentId, @RequestParam Long courseId) {
+		try {
+			Optional<Student> studentOptional = studentRepository.findById(studentId);
+			if (studentOptional.isPresent()) {
+				Student student = studentOptional.get();
+				studentService.enrollStudentInCourse(student, courseId);
+				return "redirect:/students";
+			} else {
+				LOGGER.error("Student not found with ID: " + studentId);
+				return "error";
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error assigning course to student: " + e.getMessage());
+			return "error";
+		}
+	}
+
+	@GetMapping("/{studentId}/assignCourse")
+	public String showAssignCourseForm(@PathVariable("studentId") Long studentId, Model model) {
+		try {
+			Optional<Student> studentOptional = studentRepository.findById(studentId);
+
+			if (studentOptional.isPresent()) {
+				List<Course> courses = courseRepository.findAll();
+				model.addAttribute("studentId", studentId);
+				model.addAttribute("courses", courses);
+				return "assignCourse";
+			} else {
+				return "error";
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error showing assign course form", e);
+			return "error";
+		}
+	}
+
 }

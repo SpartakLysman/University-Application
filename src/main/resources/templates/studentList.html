@@ -38,8 +38,8 @@
 .btn.delete {
 	background-color: #dc3545;
 }
-.btn.assignT {
-    background-color: #17a2b8; 
+.btn.assignC {
+    background-color: #17a2b8;
 }
 </style>
 </head>
@@ -73,6 +73,7 @@
 				<td>
 				    <a th:href= "@{/students/{id}/update(id=${student.id})}" class="btn update"> Update</a>
 				    <a th:href="@{/students/{id}/delete(id=${student.id})}" class="btn delete">Delete</a>
+					<a th:href="@{'/students/' + ${student.id} + '/assignCourse'}" class="btn assignC">Assign Course</a>
 				 </td>
 			</tr> 
 		</tbody>

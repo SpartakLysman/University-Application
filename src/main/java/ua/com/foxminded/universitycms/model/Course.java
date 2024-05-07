@@ -30,7 +30,7 @@ public class Course extends Entity<Long> implements Serializable {
 	@JoinColumn(name = "teacher_id", insertable = false, updatable = false)
 	private Teacher teacher_id;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private List<Student> students = new ArrayList<>();
 
@@ -53,11 +53,17 @@ public class Course extends Entity<Long> implements Serializable {
 	}
 
 	public void addStudent(Student student) {
-		this.students.add(student);
+		if (!this.students.contains(student)) {
+			this.students.add(student);
+			student.getCourses().add(this);
+		}
 	}
 
 	public void deleteStudent(Student student) {
-		this.students.remove(student);
+		if (this.students.contains(student)) {
+			this.students.remove(student);
+			student.getCourses().remove(this);
+		}
 	}
 
 	public void addGroup(Group group) {
