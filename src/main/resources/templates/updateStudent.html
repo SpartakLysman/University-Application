@@ -11,7 +11,7 @@
       <form th:action="@{/students/{id}/update(id=${student.id})}" th:object="${student}" method="post">
         
         <label for="group_id">Group id:</label>
-        <input type="number" id="group_id" name="group_id" th:value="${student.group_id}"><br>
+        <input type="number" id="group_id" name="group_id" th:value="${student.group.id}"><br>			
         
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" th:value="${student.name}"><br>

@@ -8,7 +8,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,8 +19,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 import ua.com.foxminded.universitycms.controller.CourseController;
@@ -96,30 +102,52 @@ public class CourseControllerTest {
 
 	@Test
 	void testUpdateCourse() {
+		CourseService courseService = Mockito.mock(CourseService.class);
+
+		Principal principal = Mockito.mock(Principal.class);
+		Authentication authentication = Mockito.mock(Authentication.class);
+		when(principal instanceof Authentication).thenReturn(true);
+		when(authentication.getAuthorities()).thenReturn(Arrays.asList(new SimpleGrantedAuthority("ROLE_TEACHER")));
+		when(SecurityContextHolder.getContext().getAuthentication()).thenReturn(authentication);
+
 		Long courseId = 1L;
-		Course course = new Course();
-		course.setId(courseId);
-		course.setTitle("Math");
-		course.setDescription("Mathematics course");
+		Course updatedCourse = new Course();
+		updatedCourse.setId(courseId);
+		updatedCourse.setTitle("Math");
+		updatedCourse.setDescription("Mathematics course");
 
-		when(courseService.update(course)).thenReturn(course);
+		when(courseService.update(updatedCourse)).thenReturn(updatedCourse);
 
-		String result = courseController.updateCourse(course);
+		CourseController courseController = new CourseController(courseService);
+
+		String result = courseController.updateCourse(courseId, updatedCourse, principal);
 
 		assertEquals("redirect:/courses", result);
-		verify(courseService, times(1)).update(course);
+		verify(courseService, times(1)).update(updatedCourse);
 	}
 
 	@Test
 	void testShowUpdateCourseForm() {
+		CourseService courseService = Mockito.mock(CourseService.class);
+
+		Principal principal = Mockito.mock(Principal.class);
+		Authentication authentication = Mockito.mock(Authentication.class);
+		when(principal instanceof Authentication).thenReturn(true);
+		when(authentication.getAuthorities()).thenReturn(Arrays.asList(new SimpleGrantedAuthority("ROLE_TEACHER")));
+		when(SecurityContextHolder.getContext().getAuthentication()).thenReturn(authentication);
+
 		Long courseId = 1L;
 		Course course = new Course();
 		course.setId(courseId);
 		Optional<Course> optionalCourse = Optional.of(course);
-		Model model = mock(Model.class);
+
 		when(courseService.findById(courseId)).thenReturn(optionalCourse);
 
-		String result = courseController.showUpdateCourseForm(courseId, model);
+		Model model = Mockito.mock(Model.class);
+
+		CourseController courseController = new CourseController(courseService);
+
+		String result = courseController.showUpdateCourseForm(courseId, model, principal);
 
 		assertEquals("updateCourse", result);
 		verify(model, times(1)).addAttribute("course", course);
