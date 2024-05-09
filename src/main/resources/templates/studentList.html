@@ -17,6 +17,20 @@
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
  .content {
     margin-left: 25px;
 }
@@ -24,6 +38,12 @@
 	background-color: #0056b3;
 }
 .btn.coursesAvailableView {
+	background-color: #28a745;
+}
+.btn.viewStudentsInGroup {
+	background-color: #28a745;
+}
+.btn.assignG {
 	background-color: #28a745;
 }
 .btn.viewSchedule {
@@ -47,8 +67,11 @@
 <br>
 <h4>Logged in as:</h4>
 	<h1>Students List</h1>
+	    <a href="/menu" class="back-to-menu">Back to Menu</a>
 		<a href="/students/scheduleView" class="btn viewSchedule">View your schedule</a>
 		<a href="/students/coursesAvailableView" class="btn coursesAvailableView">View Available Courses</a>
+		<a href="/students/studentsInGroup" class="btn viewStudentsInGroup">View Students in Group</a>
+		<a href="/students/assignGroup" class="btn assignG">Assign Student to a Group</a>
 		
 		<button class="btn findById" onclick="findById()">Find by ID</button>
 		<input type="text" id="studentIdInput" placeholder="Enter Student ID">	

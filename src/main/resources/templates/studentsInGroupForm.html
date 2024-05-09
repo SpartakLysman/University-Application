@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <title>Students in Group Form</title>
+</head>
+<body>
+    <h2>Select a Group to View Students</h2>
+   <form action="/students/studentsInGroup/{groupId}" method="post">
+        <label for="group">Select Group:</label>
+        <select name="groupId" id="group">
+            <option value="">Select Group</option>
+            <th:block th:each="group : ${groups}">
+                <option th:value="${group.id}" th:text="${group.title}"></option>
+            </th:block>
+        </select>
+        <br>
+        <button type="submit">View Students</button>
+    </form>
+</body>
+</html>

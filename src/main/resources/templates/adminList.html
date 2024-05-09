@@ -35,6 +35,20 @@
 	cursor: pointer;
 	transition: background-color 0.3s;
 }
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
  .content {
     margin-left: 25px;
 }
@@ -56,6 +70,7 @@
 <br>
 <h4>Logged in as:</h4>
 	<h1>Admins List</h1>
+	    <a href="/menu" class="back-to-menu">Back to Menu</a>
 		<button class="btn findById" onclick="getAdminById()">Find by ID</button>
 		<input type="text" id="adminIdInput" placeholder="Enter Admin ID">
 

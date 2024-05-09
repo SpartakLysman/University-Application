@@ -18,6 +18,7 @@ import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
+import ua.com.foxminded.universitycms.repository.GroupRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
 import ua.com.foxminded.universitycms.service.GroupService;
 import ua.com.foxminded.universitycms.service.StudentService;
@@ -34,14 +35,17 @@ public class StudentController {
 
 	private final GroupService groupService;
 
+	private final GroupRepository groupRepository;
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
 	public StudentController(StudentRepository studentRepository, StudentService studentService,
-			CourseRepository courseRepository, GroupService groupService) {
+			CourseRepository courseRepository, GroupService groupService, GroupRepository groupRepository) {
 		this.studentRepository = studentRepository;
 		this.studentService = studentService;
 		this.courseRepository = courseRepository;
 		this.groupService = groupService;
+		this.groupRepository = groupRepository;
 	}
 
 	@GetMapping
@@ -111,6 +115,13 @@ public class StudentController {
 		}
 	}
 
+	@GetMapping("/coursesAvailableView")
+	public String viewAllCourses(Model model) {
+		List<Course> courses = courseRepository.findAll();
+		model.addAttribute("courses", courses);
+		return "availableCourses";
+	}
+
 	@PostMapping("/{studentId}/assignCourse")
 	public String assignCourseToStudent(@PathVariable("studentId") Long studentId, @RequestParam Long courseId) {
 		try {
@@ -144,6 +155,65 @@ public class StudentController {
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error showing assign course form", e);
+			return "error";
+		}
+	}
+
+	@GetMapping("/assignGroup")
+	public String showAssignStudentForm(Model model) {
+		List<Student> students = studentRepository.findAll();
+		List<Group> groups = groupService.findAll();
+		model.addAttribute("students", students);
+		model.addAttribute("groups", groups);
+		return "assignStudentToGroup";
+	}
+
+	@PostMapping("/assignGroup")
+	public String assignStudentToGroup(@RequestParam Long studentId, @RequestParam Long groupId) {
+		try {
+			Optional<Student> studentOptional = studentRepository.findById(studentId);
+			Optional<Group> groupOptional = groupRepository.findById(groupId);
+
+			if (studentOptional.isPresent() && groupOptional.isPresent()) {
+				Student student = studentOptional.get();
+				Group group = groupOptional.get();
+
+				if (student.getGroup() != null && student.getGroup().getId().equals(groupId)) {
+					LOGGER.warn("Student is already assigned to the selected group.");
+					return "redirect:/students";
+				}
+				student.setGroup(group);
+				studentRepository.save(student);
+				return "redirect:/students";
+			} else {
+				LOGGER.error("Student or Group not found with ID: " + studentId + " or " + groupId);
+				return "error";
+			}
+		} catch (Exception e) {
+			LOGGER.error("Error assigning student to group: " + e.getMessage());
+			return "error";
+		}
+	}
+
+///////////
+
+	@GetMapping("/studentsInGroup")
+	public String showStudentsInGroupForm(Model model) {
+		List<Group> groups = groupService.findAll();
+		model.addAttribute("groups", groups);
+		return "studentsInGroupForm";
+	}
+
+	@PostMapping("/studentsInGroup/{groupId}")
+	public String showStudentsInGroup(@PathVariable Long groupId, Model model) {
+		Optional<Group> groupOptional = groupService.findById(groupId);
+		if (groupOptional.isPresent()) {
+			Group group = groupOptional.get();
+			List<Student> students = group.getStudents();
+			model.addAttribute("group", group);
+			model.addAttribute("students", students);
+			return "viewStudentsInGroup";
+		} else {
 			return "error";
 		}
 	}

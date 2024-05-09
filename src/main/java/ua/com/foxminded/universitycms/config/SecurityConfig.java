@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 
 @Configuration
 @EnableWebSecurity
@@ -15,6 +16,8 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
+		requestCache.setMatchingRequestParameterName(null);
 		http.authorizeHttpRequests(requests -> requests
 				.requestMatchers("static/css/**", "/?continue", "/webjars/**", "/assets/**").permitAll()
 				.requestMatchers("assignRole").hasAnyAuthority("ADMIN").requestMatchers("menu")
@@ -48,7 +51,8 @@ public class SecurityConfig {
 				.anyRequest().authenticated())
 				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/menu")
 						.permitAll())
-				.logout(logout -> logout.logoutSuccessUrl("/logout").permitAll());
+				.logout(logout -> logout.logoutSuccessUrl("/logout").permitAll())
+				.requestCache(cache -> cache.requestCache(requestCache));
 
 		return http.build();
 	}

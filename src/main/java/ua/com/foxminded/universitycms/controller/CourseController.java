@@ -1,11 +1,9 @@
 package ua.com.foxminded.universitycms.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,34 +65,21 @@ public class CourseController {
 	}
 
 	@PostMapping("/{id}/update")
-	public String updateCourse(@PathVariable("id") Long courseId, @ModelAttribute("course") Course updatedCourse,
-			Principal principal) {
-		if (principal != null && principal instanceof Authentication) {
-			Authentication authentication = (Authentication) principal;
-			if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("TEACHER"))
-					|| authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"))) {
-				courseService.update(updatedCourse);
-				return "redirect:/courses";
-			}
-		}
-		return "error";
+	public String updateCourse(@ModelAttribute("course") Course course) {
+		courseService.update(course);
+		return "redirect:/courses";
 	}
 
 	@GetMapping("/{id}/update")
-	public String showUpdateCourseForm(@PathVariable("id") Long courseId, Model model, Principal principal) {
-		if (principal != null && principal instanceof Authentication) {
-			Authentication authentication = (Authentication) principal;
-			if (authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("TEACHER"))
-					|| authentication.getAuthorities().stream().anyMatch(auth -> auth.getAuthority().equals("ADMIN"))) {
-				Optional<Course> courseOptional = courseService.findById(courseId);
-				if (courseOptional.isPresent()) {
-					Course course = courseOptional.get();
-					model.addAttribute("course", course);
-					return "updateCourse";
-				}
-			}
+	public String showUpdateCourseForm(@PathVariable("id") Long id, Model model) {
+		Optional<Course> courseOptional = courseService.findById(id);
+		if (courseOptional.isPresent()) {
+			Course course = courseOptional.get();
+			model.addAttribute("course", course);
+			return "updateCourse";
+		} else {
+			return "redirect:/courses";
 		}
-		return "redirect:/courses";
 	}
 
 	@PostMapping("/{id}/delete")

@@ -5,9 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Details</title>
     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+.content {
+    margin-left: 25px;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+</style>    
 </head>
-<body>
+<body class="content">
     <h1>User Details</h1>
+    <a href="/menu" class="back-to-menu">Back to Menu</a>
      <div th:if="${user != null}">
          <p><strong>ID:</strong> <span th:text="${user.id}"></span></p>
     	 <p><strong>Name:</strong> <span th:text="${user.name}"></span></p>

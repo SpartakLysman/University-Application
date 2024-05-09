@@ -5,53 +5,68 @@
     <title>Courses List</title>
     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
     <style>
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            margin: 5px;
-            border: none;
-            border-radius: 4px;
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.btn {
+      display: inline-block;
+      padding: 8px 16px;
+      margin: 5px;
+      border: none;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+}
 
-        .content {
-            margin-left: 25px;
-        }
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+ .content {
+    margin-left: 25px;
+}
 
-        .btn:hover {
-            background-color: #0056b3;
-        }
+.btn:hover {
+      background-color: #0056b3;
+}
 
-        .btn.findById {
-            background-color: #28a745;
-        }
+.btn.findById {
+      background-color: #28a745;
+}
 
-        .btn.update {
-            background-color: #ffc107;
-        }
+.btn.update {
+      background-color: #ffc107;
+}
 
-        .btn.delete {
-            background-color: #dc3545;
-        }
+.btn.delete {
+      background-color: #dc3545;
+}
 
-        .btn.assignT {
-            background-color: #17a2b8;
-        }
+.btn.assignT {
+      background-color: #17a2b8;
+}
 
-        .btn.assignG {
-            background-color: #17a2b8;
-        }
-    </style>
+.btn.assignG {
+      background-color: #17a2b8;
+}
+</style>
 </head>
 <body class="content">
 <br>
 <h4>Logged in as:</h4>
 <h1>Courses List</h1>
+<a href="/menu" class="back-to-menu">Back to Menu</a>
 <button class="btn findById" onclick="findById()">Find by ID</button>
 <input type="text" id="courseIdInput" placeholder="Enter Course ID">
 <br>

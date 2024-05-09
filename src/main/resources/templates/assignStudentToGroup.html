@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.content {
+    margin-left: 25px;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+</style>
+    <title>Assign Student to Group</title>
+</head>
+<body class="content">
+    <h2>Assign Student to Group</h2>
+    <a href="/menu" class="back-to-menu">Back to Menu</a>
+    <form action="/students/assignGroup" method="post">
+        <label for="student">Select Student:</label>
+        <select name="studentId" id="student">
+            <option value="">Select Student</option>
+           
+            <th:block th:each="student : ${students}">
+                <option th:value="${student.id}" th:text="${student.name}"></option>
+            </th:block>
+        </select>
+        <br>
+        <label for="group">Select Group:</label>
+        <select name="groupId" id="group">
+            <option value="">Select Group</option>
+           
+            <th:block th:each="group : ${groups}">
+                <option th:value="${group.id}" th:text="${group.title}"></option>
+            </th:block>
+        </select>
+        <br>
+        <button type="submit">Assign Student</button>
+    </form>
+</body>
+</html>
