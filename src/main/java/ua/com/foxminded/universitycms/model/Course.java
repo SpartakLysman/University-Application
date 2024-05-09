@@ -27,8 +27,8 @@ public class Course extends Entity<Long> implements Serializable {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "teacher_id", insertable = false, updatable = false)
-	private Teacher teacher_id;
+	@JoinColumn(name = "teacher_id")
+	private Teacher teacher;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
 	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
@@ -102,12 +102,12 @@ public class Course extends Entity<Long> implements Serializable {
 		groups = newGroups;
 	}
 
-	public Teacher getTeacher_id() {
-		return teacher_id;
+	public Teacher getTeacher() {
+		return teacher;
 	}
 
-	public void setTeacher_id(Teacher teacher_id) {
-		this.teacher_id = teacher_id;
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	@Override

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <title>Teacher Courses</title>
+</head>
+<body>
+    <h2>View Your Courses</h2>
+    <form action="/viewTeacherCourses/{id}" method="post">
+        <button type="submit">Refresh Courses</button>
+    </form>
+    
+    <h3>Your Courses:</h3>
+    <ul>
+        <th:block th:each="course : ${courses}">
+            <li th:text="${course.title}"></li>
+        </th:block>
+    </ul>
+</body>
+</html>

@@ -146,7 +146,7 @@ public class CourseService {
 			Course course = optionalCourse.get();
 			Teacher teacher = optionalTeacher.get();
 
-			course.setTeacher_id(teacher);
+			course.setTeacher(teacher);
 			courseRepository.save(course);
 		} else {
 			throw new EntityNotFoundException("Course or Teacher not found");

@@ -20,4 +20,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	void deleteById(@Param("id") Long id);
 
 	List<Course> findByTitle(String title);
+
+	List<Course> findByTeacherId(Long teacherId);
 }

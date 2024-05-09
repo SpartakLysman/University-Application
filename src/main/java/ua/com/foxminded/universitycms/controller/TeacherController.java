@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Teacher;
+import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.TeacherRepository;
 import ua.com.foxminded.universitycms.service.TeacherService;
 
@@ -22,10 +24,20 @@ import ua.com.foxminded.universitycms.service.TeacherService;
 public class TeacherController {
 
 	@Autowired
-	private TeacherRepository teacherRepository;
+	private final TeacherRepository teacherRepository;
 
 	@Autowired
-	private TeacherService teacherService;
+	private final TeacherService teacherService;
+
+	@Autowired
+	private final CourseRepository courseRepository;
+
+	public TeacherController(TeacherRepository teacherRepository, TeacherService teacherService,
+			CourseRepository courseRepository) {
+		this.teacherRepository = teacherRepository;
+		this.teacherService = teacherService;
+		this.courseRepository = courseRepository;
+	}
 
 	@GetMapping
 	public String showTeachers(Model model) {
@@ -82,13 +94,25 @@ public class TeacherController {
 	}
 
 	@GetMapping("/getById/{id}")
-	public String getTeacherById(@PathVariable Long id, Model model) {
+	public String getTeacherById(@PathVariable("id") Long id, Model model) {
 		Optional<Teacher> teacher = teacherService.findById(id);
 		if (teacher.isPresent()) {
 			model.addAttribute("teacher", teacher.get());
 			return "getTeacherById";
 		} else {
 			return "error";
+		}
+	}
+
+	@GetMapping("/viewTeacherCourses/{id}")
+	public String showViewTeacherCoursesForm(@PathVariable("id") Long teacherId, Model model) {
+		Optional<Teacher> teacherOptional = teacherService.findById(teacherId);
+		if (teacherOptional.isPresent()) {
+			List<Course> courses = courseRepository.findByTeacherId(teacherId);
+			model.addAttribute("courses", courses);
+			return "viewTeacherCourses";
+		} else {
+			return "redirect:/teachers";
 		}
 	}
 }
