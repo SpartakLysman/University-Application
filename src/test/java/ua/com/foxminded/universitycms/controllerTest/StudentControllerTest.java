@@ -25,6 +25,7 @@ import ua.com.foxminded.universitycms.controller.StudentController;
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
+import ua.com.foxminded.universitycms.service.GroupService;
 import ua.com.foxminded.universitycms.service.StudentService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -38,6 +39,9 @@ public class StudentControllerTest {
 
 	@Mock
 	private StudentRepository studentRepository;
+
+	@Mock
+	private GroupService groupService;
 
 	@Mock
 	private Model model;
