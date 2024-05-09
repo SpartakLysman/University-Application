@@ -11,7 +11,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Table(name = "courses")
@@ -34,7 +33,8 @@ public class Course extends Entity<Long> implements Serializable {
 	@JoinTable(name = "students_courses", schema = "public", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
 	private List<Student> students = new ArrayList<>();
 
-	@OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+	// @OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+	@JoinTable(name = "groups_courses", schema = "public", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
 	private List<Group> groups = new ArrayList<>();
 
 	public Course(Long id, String title, String description) {
