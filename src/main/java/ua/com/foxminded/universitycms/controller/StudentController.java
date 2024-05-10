@@ -159,7 +159,7 @@ public class StudentController {
 		}
 	}
 
-	@GetMapping("/assignGroup")
+	@GetMapping("/assignGroupForm")
 	public String showAssignStudentForm(Model model) {
 		List<Student> students = studentRepository.findAll();
 		List<Group> groups = groupService.findAll();
@@ -168,8 +168,8 @@ public class StudentController {
 		return "assignStudentToGroup";
 	}
 
-	@PostMapping("/assignGroup")
-	public String assignStudentToGroup(@RequestParam Long studentId, @RequestParam Long groupId) {
+	@PostMapping("/{id}/assignGroup")
+	public String assignStudentToGroup(@PathVariable("id") Long studentId, @RequestParam Long groupId) {
 		try {
 			Optional<Student> studentOptional = studentRepository.findById(studentId);
 			Optional<Group> groupOptional = groupRepository.findById(groupId);
