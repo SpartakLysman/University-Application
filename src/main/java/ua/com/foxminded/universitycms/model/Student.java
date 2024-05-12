@@ -147,7 +147,6 @@ public class Student extends Entity<Long> implements Serializable {
 	}
 
 	public String toString() {
-		return "Group id: " + group.getId() + ", Name: " + name + ",  Surname: " + surname + ",  Login: " + login
-				+ ",  Password: " + password;
+		return "Name: " + name + ",  Surname: " + surname + ",  Login: " + login + ",  Password: " + password;
 	}
 }

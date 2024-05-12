@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Table(name = "courses")
@@ -28,15 +26,10 @@ public class Course extends Entity<Long> implements Serializable {
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 
-//	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE })
-
-	// @JoinTable(name = "students_courses", schema = "public", joinColumns =
-	// @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name =
-	// "student_id"))
 	@ManyToMany(mappedBy = "courses")
 	private List<Student> students = new ArrayList<>();
 
-	@OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "courses")
 	private List<Group> groups = new ArrayList<>();
 
 	public Course(Long id, String title, String description) {
