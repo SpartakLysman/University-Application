@@ -28,13 +28,13 @@
 <body class="content">
     <h1>Teacher Details</h1>
     <a href="/menu" class="back-to-menu">Back to Menu</a>
-     <div th:if="${course != null}">
+     <div th:if="${teacher != null}">
         <p><strong>ID:</strong> <span th:text="${teacher.id}"></span></p>
         <p><strong>Name:</strong> <span th:text="${teacher.name}"></span></p>
         <p><strong>Surname:</strong> <span th:text="${teacher.surname}"></span></p>
         <p><strong>Login:</strong> <span th:text="${teacher.login}"></span></p>
     </div>
-    <div th:if="${course == null}">
+    <div th:if="${teacher == null}">
         <p>Teacher not found.</p>
     </div>
     <a href="/teachers">Back to Teacher List</a>

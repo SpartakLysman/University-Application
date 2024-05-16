@@ -75,7 +75,7 @@
 				<td th:text="${teacher.login}">Login</td>
 				<td>			
 					<a th:href="@{/teachers/{id}/update(id=${teacher.id})}"class="btn update">Update</a>  
-					<a th:href="@{/teachers/delete/{id}(id=${teacher.id})}"class="btn delete">Delete</a>
+					<a th:href="@{/teachers/{id}/delete(id=${teacher.id})}"class="btn delete">Delete</a>
 					<a th:href="@{/teachers/viewTeacherCourses/{id}(id=${teacher.id})}"class="btn viewTCourses">View Assigned Courses</a>
 				</td>
 			</tr>
