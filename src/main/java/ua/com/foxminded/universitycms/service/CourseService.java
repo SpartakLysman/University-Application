@@ -37,12 +37,17 @@ public class CourseService {
 		this.teacherRepository = teacherRepository;
 	}
 
-	public Course create(Course course) {
+	public Course create(Course course, Long teacherId) {
+		Optional<Teacher> teacherOptional = teacherRepository.findById(teacherId);
 		LOGGER.debug("Course creating... " + course.toString());
-		Course newCourse = courseRepository.save(course);
-		LOGGER.info("Course was created successfully with id - " + course.getId());
-
-		return newCourse;
+		if (teacherOptional.isPresent()) {
+			Teacher teacher = teacherOptional.get();
+			course.setTeacher(teacher);
+			LOGGER.info("Course was created successfully with id - " + course.getId());
+			return courseRepository.save(course);
+		} else {
+			throw new IllegalArgumentException("Teacher with id " + teacherId + " not found");
+		}
 	}
 
 	public List<Course> createAll(List<Course> coursesList) {

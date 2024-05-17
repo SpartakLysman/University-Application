@@ -136,6 +136,14 @@ public class StudentService {
 		return studentsList;
 	}
 
+	public List<Student> findByGroupId(Long groupId) {
+		LOGGER.debug("Student finding by group id... ");
+		List<Student> students = studentRepository.findByGroupId(groupId);
+		LOGGER.info("Student was successfully found by group id - " + groupId);
+
+		return students;
+	}
+
 	public Optional<Student> findById(long id) {
 		LOGGER.debug("Student finding by id... ");
 		Optional<Student> student = studentRepository.findById(id);

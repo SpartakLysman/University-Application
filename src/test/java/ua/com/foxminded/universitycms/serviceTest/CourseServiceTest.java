@@ -58,14 +58,14 @@ class CourseServiceTest {
 	void createCourseTest() {
 		Course course = new Course(5L, "Math", "Algebra");
 
-		when(courseService.create(course)).thenReturn(course);
+		when(courseService.create(course, 3L)).thenReturn(course);
 
-		Course createdCourse = courseService.create(course);
+		Course createdCourse = courseService.create(course, 3L);
 
 		assertNotNull(createdCourse);
 		assertEquals(course, createdCourse);
 
-		verify(courseService).create(course);
+		verify(courseService).create(course, 3L);
 	}
 
 	@Test

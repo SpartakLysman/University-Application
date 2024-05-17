@@ -53,14 +53,16 @@ public class CourseController {
 	}
 
 	@PostMapping("/create")
-	public String createCourse(@ModelAttribute("course") Course course) {
-		courseService.create(course);
+	public String createCourse(@ModelAttribute("course") Course course, @RequestParam("teacherId") Long teacherId) {
+		courseService.create(course, teacherId);
 		return "redirect:/courses";
 	}
 
 	@GetMapping("/create")
 	public String showCreateCourseForm(Model model) {
 		model.addAttribute("course", new Course());
+		List<Teacher> teachers = teacherService.findAll();
+		model.addAttribute("teachers", teachers);
 		return "createCourse";
 	}
 

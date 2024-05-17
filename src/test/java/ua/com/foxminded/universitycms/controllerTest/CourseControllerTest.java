@@ -79,10 +79,10 @@ public class CourseControllerTest {
 		course.setTitle("Math");
 		course.setDescription("Mathematics course");
 
-		String result = courseController.createCourse(course);
+		String result = courseController.createCourse(course, 3L);
 
 		assertEquals("redirect:/courses", result);
-		verify(courseService, times(1)).create(course);
+		verify(courseService, times(1)).create(course, 3L);
 	}
 
 	@Test

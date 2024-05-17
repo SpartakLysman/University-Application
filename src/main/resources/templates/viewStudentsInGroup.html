@@ -1,40 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
     <title>Students in Group</title>
 </head>
 <body>
-    <h2>Students in Group: <span th:text="${group.title}"></span></h2>
+    <h2>Students in Group</h2>
     <table>
         <thead>
             <tr>
                 <th>ID</th>
-                 <th>Group_Id</th>
                 <th>Name</th>
                 <th>Surname</th>
-                <th>Login</th>            
+                <th>Login</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="student : ${students}">
                 <td th:text="${student.id}">ID</td>
-                <td th:text="${student.group != null ? student.group.id : 'N/A'}">Group_id</td>
                 <td th:text="${student.name}">Name</td>
                 <td th:text="${student.surname}">Surname</td>
-                <td th:text="${student.login}">Login</td>               
-            </tr>
+                <td th:text="${student.login}">Login</td>
+            </tr> 
         </tbody>
     </table>
-     <br>
-    <form action="/studentsInGroup" method="get">
-        <button type="submit">Select Another Group</button>
-    </form>
-    
-    <form action="/students" method="get">
-        <button type="submit">Back to Students List</button>
-    </form>
 </body>
 </html>

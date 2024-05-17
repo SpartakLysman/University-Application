@@ -24,6 +24,17 @@
 .back-to-menu:hover {
          background-color: #138496;
 }
+.btn {
+       background-color: #17a2b8;
+       color: white;
+       padding: 10px 20px;
+       text-decoration: none;
+       border-radius: 5px;
+       margin: 10px;
+}
+.btn:hover {
+       background-color: #138496;
+}
 </style>
 </head>
 <body class="content">
@@ -35,6 +46,7 @@
         <p><strong>Surname:</strong> <span th:text="${student.surname}"></span></p>
         <p><strong>Login:</strong> <span th:text="${student.login}"></span></p>
     </div>
+     <a href="/students" class="btn">Back to Students List</a>
     <div th:if="${student == null}">
         <p>Student not found.</p>
     </div>

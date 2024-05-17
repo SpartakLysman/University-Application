@@ -30,17 +30,20 @@
 <body>
     <h1>Create New Course</h1>
      <form th:action="@{/courses/create}" method="post">
-        <br>
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title"><br><br>
-       
-        <label for="description">Description:</label>
-        <input type="text" id="description" name="description"><br><br>   
-             
-        <label for="teacher_id">Teacher_id:</label>
-        <input type="text" id="teacher_id" name="teacher_id"><br><br>  
-        <br> 
-        <button type="submit" class="create-btn">Create New Course</button>
-    </form>
+    <br>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title"><br><br>
+   
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description"><br><br>   
+
+    <label for="teacher">Teacher:</label>
+  <select id="teacher" name="teacherId">
+    <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+</select><br><br>
+<br><br>
+
+    <button type="submit" class="create-btn">Create New Course</button>
+</form>
 </body>
 </html>

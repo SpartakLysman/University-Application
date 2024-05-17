@@ -111,7 +111,7 @@ public class StudentController {
 			model.addAttribute("student", student.get());
 			return "getStudentById";
 		} else {
-			return "error";
+			return "studentDoesNotExist";
 		}
 	}
 
@@ -159,17 +159,16 @@ public class StudentController {
 		}
 	}
 
-	@GetMapping("/assignGroup")
-	public String showAssignStudentForm(Model model) {
-		List<Student> students = studentRepository.findAll();
+	@GetMapping("/{studentId}/assignGroup")
+	public String showAssignStudentForm(@PathVariable Long studentId, Model model) {
 		List<Group> groups = groupService.findAll();
-		model.addAttribute("students", students);
+		model.addAttribute("studentId", studentId);
 		model.addAttribute("groups", groups);
 		return "assignStudentToGroup";
 	}
 
-	@PostMapping("/assignGroup")
-	public String assignStudentToGroup(@RequestParam Long studentId, @RequestParam Long groupId) {
+	@PostMapping("/{studentId}/assignGroup")
+	public String assignStudentToGroup(@PathVariable Long studentId, @RequestParam Long groupId) {
 		try {
 			Optional<Student> studentOptional = studentRepository.findById(studentId);
 			Optional<Group> groupOptional = groupRepository.findById(groupId);
@@ -198,23 +197,17 @@ public class StudentController {
 ///////////
 
 	@GetMapping("/studentsInGroup")
-	public String showStudentsInGroupForm(Model model) {
+	public String showSelectGroupForm(Model model) {
 		List<Group> groups = groupService.findAll();
 		model.addAttribute("groups", groups);
 		return "studentsInGroupForm";
 	}
 
-	@PostMapping("/studentsInGroup/{groupId}")
-	public String showStudentsInGroup(@PathVariable Long groupId, Model model) {
-		Optional<Group> groupOptional = groupService.findById(groupId);
-		if (groupOptional.isPresent()) {
-			Group group = groupOptional.get();
-			List<Student> students = group.getStudents();
-			model.addAttribute("group", group);
-			model.addAttribute("students", students);
-			return "viewStudentsInGroup";
-		} else {
-			return "error";
-		}
+	@PostMapping("/studentsInGroup{groupId}")
+	public String showStudentsInGroup(@RequestParam("groupId") Long groupId, Model model) {
+		List<Student> studentsInGroup = studentService.findByGroupId(groupId);
+		model.addAttribute("students", studentsInGroup);
+		return "viewStudetsInGroup";
 	}
+
 }

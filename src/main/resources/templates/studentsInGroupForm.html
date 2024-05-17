@@ -1,22 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
-    <title>Students in Group Form</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />    
+    <title>Select Group</title>
 </head>
 <body>
-    <h2>Select a Group to View Students</h2>
-   <form action="/students/studentsInGroup/{groupId}" method="post">
-        <label for="group">Select Group:</label>
-        <select name="groupId" id="group">
-            <option value="">Select Group</option>
-            <th:block th:each="group : ${groups}">
-                <option th:value="${group.id}" th:text="${group.title}"></option>
-            </th:block>
+    <h2>Select a Group</h2>
+    <form action="/students/studentsInGroup" method="post">
+        <select name="group_id">
+            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
         </select>
-        <br>
         <button type="submit">View Students</button>
     </form>
 </body>
