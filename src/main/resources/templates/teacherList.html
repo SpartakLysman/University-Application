@@ -59,7 +59,6 @@
 <h4>Logged in as:</h4>
 	<h1>Teachers List</h1>
 	    <a href="/menu" class="back-to-menu">Back to Menu</a>
-	    <a href="/teachers/{teacherId}/schedule" class="btn viewSchedule">View your schedule</a>
 		<button class="btn findById" onclick="findById()">Find by ID</button>
 		<input type="text" id="teacherIdInput" placeholder="Enter Teacher ID">
 	<table>
@@ -78,6 +77,7 @@
 				<td th:text="${teacher.surname}">Surname</td>
 				<td th:text="${teacher.login}">Login</td>
 				<td>			
+				    <a th:href="@{/teachers/{teacherId}/schedule(teacherId=${teacher.id})}" class="btn viewSchedule">View your schedule</a>
 					<a th:href="@{/teachers/{id}/update(id=${teacher.id})}"class="btn update">Update</a>  
 					<a th:href="@{/teachers/{id}/delete(id=${teacher.id})}"class="btn delete">Delete</a>
 					<a th:href="@{/teachers/viewTeacherCourses/{id}(id=${teacher.id})}"class="btn viewTCourses">View Assigned Courses</a>
