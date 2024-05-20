@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
+import ua.com.foxminded.universitycms.model.ScheduleEntry;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
 import ua.com.foxminded.universitycms.service.GroupService;
+import ua.com.foxminded.universitycms.service.ScheduleService;
 import ua.com.foxminded.universitycms.service.StudentService;
 
 @Controller
@@ -37,15 +39,19 @@ public class StudentController {
 
 	private final GroupRepository groupRepository;
 
+	private final ScheduleService scheduleService;
+
 	private final static Logger LOGGER = LoggerFactory.getLogger(StudentController.class);
 
 	public StudentController(StudentRepository studentRepository, StudentService studentService,
-			CourseRepository courseRepository, GroupService groupService, GroupRepository groupRepository) {
+			CourseRepository courseRepository, GroupService groupService, GroupRepository groupRepository,
+			ScheduleService scheduleService) {
 		this.studentRepository = studentRepository;
 		this.studentService = studentService;
 		this.courseRepository = courseRepository;
 		this.groupService = groupService;
 		this.groupRepository = groupRepository;
+		this.scheduleService = scheduleService;
 	}
 
 	@GetMapping
@@ -194,8 +200,6 @@ public class StudentController {
 		}
 	}
 
-///////////
-
 	@GetMapping("/studentsInGroup")
 	public String showSelectGroupForm(Model model) {
 		List<Group> groups = groupService.findAll();
@@ -209,5 +213,12 @@ public class StudentController {
 		model.addAttribute("students", studentsInGroup);
 		return "viewStudetsInGroup";
 	}
+/////////
 
+	@GetMapping("/{studentId}/schedule")
+	public String showStudentSchedule(@PathVariable("studentId") Long studentId, Model model) {
+		List<ScheduleEntry> schedule = scheduleService.getStudentSchedule(studentId);
+		model.addAttribute("schedule", schedule);
+		return "studentSchedule";
+	}
 }

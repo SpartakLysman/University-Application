@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.universitycms.model.Course;
+import ua.com.foxminded.universitycms.model.ScheduleEntry;
 import ua.com.foxminded.universitycms.model.Teacher;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.TeacherRepository;
+import ua.com.foxminded.universitycms.service.ScheduleService;
 import ua.com.foxminded.universitycms.service.TeacherService;
 
 @Controller
@@ -32,11 +34,14 @@ public class TeacherController {
 	@Autowired
 	private final CourseRepository courseRepository;
 
+	private final ScheduleService scheduleService;
+
 	public TeacherController(TeacherRepository teacherRepository, TeacherService teacherService,
-			CourseRepository courseRepository) {
+			CourseRepository courseRepository, ScheduleService scheduleService) {
 		this.teacherRepository = teacherRepository;
 		this.teacherService = teacherService;
 		this.courseRepository = courseRepository;
+		this.scheduleService = scheduleService;
 	}
 
 	@GetMapping
@@ -114,5 +119,13 @@ public class TeacherController {
 		} else {
 			return "redirect:/teachers";
 		}
+	}
+/////////////////
+
+	@GetMapping("/{teacherId}/schedule")
+	public String showTeacherSchedule(@PathVariable Long teacherId, Model model) {
+		List<ScheduleEntry> schedule = scheduleService.getTeacherSchedule(teacherId);
+		model.addAttribute("schedule", schedule);
+		return "teacherSchedule";
 	}
 }

@@ -49,6 +49,9 @@
 .btn.delete {
 	background-color: #dc3545;
 }
+.btn.viewSchedule {
+	background-color: rgb(255, 87, 0);
+}
 </style>
 </head>
 <body class="content">
@@ -56,6 +59,7 @@
 <h4>Logged in as:</h4>
 	<h1>Teachers List</h1>
 	    <a href="/menu" class="back-to-menu">Back to Menu</a>
+	    <a href="/teachers/{teacherId}/schedule" class="btn viewSchedule">View your schedule</a>
 		<button class="btn findById" onclick="findById()">Find by ID</button>
 		<input type="text" id="teacherIdInput" placeholder="Enter Teacher ID">
 	<table>

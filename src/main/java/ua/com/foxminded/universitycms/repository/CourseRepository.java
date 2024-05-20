@@ -22,4 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	List<Course> findByTitle(String title);
 
 	List<Course> findByTeacherId(Long teacherId);
+
+	@Query("SELECT c FROM Course c JOIN c.students s WHERE s.id = :studentId")
+	List<Course> findByStudentId(Long studentId);
 }
