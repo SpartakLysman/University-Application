@@ -21,9 +21,9 @@ import ua.com.foxminded.universitycms.service.TeacherService;
 @RequestMapping("/schedules")
 public class ScheduleController {
 	private final ScheduleService scheduleService;
-	private final CourseService courseService; // Assuming you have a CourseService
-	private final StudentService studentService; // Assuming you have a StudentService
-	private final TeacherService teacherService; // Assuming you have a TeacherService
+	private final CourseService courseService;
+	private final StudentService studentService;
+	private final TeacherService teacherService;
 
 	public ScheduleController(ScheduleService scheduleService, CourseService courseService,
 			StudentService studentService, TeacherService teacherService) {
