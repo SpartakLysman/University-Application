@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Schedule</title>
+    <style>
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Edit Schedule</h1>
+    <form th:action="@{/schedules/edit/{id}(id=${scheduleEntry.id})}" th:object="${scheduleEntry}" method="post">
+        <div class="form-group">
+            <label for="dateTime">Date and Time:</label>
+            <input type="datetime-local" id="dateTime" th:field="*{dateTime}">
+        </div>
+        <div class="form-group">
+            <label for="classroom">Classroom:</label>
+            <input type="text" id="classroom" th:field="*{classroom}">
+        </div>
+        <div class="form-group">
+            <label for="course">Course:</label>
+            <select id="course" th:field="*{course.id}">
+                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="student">Student:</label>
+            <select id="student" th:field="*{student.id}">
+                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="teacher">Teacher:</label>
+            <select id="teacher" th:field="*{teacher.id}">
+                <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+            </select>
+        </div>
+        <button type="submit">Update Schedule</button>
+    </form>
+</body>
+</html>

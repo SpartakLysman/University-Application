@@ -9,4 +9,10 @@ public interface ScheduleService {
 	List<ScheduleEntry> getStudentSchedule(Long studentId);
 
 	List<ScheduleEntry> getTeacherSchedule(Long teacherId);
+
+	List<ScheduleEntry> findAll();
+
+	ScheduleEntry findById(Long id);
+
+	void save(ScheduleEntry scheduleEntry);
 }

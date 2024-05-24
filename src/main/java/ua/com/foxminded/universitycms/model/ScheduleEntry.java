@@ -1,25 +1,44 @@
 package ua.com.foxminded.universitycms.model;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Table(name = "schedule")
+@jakarta.persistence.Entity
 public class ScheduleEntry {
 
-	private LocalDate date;
-	private LocalTime time;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "student_id", nullable = false)
+	private Student student;
+
+	@ManyToOne
+	@JoinColumn(name = "teacher_id", nullable = false)
+	private Teacher teacher;
+
+	@ManyToOne
+	@JoinColumn(name = "course_id", nullable = false)
 	private Course course;
+
+	private LocalDateTime dateTime;
+
 	private String classroom;
 
 	public ScheduleEntry() {
 
 	}
 
-	public LocalDate getDate() {
-		return date;
-	}
-
-	public LocalTime getTime() {
-		return time;
+	public LocalDateTime getDateTime() {
+		return dateTime;
 	}
 
 	public Course getCourse() {
@@ -30,12 +49,12 @@ public class ScheduleEntry {
 		return classroom;
 	}
 
-	public void setDate(LocalDate newDate) {
-		date = newDate;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setTime(LocalTime newTime) {
-		time = newTime;
+	public void setDateTime(LocalDateTime newDateTime) {
+		dateTime = newDateTime;
 	}
 
 	public void setCourse(Course newCourse) {

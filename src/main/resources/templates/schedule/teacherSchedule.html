@@ -2,8 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Student Schedule</title>
-    <style>
+     <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <title>Teacher Schedule</title>
+     <style>
         table {
             width: 100%;
             border-collapse: collapse;
@@ -17,31 +18,33 @@
             background-color: #f2f2f2;
         }
         .deep-orange-bg {
-            background-color: #FF5733; 
+            background-color: #FF5733;
         }
     </style>
 </head>
 <body>
-    <h1>Student Schedule</h1>
+    <h1>Teacher Schedule</h1>
+        <a href="/schedules/create" class="btn">Create New Schedule Entry</a>
     <table>
         <thead>
-            <tr>
-                <th>Date</th>
-                <th>Time</th>
+             <tr>
+                <th>Date and Time</th>
                 <th>Course</th>
-                <th>Teacher</th>
                 <th>Classroom</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="entry : ${schedule}">
-                <td th:text="${entry.date}">-</td>
-                <td th:text="${entry.time}">-</td>
-                <td th:text="${entry.course.title}">-</td>
-                <td th:text="${entry.course.teacher.name}">-</td>
+                <td th:text="${entry.dateTime}">-</td>
+                <td th:text="${entry.course.name}">-</td>
                 <td th:text="${entry.classroom}">-</td>
-            </tr>
+                <td>
+                    <a th:href="@{/schedules/edit/{id}(id=${entry.id})}" class="btn">Edit</a>
+                </td>
+            </tr>           
         </tbody>
     </table>
 </body>
 </html>
+

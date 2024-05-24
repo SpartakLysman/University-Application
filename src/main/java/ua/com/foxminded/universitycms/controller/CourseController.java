@@ -49,7 +49,7 @@ public class CourseController {
 	public String showCourses(Model model) {
 		List<Course> courses = courseRepository.findAll();
 		model.addAttribute("courses", courses);
-		return "courseList";
+		return "course/courseList";
 	}
 
 	@PostMapping("/create")
@@ -63,7 +63,7 @@ public class CourseController {
 		model.addAttribute("course", new Course());
 		List<Teacher> teachers = teacherService.findAll();
 		model.addAttribute("teachers", teachers);
-		return "createCourse";
+		return "course/createCourse";
 	}
 
 	@PostMapping("/{id}/update")
@@ -78,7 +78,7 @@ public class CourseController {
 		if (courseOptional.isPresent()) {
 			Course course = courseOptional.get();
 			model.addAttribute("course", course);
-			return "updateCourse";
+			return "course/updateCourse";
 		} else {
 			return "redirect:/courses";
 		}
@@ -95,7 +95,7 @@ public class CourseController {
 		Optional<Course> course = courseService.findById(id);
 		if (course.isPresent()) {
 			model.addAttribute("course", course.get());
-			return "deleteCourse";
+			return "course/deleteCourse";
 		} else {
 			return "redirect:/courses";
 		}
@@ -106,7 +106,7 @@ public class CourseController {
 		Optional<Course> course = courseService.findById(id);
 		if (course.isPresent()) {
 			model.addAttribute("course", course.get());
-			return "getCourseById";
+			return "course/getCourseById";
 		} else {
 			return "error";
 		}
@@ -124,7 +124,7 @@ public class CourseController {
 			model.addAttribute("course", course);
 			model.addAttribute("teachers", teachers);
 
-			return "assignTeacher";
+			return "course/assignTeacher";
 		} else {
 			return "error";
 		}
@@ -148,7 +148,7 @@ public class CourseController {
 			model.addAttribute("course", course);
 			model.addAttribute("groups", groups);
 
-			return "assignGroup";
+			return "course/assignGroup";
 		} else {
 			return "error";
 		}

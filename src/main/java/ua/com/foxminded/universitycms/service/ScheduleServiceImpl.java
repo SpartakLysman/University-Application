@@ -1,61 +1,44 @@
 package ua.com.foxminded.universitycms.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.ScheduleEntry;
-import ua.com.foxminded.universitycms.repository.CourseRepository;
+import ua.com.foxminded.universitycms.repository.ScheduleRepository;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
 
-	private final CourseRepository courseRepository;
+	private final ScheduleRepository scheduleRepository;
 
-	public ScheduleServiceImpl(CourseRepository courseRepository) {
-		this.courseRepository = courseRepository;
+	public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
+		this.scheduleRepository = scheduleRepository;
 	}
 
 	@Override
 	public List<ScheduleEntry> getStudentSchedule(Long studentId) {
-		List<Course> enrolledCourses = courseRepository.findByStudentId(studentId);
-		List<ScheduleEntry> schedule = new ArrayList<>();
-
-		LocalDate staticDate = LocalDate.of(2024, Month.MAY, 31);
-		LocalTime staticTime = LocalTime.of(9, 0);
-
-		for (Course course : enrolledCourses) {
-			ScheduleEntry entry = new ScheduleEntry();
-			entry.setDate(staticDate);
-			entry.setTime(staticTime);
-			entry.setCourse(course);
-
-			schedule.add(entry);
-		}
-		return schedule;
+		return scheduleRepository.findByStudentId(studentId);
 	}
 
 	@Override
 	public List<ScheduleEntry> getTeacherSchedule(Long teacherId) {
-		List<Course> teacherCourses = courseRepository.findByTeacherId(teacherId);
-		List<ScheduleEntry> schedule = new ArrayList<>();
+		return scheduleRepository.findByTeacherId(teacherId);
+	}
 
-		LocalDate staticDate = LocalDate.of(2024, Month.MAY, 31);
-		LocalTime staticTime = LocalTime.of(9, 0);
+	@Override
+	public List<ScheduleEntry> findAll() {
+		return scheduleRepository.findAll();
+	}
 
-		for (Course course : teacherCourses) {
-			ScheduleEntry entry = new ScheduleEntry();
-			entry.setDate(staticDate);
-			entry.setTime(staticTime);
-			entry.setCourse(course);
+	@Override
+	public ScheduleEntry findById(Long id) {
+		return scheduleRepository.findById(id)
+				.orElseThrow(() -> new IllegalArgumentException("Invalid schedule Id:" + id));
+	}
 
-			schedule.add(entry);
-		}
-		return schedule;
+	@Override
+	public void save(ScheduleEntry scheduleEntry) {
+		scheduleRepository.save(scheduleEntry);
 	}
 }

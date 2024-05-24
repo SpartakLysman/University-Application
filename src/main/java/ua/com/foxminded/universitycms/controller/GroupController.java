@@ -36,7 +36,7 @@ public class GroupController {
 	public String showGroups(Model model) {
 		List<Group> groups = groupRepository.findAll();
 		model.addAttribute("groups", groups);
-		return "groupList";
+		return "group/groupList";
 	}
 
 	@PostMapping("/create")
@@ -48,7 +48,7 @@ public class GroupController {
 	@GetMapping("/create")
 	public String showCreateGroupForm(Model model) {
 		model.addAttribute("group", new Group());
-		return "createGroup";
+		return "group/createGroup";
 	}
 
 	@PostMapping("/{id}/update")
@@ -63,7 +63,7 @@ public class GroupController {
 		if (groupOptional.isPresent()) {
 			Group group = groupOptional.get();
 			model.addAttribute("group", group);
-			return "updateGroup";
+			return "group/updateGroup";
 		} else {
 			return "redirect:/groups";
 		}
@@ -80,7 +80,7 @@ public class GroupController {
 		Optional<Group> group = groupService.findById(id);
 		if (group.isPresent()) {
 			model.addAttribute("group", group.get());
-			return "deleteGroup";
+			return "group/deleteGroup";
 		} else {
 			return "redirect:/groups";
 		}
@@ -91,7 +91,7 @@ public class GroupController {
 		Optional<Group> group = groupService.findById(id);
 		if (group.isPresent()) {
 			model.addAttribute("group", group.get());
-			return "getGroupById";
+			return "group/getGroupById";
 		} else {
 			return "error";
 		}
@@ -111,7 +111,7 @@ public class GroupController {
 			List<Student> students = studentService.findAll();
 			model.addAttribute("group", group);
 			model.addAttribute("students", students);
-			return "assignStudent";
+			return "group/assignStudent";
 		} else {
 			return "error";
 		}

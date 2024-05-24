@@ -20,7 +20,7 @@ public class SecurityConfig {
 		requestCache.setMatchingRequestParameterName(null);
 		http.authorizeHttpRequests(requests -> requests
 				.requestMatchers("static/css/**", "/?continue", "/webjars/**", "/assets/**").permitAll()
-				.requestMatchers("assignRole").hasAnyAuthority("ADMIN").requestMatchers("menu")
+				.requestMatchers("admin/assignRole").hasAnyAuthority("ADMIN").requestMatchers("auth/menu")
 				.hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
 				//
 				.requestMatchers("/courses/").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")

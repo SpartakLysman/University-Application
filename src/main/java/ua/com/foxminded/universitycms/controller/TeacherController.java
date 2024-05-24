@@ -48,7 +48,7 @@ public class TeacherController {
 	public String showTeachers(Model model) {
 		List<Teacher> teachers = teacherRepository.findAll();
 		model.addAttribute("teachers", teachers);
-		return "teacherList";
+		return "teacher/teacherList";
 	}
 
 	@PostMapping("/create")
@@ -60,7 +60,7 @@ public class TeacherController {
 	@GetMapping("/create")
 	public String showCreateTeacherForm(Model model) {
 		model.addAttribute("teacher", new Teacher());
-		return "createTeacher";
+		return "teacher/createTeacher";
 	}
 
 	@PostMapping("/{id}/update")
@@ -75,7 +75,7 @@ public class TeacherController {
 		if (teacherOptional.isPresent()) {
 			Teacher teacher = teacherOptional.get();
 			model.addAttribute("teacher", teacher);
-			return "updateTeacher";
+			return "teacher/updateTeacher";
 		} else {
 			return "redirect:/teachers";
 		}
@@ -92,7 +92,7 @@ public class TeacherController {
 		Optional<Teacher> teacher = teacherService.findById(id);
 		if (teacher.isPresent()) {
 			model.addAttribute("teacher", teacher.get());
-			return "deleteTeacher";
+			return "teacher/deleteTeacher";
 		} else {
 			return "redirect:/teachers";
 		}
@@ -103,7 +103,7 @@ public class TeacherController {
 		Optional<Teacher> teacher = teacherService.findById(id);
 		if (teacher.isPresent()) {
 			model.addAttribute("teacher", teacher.get());
-			return "getTeacherById";
+			return "teacher/getTeacherById";
 		} else {
 			return "error";
 		}
@@ -115,17 +115,16 @@ public class TeacherController {
 		if (teacherOptional.isPresent()) {
 			List<Course> courses = courseRepository.findByTeacherId(teacherId);
 			model.addAttribute("courses", courses);
-			return "viewTeacherCourses";
+			return "teacher/viewTeacherCourses";
 		} else {
 			return "redirect:/teachers";
 		}
 	}
-/////////////////
 
 	@GetMapping("/{teacherId}/schedule")
-	public String showTeacherSchedule(@PathVariable Long teacherId, Model model) {
+	public String viewTeacherSchedule(@PathVariable Long teacherId, Model model) {
 		List<ScheduleEntry> schedule = scheduleService.getTeacherSchedule(teacherId);
 		model.addAttribute("schedule", schedule);
-		return "teacherSchedule";
+		return "schedule/teacherSchedule";
 	}
 }

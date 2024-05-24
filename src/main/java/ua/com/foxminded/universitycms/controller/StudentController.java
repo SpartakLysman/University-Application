@@ -58,7 +58,7 @@ public class StudentController {
 	public String showStudents(Model model) {
 		List<Student> students = studentRepository.findAll();
 		model.addAttribute("students", students);
-		return "studentList";
+		return "student/studentList";
 	}
 
 	@PostMapping("/create")
@@ -72,7 +72,7 @@ public class StudentController {
 	@GetMapping("/create")
 	public String showCreateStudentForm(Model model) {
 		model.addAttribute("student", new Student());
-		return "createStudent";
+		return "student/createStudent";
 	}
 
 	@PostMapping("/{id}/update")
@@ -87,7 +87,7 @@ public class StudentController {
 		if (studentOptional.isPresent()) {
 			Student student = studentOptional.get();
 			model.addAttribute("student", student);
-			return "updateStudent";
+			return "student/updateStudent";
 		} else {
 			return "redirect:/students";
 		}
@@ -104,7 +104,7 @@ public class StudentController {
 		Optional<Student> student = studentService.findById(id);
 		if (student.isPresent()) {
 			model.addAttribute("student", student.get());
-			return "deleteStudent";
+			return "student/deleteStudent";
 		} else {
 			return "redirect:/students";
 		}
@@ -115,9 +115,9 @@ public class StudentController {
 		Optional<Student> student = studentService.findById(id);
 		if (student.isPresent()) {
 			model.addAttribute("student", student.get());
-			return "getStudentById";
+			return "student/getStudentById";
 		} else {
-			return "studentDoesNotExist";
+			return "student/studentDoesNotExist";
 		}
 	}
 
@@ -125,7 +125,7 @@ public class StudentController {
 	public String viewAllCourses(Model model) {
 		List<Course> courses = courseRepository.findAll();
 		model.addAttribute("courses", courses);
-		return "availableCourses";
+		return "student/availableCourses";
 	}
 
 	@PostMapping("/{studentId}/assignCourse")
@@ -155,7 +155,7 @@ public class StudentController {
 				List<Course> courses = courseRepository.findAll();
 				model.addAttribute("studentId", studentId);
 				model.addAttribute("courses", courses);
-				return "assignCourse";
+				return "student/assignCourse";
 			} else {
 				return "error";
 			}
@@ -170,7 +170,7 @@ public class StudentController {
 		List<Group> groups = groupService.findAll();
 		model.addAttribute("studentId", studentId);
 		model.addAttribute("groups", groups);
-		return "assignStudentToGroup";
+		return "student/assignStudentToGroup";
 	}
 
 	@PostMapping("/{studentId}/assignGroup")
@@ -204,21 +204,20 @@ public class StudentController {
 	public String showSelectGroupForm(Model model) {
 		List<Group> groups = groupService.findAll();
 		model.addAttribute("groups", groups);
-		return "studentsInGroupForm";
+		return "student/studentsInGroupForm";
 	}
 
 	@PostMapping("/studentsInGroup{groupId}")
 	public String showStudentsInGroup(@RequestParam("groupId") Long groupId, Model model) {
 		List<Student> studentsInGroup = studentService.findByGroupId(groupId);
 		model.addAttribute("students", studentsInGroup);
-		return "viewStudetsInGroup";
+		return "student/viewStudetsInGroup";
 	}
-/////////
 
 	@GetMapping("/{studentId}/schedule")
-	public String showStudentSchedule(@PathVariable("studentId") Long studentId, Model model) {
+	public String viewStudentSchedule(@PathVariable Long studentId, Model model) {
 		List<ScheduleEntry> schedule = scheduleService.getStudentSchedule(studentId);
 		model.addAttribute("schedule", schedule);
-		return "studentSchedule";
+		return "schedule/studentSchedule";
 	}
 }

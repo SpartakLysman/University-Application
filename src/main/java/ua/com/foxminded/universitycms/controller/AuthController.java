@@ -8,21 +8,21 @@ public class AuthController {
 
 	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "auth/login";
 	}
 
 	@GetMapping("/menu")
 	public String menu() {
-		return "menu";
+		return "auth/menu";
 	}
 
 	@GetMapping("/logout")
 	public String logout() {
-		return "logout";
+		return "auth/logout";
 	}
 
 	@GetMapping("/error")
 	public String error() {
-		return "error";
+		return "auth/error";
 	}
 }
