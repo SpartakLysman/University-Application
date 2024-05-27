@@ -18,8 +18,8 @@ public class ScheduleEntry {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "student_id", nullable = false)
-	private Student student;
+	@JoinColumn(name = "group_id", nullable = false)
+	private Group group;
 
 	@ManyToOne
 	@JoinColumn(name = "teacher_id", nullable = false)
@@ -39,6 +39,14 @@ public class ScheduleEntry {
 
 	public LocalDateTime getDateTime() {
 		return dateTime;
+	}
+
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public Course getCourse() {

@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+ <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 <head>
     <title>Edit Schedule</title>
-      <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    
 <style>
 .back-to-menu {
          position: absolute;
@@ -18,15 +19,16 @@
 .back-to-menu:hover {
          background-color: #138496;
 }
-</style>   
+</style>  
 </head>
 <body>
 <h1>Edit Schedule</h1>
+<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
 <form action="#" th:action="@{/schedules/edit/{id}(id=${scheduleEntry.id})}" th:object="${scheduleEntry}" method="post">
     <div>
-        <label>Student:</label>
-        <select th:field="*{student.id}">
-            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        <label>Group:</label>
+        <select th:field="*{group.id}">
+            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
         </select>
     </div>
     <div>

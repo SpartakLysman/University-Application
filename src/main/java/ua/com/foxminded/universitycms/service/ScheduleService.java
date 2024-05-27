@@ -6,7 +6,7 @@ import ua.com.foxminded.universitycms.model.ScheduleEntry;
 
 public interface ScheduleService {
 
-	List<ScheduleEntry> getStudentSchedule(Long studentId);
+	List<ScheduleEntry> getGroupSchedule(Long groupId);
 
 	List<ScheduleEntry> getTeacherSchedule(Long teacherId);
 

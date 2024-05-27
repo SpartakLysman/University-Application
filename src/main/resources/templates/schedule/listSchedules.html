@@ -50,30 +50,31 @@
 <body>
     <h1>Schedules</h1>
     <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
-    <a href="/schedules/create" class="btn">Create New Schedule</a>
     <table>
         <thead>
             <tr>
-                <th>Date and Time</th>
-                <th>Course</th>
-                <th>Student</th>
-                <th>Teacher</th>
-                <th>Classroom</th>
-                <th>Actions</th>
+                  <th>Group</th>
+          		  <th>Teacher</th>
+        	      <th>Course</th>
+          		  <th>Date and Time</th>
+          		  <th>Classroom</th>
+          		  <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="entry : ${schedules}">
-                <td th:text="${#dates.format(entry.dateTime, 'yyyy-MM-dd HH:mm')}">-</td>
-                <td th:text="${entry.course.title}">-</td>
-                <td th:text="${entry.student.name}">-</td>
-                <td th:text="${entry.teacher.name}">-</td>
-                <td th:text="${entry.classroom}">-</td>
+                
+                     <td th:text="${schedule.group.title}"></td>
+           			 <td th:text="${schedule.teacher.name}"></td>
+           		     <td th:text="${schedule.course.title}"></td>
+                     <td th:text="${#dates.format(entry.dateTime, 'yyyy-MM-dd HH:mm')}">-</td>
+                     <td th:text="${schedule.classroom}"></td>
                 <td>
                     <a th:href="@{/schedules/edit/{id}(id=${entry.id})}" class="btn">Edit</a>
                 </td>
             </tr>
         </tbody>
     </table>
+    <a th:href="@{/schedules/create}">Create New Schedule</a>
 </body>
 </html>

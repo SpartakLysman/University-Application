@@ -1,25 +1,26 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 <head>
-    <title>Student Schedule</title>
+    <title>Group Schedule</title>
 <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .deep-orange-bg {
-            background-color: #FF5733;
-        }
-		.back-to-menu {
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+th, td {
+	padding: 8px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+th {
+	background-color: #f2f2f2;
+}
+.deep-orange-bg {
+	background-color: #FF5733;
+}
+.back-to-menu {
          position: absolute;
          top: 20px;
          right: 18px;
@@ -29,12 +30,11 @@
          border: none;
          border-radius: 4px;
          text-decoration: none;
-		}
-		.back-to-menu:hover {
+}
+.back-to-menu:hover {
          background-color: #138496;
-		}
-		
-		.btn {
+}
+.btn {
 	display: inline-block;
 	padding: 8px 16px;
 	margin: 5px;
@@ -53,8 +53,8 @@
 </style>
 </head>
 <body>
-<h1>Student Schedule</h1>
-  		<a href="/students" class="back-to-menu">Back to Students</a>
+<h1>Group Schedule</h1>
+ 		<a href="/groups" class="back-to-menu">Back to Groups</a>
         <a href="/schedules/create" class="btn">Create New Schedule Entry</a>
 <table>
     <thead>
@@ -68,7 +68,7 @@
     <tbody>
         <tr th:each="schedule : ${schedules}">
             <td th:text="${schedule.teacher.name}"></td>
-            <td th:text="${schedule.course.name}"></td>
+            <td th:text="${schedule.course.title}"></td>
             <td th:text="${schedule.dateTime}"></td>
             <td th:text="${schedule.classroom}"></td>
         </tr>

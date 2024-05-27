@@ -17,8 +17,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 
 	@Override
-	public List<ScheduleEntry> getStudentSchedule(Long studentId) {
-		return scheduleRepository.findByStudentId(studentId);
+	public List<ScheduleEntry> getGroupSchedule(Long groupId) {
+		return scheduleRepository.findByGroupId(groupId);
 	}
 
 	@Override

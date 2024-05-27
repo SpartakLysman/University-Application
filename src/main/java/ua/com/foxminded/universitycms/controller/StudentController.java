@@ -215,7 +215,12 @@ public class StudentController {
 
 	@GetMapping("/{id}/schedule")
 	public String viewSchedule(@PathVariable("id") Long id, Model model) {
-		model.addAttribute("schedules", scheduleService.getStudentSchedule(id));
+		Optional<Student> student = studentService.findById(id);
+		if (student == null) {
+			throw new IllegalArgumentException("Invalid student Id:" + id);
+		}
+		Long groupId = student.get().getGroup().getId();
+		model.addAttribute("schedules", scheduleService.getGroupSchedule(groupId));
 		return "schedule/studentSchedule";
 	}
 }

@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 <head>
     <title>Create Schedule</title>
-<style>
+    <style>
 .back-to-menu {
          position: absolute;
          top: 20px;
@@ -25,9 +25,9 @@
 <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
 <form action="#" th:action="@{/schedules/create}" th:object="${scheduleEntry}" method="post">
     <div>
-        <label>Student:</label>
-        <select th:field="*{student.id}">
-            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        <label>Group:</label>
+        <select th:field="*{group.id}">
+            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
         </select>
     </div>
     <div>

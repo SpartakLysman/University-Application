@@ -17,6 +17,7 @@ import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
 import ua.com.foxminded.universitycms.service.GroupService;
+import ua.com.foxminded.universitycms.service.ScheduleService;
 import ua.com.foxminded.universitycms.service.StudentService;
 
 @Controller
@@ -31,6 +32,13 @@ public class GroupController {
 
 	@Autowired
 	private StudentService studentService;
+
+	private final ScheduleService scheduleService;
+
+	public GroupController(GroupService groupService, ScheduleService scheduleService) {
+		this.groupService = groupService;
+		this.scheduleService = scheduleService;
+	}
 
 	@GetMapping
 	public String showGroups(Model model) {
@@ -115,5 +123,11 @@ public class GroupController {
 		} else {
 			return "auth/error";
 		}
+	}
+
+	@GetMapping("/{id}/schedule")
+	public String viewSchedule(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("schedules", scheduleService.getGroupSchedule(id));
+		return "schedule/groupSchedule";
 	}
 }

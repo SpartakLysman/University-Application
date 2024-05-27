@@ -8,7 +8,7 @@ import ua.com.foxminded.universitycms.model.ScheduleEntry;
 
 public interface ScheduleRepository extends JpaRepository<ScheduleEntry, Long> {
 
-	List<ScheduleEntry> findByStudentId(Long studentId);
+	List<ScheduleEntry> findByGroupId(Long groupId);
 
 	List<ScheduleEntry> findByTeacherId(Long teacherId);
 }
