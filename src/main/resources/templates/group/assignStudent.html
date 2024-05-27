@@ -27,7 +27,7 @@
 </head>
 <body class="content" >
     <h1>Assign Student to Group</h1>
-    <a href="/menu" class="back-to-menu">Back to Menu</a>
+    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
     	<form th:action="@{/groups/{id}/assignStudent(id=${group.id})}" method="post">
    			 <input type="hidden" name="groupId" th:value="${group.id}">
   			 <label for="studentId">Select Student:</label>

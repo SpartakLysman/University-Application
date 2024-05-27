@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.universitycms.model.Course;
-import ua.com.foxminded.universitycms.model.ScheduleEntry;
 import ua.com.foxminded.universitycms.model.Teacher;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.TeacherRepository;
@@ -105,7 +104,7 @@ public class TeacherController {
 			model.addAttribute("teacher", teacher.get());
 			return "teacher/getTeacherById";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -121,10 +120,9 @@ public class TeacherController {
 		}
 	}
 
-	@GetMapping("/{teacherId}/schedule")
-	public String viewTeacherSchedule(@PathVariable Long teacherId, Model model) {
-		List<ScheduleEntry> schedule = scheduleService.getTeacherSchedule(teacherId);
-		model.addAttribute("schedule", schedule);
+	@GetMapping("/{id}/schedule")
+	public String viewSchedule(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("schedules", scheduleService.getTeacherSchedule(id));
 		return "schedule/teacherSchedule";
 	}
 }

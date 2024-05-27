@@ -64,4 +64,8 @@ public class ScheduleEntry {
 	public void setClassroom(String newClassroom) {
 		classroom = newClassroom;
 	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
 }

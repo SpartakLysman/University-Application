@@ -1,8 +1,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Teachers List</title>
 <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<title>Teachers List</title>
+
 <style>
 .btn {
 	display: inline-block;
@@ -58,7 +59,7 @@
 <br>
 <h4>Logged in as:</h4>
 	<h1>Teachers List</h1>
-	    <a href="/menu" class="back-to-menu">Back to Menu</a>
+	    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
 		<button class="btn findById" onclick="findById()">Find by ID</button>
 		<input type="text" id="teacherIdInput" placeholder="Enter Teacher ID">
 	<table>

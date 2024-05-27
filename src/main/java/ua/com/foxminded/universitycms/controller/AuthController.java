@@ -6,22 +6,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class AuthController {
 
-	@GetMapping("/login")
+	@GetMapping("/auth/login")
 	public String login() {
 		return "auth/login";
 	}
 
-	@GetMapping("/menu")
+	@GetMapping("/auth/menu")
 	public String menu() {
 		return "auth/menu";
 	}
 
-	@GetMapping("/logout")
+	@GetMapping("/auth/logout")
 	public String logout() {
 		return "auth/logout";
 	}
 
-	@GetMapping("/error")
+	@GetMapping("/auth/error")
 	public String error() {
 		return "auth/error";
 	}

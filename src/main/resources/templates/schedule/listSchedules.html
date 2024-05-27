@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
     <title>Schedules</title>
     <style>
         table {
@@ -29,11 +30,26 @@
         }
         .btn:hover {
             background-color: #218838;
-        }
-    </style>
+        }	
+		.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+		}
+		.back-to-menu:hover {
+        	 background-color: #138496;
+		}
+</style>  
 </head>
 <body>
     <h1>Schedules</h1>
+    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
     <a href="/schedules/create" class="btn">Create New Schedule</a>
     <table>
         <thead>
@@ -49,7 +65,7 @@
         <tbody>
             <tr th:each="entry : ${schedules}">
                 <td th:text="${#dates.format(entry.dateTime, 'yyyy-MM-dd HH:mm')}">-</td>
-                <td th:text="${entry.course.name}">-</td>
+                <td th:text="${entry.course.title}">-</td>
                 <td th:text="${entry.student.name}">-</td>
                 <td th:text="${entry.teacher.name}">-</td>
                 <td th:text="${entry.classroom}">-</td>

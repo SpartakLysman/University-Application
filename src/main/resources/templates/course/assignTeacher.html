@@ -27,7 +27,7 @@
 </head>
 <<body class="content">
 	<h1>Assign Teacher to Course</h1>
-	<a href="/menu" class="back-to-menu">Back to Menu</a>
+	<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
 	<form th:action="@{/courses/{id}/assignTeacher(id=${course.id})}" th:object="${course}" method="post">
         
 		<input type="hidden" name="courseId" th:value="${courseId}"> 

@@ -108,7 +108,7 @@ public class CourseController {
 			model.addAttribute("course", course.get());
 			return "course/getCourseById";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -126,7 +126,7 @@ public class CourseController {
 
 			return "course/assignTeacher";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -150,7 +150,7 @@ public class CourseController {
 
 			return "course/assignGroup";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 

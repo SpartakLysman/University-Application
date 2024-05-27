@@ -59,7 +59,7 @@
 		<h2>Welcome, Student!</h2>
 	</div>
 
- <form method="post" th:action="@{/logout}" id="logoutForm">
+ <form method="post" th:action="@{/auth/logout}" id="logoutForm">
 	<nav>
 		<ul>
 			<li id="courses"><a th:href="@{/courses}">Courses</a></li>
@@ -71,7 +71,7 @@
 			<br>
 			<br>
 
-			<li id="logout-item"><a href="/logout" class="logout-btn">Logout</a></li>
+			<li id="logout-item"><a href="/auth/logout" class="logout-btn">Logout</a></li>
 		</ul>
 	</nav>
 	</form>

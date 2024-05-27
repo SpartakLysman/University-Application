@@ -27,7 +27,7 @@
 </head>
 <body th:fragment="body" class="content">
 	<h1>Role Assigning</h1>
-	<a href="/menu" class="back-to-menu">Back to Menu</a>
+	<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
 	<form method="post" th:action="@{/assignRole}"> 
 		<label for="id">User:</label> <select id="id" name="id">
 			<option th:each="user : ${users}" th:value="${user.id}"

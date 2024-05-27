@@ -93,7 +93,7 @@ public class GroupController {
 			model.addAttribute("group", group.get());
 			return "group/getGroupById";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -113,7 +113,7 @@ public class GroupController {
 			model.addAttribute("students", students);
 			return "group/assignStudent";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
-import ua.com.foxminded.universitycms.model.ScheduleEntry;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.GroupRepository;
@@ -138,11 +137,11 @@ public class StudentController {
 				return "redirect:/students";
 			} else {
 				LOGGER.error("Student not found with ID: " + studentId);
-				return "error";
+				return "auth/error";
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error assigning course to student: " + e.getMessage());
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -157,11 +156,11 @@ public class StudentController {
 				model.addAttribute("courses", courses);
 				return "student/assignCourse";
 			} else {
-				return "error";
+				return "auth/error";
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error showing assign course form", e);
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -192,11 +191,11 @@ public class StudentController {
 				return "redirect:/students";
 			} else {
 				LOGGER.error("Student or Group not found with ID: " + studentId + " or " + groupId);
-				return "error";
+				return "auth/error";
 			}
 		} catch (Exception e) {
 			LOGGER.error("Error assigning student to group: " + e.getMessage());
-			return "error";
+			return "auth/error";
 		}
 	}
 
@@ -214,10 +213,9 @@ public class StudentController {
 		return "student/viewStudetsInGroup";
 	}
 
-	@GetMapping("/{studentId}/schedule")
-	public String viewStudentSchedule(@PathVariable Long studentId, Model model) {
-		List<ScheduleEntry> schedule = scheduleService.getStudentSchedule(studentId);
-		model.addAttribute("schedule", schedule);
+	@GetMapping("/{id}/schedule")
+	public String viewSchedule(@PathVariable("id") Long id, Model model) {
+		model.addAttribute("schedules", scheduleService.getStudentSchedule(id));
 		return "schedule/studentSchedule";
 	}
 }

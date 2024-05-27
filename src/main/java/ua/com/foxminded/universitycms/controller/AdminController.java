@@ -116,7 +116,7 @@ public class AdminController {
 			model.addAttribute("admin", admin.get());
 			return "admin/getAdminById";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,7 +183,7 @@ public class AdminController {
 			model.addAttribute("user", user.get());
 			return "admin/getUserById";
 		} else {
-			return "error";
+			return "auth/error";
 		}
 	}
 }

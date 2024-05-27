@@ -41,7 +41,7 @@ input[type="submit"] {
 	<div th:if="${param.error}">Invalid username or password.</div>
 	<div th:if="${param.logout}">You have been logged out.</div>
 
-	<form method="post" th:action="@{/login}" role="form">
+	<form method="post" th:action="@{/auth/login}" role="form">
 
 		<div>
 			<input name="username" placeholder="Username" type="text" />

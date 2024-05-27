@@ -1,60 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
 <head>
-    <meta charset="UTF-8">
     <title>Create Schedule</title>
-    <style>
-        form {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        label, select, input {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+<style>
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}   
+   </style>
 </head>
 <body>
-    <h1>Create Schedule</h1>
-    <form th:action="@{/schedules/create}" th:object="${scheduleEntry}" method="post">
-        <div class="form-group">
-            <label for="dateTime">Date and Time:</label>
-            <input type="datetime-local" id="dateTime" th:field="*{dateTime}">
-        </div>
-        <div class="form-group">
-            <label for="classroom">Classroom:</label>
-            <input type="text" id="classroom" th:field="*{classroom}">
-        </div>
-        <div class="form-group">
-            <label for="course">Course:</label>
-            <select id="course" th:field="*{course.id}">
-                <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.name}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="student">Student:</label>
-            <select id="student" th:field="*{student.id}">
-                <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="teacher">Teacher:</label>
-            <select id="teacher" th:field="*{teacher.id}">
-                <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
-            </select>
-        </div>
-        <button type="submit">Create Schedule</button>
-    </form>
+<h1>Create Schedule</h1>
+<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+<form action="#" th:action="@{/schedules/create}" th:object="${scheduleEntry}" method="post">
+    <div>
+        <label>Student:</label>
+        <select th:field="*{student.id}">
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Teacher:</label>
+        <select th:field="*{teacher.id}">
+            <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Course:</label>
+        <select th:field="*{course.id}">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Date and Time:</label>
+        <input type="datetime-local" th:field="*{dateTime}" />
+    </div>
+    <div>
+        <label>Classroom:</label>
+        <input type="text" th:field="*{classroom}" />
+    </div>
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>
 </body>
 </html>

@@ -49,9 +49,9 @@ public class SecurityConfig {
 				.requestMatchers("/students/{studentId}/assignCourse").hasAnyAuthority("ADMIN", "STUDENT")
 
 				.anyRequest().authenticated())
-				.formLogin(form -> form.loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/menu")
-						.permitAll())
-				.logout(logout -> logout.logoutSuccessUrl("/logout").permitAll())
+				.formLogin(form -> form.loginPage("/auth/login").loginProcessingUrl("/auth/login")
+						.defaultSuccessUrl("/auth/menu").permitAll())
+				.logout(logout -> logout.logoutSuccessUrl("/auth/logout").permitAll())
 				.requestCache(cache -> cache.requestCache(requestCache));
 
 		return http.build();
