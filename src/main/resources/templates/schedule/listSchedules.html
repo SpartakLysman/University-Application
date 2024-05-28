@@ -21,13 +21,18 @@
             background-color: #FF5733;
         }
         .btn {
-            padding: 10px 15px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-        }
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
         .btn:hover {
             background-color: #218838;
         }	
@@ -75,6 +80,6 @@
             </tr>
         </tbody>
     </table>
-    <a th:href="@{/schedules/create}">Create New Schedule</a>
+    <a th:href="@{/schedules/create}" class="btn">Create New Schedule</a>
 </body>
 </html>
