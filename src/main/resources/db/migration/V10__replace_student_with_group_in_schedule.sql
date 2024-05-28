@@ -5,7 +5,7 @@ ALTER TABLE schedule DROP CONSTRAINT IF EXISTS schedule_student_id_fkey;
 ALTER TABLE schedule DROP COLUMN IF EXISTS student_id;
 
 -- Step 3: Add the group_id column
-ALTER TABLE schedule ADD COLUMN group_id BIGINT NOT NULL;
+ALTER TABLE schedule ADD COLUMN group_id BIGINT;
 
 -- Step 4: Create a new foreign key constraint on group_id
 ALTER TABLE schedule

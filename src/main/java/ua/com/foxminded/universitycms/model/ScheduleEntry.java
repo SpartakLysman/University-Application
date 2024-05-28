@@ -1,13 +1,8 @@
 package ua.com.foxminded.universitycms.model;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 
 @Table(name = "schedule")
 @jakarta.persistence.Entity
@@ -33,12 +28,12 @@ public class ScheduleEntry {
 
 	private String classroom;
 
-	public ScheduleEntry() {
-
+	public Long getId() {
+		return id;
 	}
 
-	public LocalDateTime getDateTime() {
-		return dateTime;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Group getGroup() {
@@ -49,31 +44,35 @@ public class ScheduleEntry {
 		this.group = group;
 	}
 
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 	public Course getCourse() {
 		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 	public String getClassroom() {
 		return classroom;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setDateTime(LocalDateTime newDateTime) {
-		dateTime = newDateTime;
-	}
-
-	public void setCourse(Course newCourse) {
-		course = newCourse;
-	}
-
-	public void setClassroom(String newClassroom) {
-		classroom = newClassroom;
-	}
-
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
+	public void setClassroom(String classroom) {
+		this.classroom = classroom;
 	}
 }

@@ -67,10 +67,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="entry : ${schedule}">
-                <td th:text="${entry.dateTime}">-</td>
-                <td th:text="${entry.course.title}">-</td>
-                <td th:text="${entry.classroom}">-</td>
+            <tr th:each="entry : ${schedules}">
+                <td th:text="${entry?.dateTime}">-</td>
+                <td th:text="${entry?.course?.title}">-</td>
+                <td th:text="${entry?.classroom}">-</td>
                 <td>
                     <a th:href="@{/schedules/edit/{id}(id=${entry.id})}" class="btn">Edit</a>
                 </td>
