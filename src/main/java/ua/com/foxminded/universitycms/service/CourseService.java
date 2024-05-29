@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import ua.com.foxminded.universitycms.dto.CourseBasicInfo;
 import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Group;
 import ua.com.foxminded.universitycms.model.Teacher;
@@ -175,5 +176,9 @@ public class CourseService {
 		} else {
 			throw new EntityNotFoundException("Course not found");
 		}
+	}
+
+	public List<CourseBasicInfo> findAllBasicInfo() {
+		return courseRepository.findAllBasicInfo();
 	}
 }

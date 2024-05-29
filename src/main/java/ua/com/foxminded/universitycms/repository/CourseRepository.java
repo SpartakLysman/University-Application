@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.universitycms.dto.CourseBasicInfo;
 import ua.com.foxminded.universitycms.model.Course;
 
 @Repository
@@ -25,4 +26,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 
 	@Query("SELECT c FROM Course c JOIN c.students s WHERE s.id = :studentId")
 	List<Course> findByStudentId(Long studentId);
+
+	@Query("SELECT new ua.com.foxminded.universitycms.dto.CourseBasicInfo(c.id, c.title, c.description) FROM Course c")
+	List<CourseBasicInfo> findAllBasicInfo();
 }

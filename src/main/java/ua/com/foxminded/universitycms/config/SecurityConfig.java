@@ -19,8 +19,8 @@ public class SecurityConfig {
 		HttpSessionRequestCache requestCache = new HttpSessionRequestCache();
 		requestCache.setMatchingRequestParameterName(null);
 		http.authorizeHttpRequests(requests -> requests
-				.requestMatchers("static/css/**", "/?continue", "/webjars/**", "/assets/**").permitAll()
-				.requestMatchers("admin/assignRole").hasAnyAuthority("ADMIN").requestMatchers("auth/menu")
+				.requestMatchers("static/css/**", "/?continue", "/webjars/**", "/assets/**", "/public/courses")
+				.permitAll().requestMatchers("admin/assignRole").hasAnyAuthority("ADMIN").requestMatchers("auth/menu")
 				.hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
 				//
 				.requestMatchers("/courses/").hasAnyAuthority("ADMIN", "TEACHER", "STUDENT")
