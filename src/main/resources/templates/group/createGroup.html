@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create New Group</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.container {
+	text-align: center;
+}
+
+.create-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+	background-color: #c82333;
+}
+</style>
+</head>
+<body>
+	<h1>Create New Group</h1>
+	<form th:action="@{/groups/create}" method="post">
+		<br>
+		<label for="title">Title:</label> 
+		<input type="text" id="title" name="title"><br><br>
+		<br>
+		<button type="submit" class="create-btn">Create New Group</button>
+</form>
+</body>
+</html>

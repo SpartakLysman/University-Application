@@ -1,0 +1,99 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<title>Teachers List</title>
+
+<style>
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+.content {
+    margin-left: 25px;
+}
+.btn:hover {
+	background-color: #0056b3;
+}
+.btn.findById {
+	background-color: #28a745;
+}
+.btn.viewTCourses {
+	background-color: #28a745;
+}
+.btn.update {
+	background-color: #ffc107;
+}
+.btn.delete {
+	background-color: #dc3545;
+}
+.btn.viewSchedule {
+	background-color: rgb(255, 87, 0);
+}
+</style>
+</head>
+<body class="content">
+<br>
+<h4>Logged in as:</h4>
+	<h1>Teachers List</h1>
+	    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+		<button class="btn findById" onclick="findById()">Find by ID</button>
+		<input type="text" id="teacherIdInput" placeholder="Enter Teacher ID">
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="teacher : ${teachers}">
+				<td th:text="${teacher.id}">ID</td>
+				<td th:text="${teacher.name}">Name</td>
+				<td th:text="${teacher.surname}">Surname</td>
+				<td th:text="${teacher.login}">Login</td>
+				<td>			
+				    <a th:href="@{/teachers/{teacherId}/schedule(teacherId=${teacher.id})}" class="btn viewSchedule">View your schedule</a>
+					<a th:href="@{/teachers/{id}/update(id=${teacher.id})}"class="btn update">Update</a>  
+					<a th:href="@{/teachers/{id}/delete(id=${teacher.id})}"class="btn delete">Delete</a>
+					<a th:href="@{/teachers/viewTeacherCourses/{id}(id=${teacher.id})}"class="btn viewTCourses">View Assigned Courses</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<br>
+	<a href="/teachers/create" class="btn">Create new teacher</a>
+	<script>
+        function findById() {
+            var teacherId = document.getElementById("teacherIdInput").value;
+            window.location.href = "/teachers/getById/" + teacherId;
+        }
+    </script>

@@ -10,20 +10,20 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "groups")
+@jakarta.persistence.Entity
 public class Group extends Entity<Long> implements Serializable {
+
+	private static final long serialVersionUID = -7353719263354063173L;
 
 	@Column(name = "title")
 	private String title;
 
 	@ManyToMany
-	@JoinTable(name = "groups_courses", schema = "application", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
+	@JoinTable(name = "groups_courses", schema = "public", joinColumns = @JoinColumn(name = "group_id"), inverseJoinColumns = @JoinColumn(name = "course_id"))
 	private List<Course> courses = new ArrayList<>();
 
-	private static final long serialVersionUID = -7353719263354063173L;
-
-	public Group(long id, String title) {
+	public Group(Long id, String title) {
 		super(id);
 		this.title = title;
 	}
@@ -60,6 +60,32 @@ public class Group extends Entity<Long> implements Serializable {
 
 	public void setTitle(String newTitle) {
 		title = newTitle;
+	}
+
+	public List<Student> getStudents() {
+		List<Student> students = new ArrayList<>();
+		for (Course course : courses) {
+			students.addAll(course.getStudents());
+		}
+		return students;
+	}
+
+	public void removeStudent(Student student) {
+		for (Course course : courses) {
+			if (course.getStudents().contains(student)) {
+				course.deleteStudent(student);
+				return;
+			}
+		}
+		System.out.println("The student not found in any course of this group");
+	}
+
+	public void addStudent(Student student) {
+		for (Course course : courses) {
+			if (!course.getStudents().contains(student)) {
+				course.addStudent(student);
+			}
+		}
 	}
 
 	public String toString() {

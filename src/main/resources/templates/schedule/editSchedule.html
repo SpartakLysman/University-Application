@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<head>
+    <title>Edit Schedule</title>
+    
+<style>
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+</style>  
+</head>
+<body>
+<h1>Edit Schedule</h1>
+<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+<form action="#" th:action="@{/schedules/edit/{id}(id=${scheduleEntry.id})}" th:object="${scheduleEntry}" method="post">
+    <div>
+        <label>Group:</label>
+        <select th:field="*{group.id}">
+            <option th:each="group : ${groups}" th:value="${group.id}" th:text="${group.title}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Teacher:</label>
+        <select th:field="*{teacher.id}">
+            <option th:each="teacher : ${teachers}" th:value="${teacher.id}" th:text="${teacher.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Course:</label>
+        <select th:field="*{course.id}">
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
+        </select>
+    </div>
+    <div>
+        <label>Date and Time:</label>
+        <input type="datetime-local" th:field="*{dateTime}" />
+    </div>
+    <div>
+        <label>Classroom:</label>
+        <input type="text" th:field="*{classroom}" />
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+</body>
+</html>

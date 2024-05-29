@@ -19,11 +19,49 @@ import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
 
 @SpringBootTest(classes = { StudentRepository.class })
-
 public class StudentRepositoryTest {
 
 	@Mock
 	private StudentRepository studentRepository;
+
+	@Test
+	public void testDeleteStudent() {
+		Student studentToDelete = new Student();
+
+		when(studentRepository.deleteStudent(studentToDelete)).thenReturn(true);
+
+		boolean result = studentRepository.deleteStudent(studentToDelete);
+
+		verify(studentRepository).deleteStudent(studentToDelete);
+		assertEquals(true, result);
+	}
+
+	@Test
+	public void testFindByName() {
+		String name = "John Doe";
+
+		when(studentRepository.findByName(name)).thenReturn(Arrays.asList(new Student()));
+
+		List<Student> students = studentRepository.findByName(name);
+
+		verify(studentRepository).findByName(name);
+		assertNotNull(students);
+		assertFalse(students.isEmpty());
+	}
+
+	@Test
+	public void testFindByLogin() {
+		String login = "john_doe";
+
+		when(studentRepository.findByLogin(login)).thenReturn(Optional.of(new Student()));
+
+		Optional<Student> student = studentRepository.findByLogin(login);
+
+		assertTrue(student.isPresent());
+
+		verify(studentRepository).findByLogin(login);
+
+	}
 
 	@Test
 	public void testFindByLoginAndPassword() {
@@ -39,18 +77,6 @@ public class StudentRepositoryTest {
 	}
 
 	@Test
-	public void testDeleteStudent() {
-		Student studentToDelete = new Student();
-
-		when(studentRepository.deleteStudent(studentToDelete)).thenReturn(true);
-
-		boolean result = studentRepository.deleteStudent(studentToDelete);
-
-		verify(studentRepository).deleteStudent(studentToDelete);
-		assertEquals(true, result);
-	}
-
-	@Test
 	public void testFindFirstByOrderByKeyDesc() {
 		when(studentRepository.findFirstByOrderByIdDesc()).thenReturn(Optional.of(new Student()));
 
@@ -58,18 +84,5 @@ public class StudentRepositoryTest {
 
 		verify(studentRepository).findFirstByOrderByIdDesc();
 		assertTrue(student.isPresent());
-	}
-
-	@Test
-	public void testFindByName() {
-		String name = "John Doe";
-
-		when(studentRepository.findByName(name)).thenReturn(Arrays.asList(new Student()));
-
-		List<Student> students = studentRepository.findByName(name);
-
-		verify(studentRepository).findByName(name);
-		assertNotNull(students);
-		assertFalse(students.isEmpty());
 	}
 }

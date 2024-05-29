@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Edit Admin</h1>
+    <form th:action="@{/admins/{id}/update(id=${admin.id})}" th:object="${admin}" method="post">
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" th:value="${admin.name}" ><br><br>
+        
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" th:value="${admin.surname}" ><br><br>
+       
+        <label for="login">Login:</label>
+          <input type="text" id="login" name="login" th:value="${admin.login}" ><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password" th:value="${admin.password}" ><br><br>
+       
+        <button type="submit">Save Changes</button>
+    </form> 
+</body>
+</html>

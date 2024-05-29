@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New User</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+        .container {
+            text-align: center;
+        }
+
+        .create-btn {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .create-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Create New Course</h1>
+     <form th:action="@{/admins/users/create}" method="post">
+        <br>
+        <label for="teacher_id">Group_id:</label>
+        <input type="text" id="teacher_id" name="teacher_id"><br><br>  
+        
+        <label for="title">Name:</label>
+        <input type="text" id="title" name="title"><br><br>
+       
+        <label for="description">Surname:</label>
+        <input type="text" id="description" name="description"><br><br>   
+             
+        <label for="teacher_id">Login:</label>
+        <input type="text" id="teacher_id" name="teacher_id"><br><br>  
+        
+        <label for="teacher_id">Password:</label>
+        <input type="text" id="teacher_id" name="teacher_id"><br><br>
+          
+        <label for="teacher_id">Role:</label>      
+        <input type="text" id="teacher_id" name="teacher_id"><br><br>  
+        <br> 
+        <button type="submit" class="create-btn">Create New Course</button>
+    </form>
+</body>
+</html>

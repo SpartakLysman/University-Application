@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Error page</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.container {
+	text-align: center;
+}
+
+.backhome-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.backhome-btn:hover {
+	background-color: #c82333;
+}
+</style>
+<body>
+	<div class="container">
+		<h1>Error Page</h1>
+		<h2>something went wrong. 404.</h2>
+
+		<a href="login.html" th:href="@{/auth/login}">Back to Home Page</a>
+		</div>
+</body>
+</html>

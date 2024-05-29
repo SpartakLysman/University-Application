@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Course to Student</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+.content {
+    margin-left: 25px;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+</style>
+</head>
+<body class="content">
+    <h1>Assign Course to Student</h1>
+    <a href="/menu" class="back-to-menu">Back to Menu</a>
+    <form th:action="@{'/students/' + ${studentId} + '/assignCourse'}" method="post">
+        <input type="hidden" name="studentId" th:value="${studentId}">
+        <label for="courseId">Select Course:</label>
+        <select id="courseId" name="courseId" required>
+            <option value="">Select a course</option>
+            <option th:each="course : ${courses}" th:value="${course.id}" th:text="${course.title}"></option>
+        </select>
+        <br>
+        <button type="submit">Assign Course</button>
+    </form>
+</body>
+</html>

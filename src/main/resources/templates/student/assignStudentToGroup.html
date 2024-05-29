@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assign Student to Group</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+        .content {
+            margin-left: 25px;
+        }
+        .back-to-menu {
+            position: absolute;
+            top: 20px;
+            right: 18px;
+            background-color: #17a2b8;
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+        .back-to-menu:hover {
+            background-color: #138496;
+        }
+        .assign-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .assign-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body class="content">
+    <h2>Assign Student to Group</h2>
+    <a href="/menu" class="back-to-menu">Back to Menu</a>
+
+   <form th:action="@{'/students/' + ${studentId} + '/assignGroup'}" method="post">
+        <label for="group">Select Group:</label>
+        <select name="groupId" id="groupId">
+            <option value="">Select Group</option>
+            <th:block th:each="group : ${groups}">
+                <option th:value="${group.id}" th:text="${group.title}"></option>
+            </th:block>
+        </select>
+        <br>
+            <button type="submit" class="assign-button">Assign Student</button>
+    </form>
+</body>
+</html>
+

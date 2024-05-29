@@ -1,0 +1,92 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Groups List</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+.content {
+    margin-left: 25px;
+}
+.btn:hover {
+	background-color: #0056b3;
+}
+.btn.findById {
+	background-color: #28a745;
+}
+.btn.update {
+	background-color: #ffc107;
+}
+.btn.delete {
+	background-color: #dc3545;
+}
+.btn.assignS {
+    background-color: #17a2b8; 
+}
+</style>
+</head>
+<body class="content">
+<br>
+<h4>Logged in as:</h4>
+	<h1>Groups List</h1>
+	<a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+	<button class="btn findById" onclick="findById()">Find by ID</button>
+		<input type="text" id="groupIdInput" placeholder="Enter Group ID">
+		
+	<br>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Title</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="group : ${groups}">
+				<td th:text="${group.id}">ID</td>
+				<td th:text="${group.title}">Title</td>
+				<td> 				  
+				    <a th:href= "@{/groups/{id}/update(id=${group.id})}" class="btn update"> Update</a>				   
+					<a th:href="@{/groups/{id}/delete(id=${group.id})}" class="btn delete">Delete</a>		
+					<a th:href="@{/groups/{id}/assignStudent(id=${group.id})}" class="btn assignT">Assign Student</a> 
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<br>
+	<a href="/groups/create" class="btn">Create new group</a>
+	<script>
+        function findById() {
+            var groupId = document.getElementById("groupIdInput").value;
+            window.location.href = "/groups/getById/" + groupId;
+        }
+    </script>

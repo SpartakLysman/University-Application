@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Does Not Exist</title>
+    <style>
+body {
+       font-family: Arial, sans-serif;
+       margin: 0;
+       padding: 0;
+       background-color: #f4f4f4;
+       text-align: center;
+}
+.container {
+       margin-top: 50px;
+}
+h2 {
+       color: #dc3545;
+}
+.btn {
+       background-color: #17a2b8;
+       color: white;
+       padding: 10px 20px;
+       text-decoration: none;
+       border-radius: 5px;
+       margin: 10px;
+}
+.btn:hover {
+       background-color: #138496;
+}
+.back-to-menu {
+       position: absolute;
+       top: 20px;
+       right: 18px;
+       background-color: #17a2b8;
+       color: white;
+       padding: 8px 16px;
+       border: none;
+       border-radius: 4px;
+       text-decoration: none;
+}
+.back-to-menu:hover {
+       background-color: #138496;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Student does not exist</h2>
+        <a href="/menu" class="back-to-menu">Back to Menu</a>
+        <a href="/students" class="btn">Back to Students List</a>
+       
+    </div>
+</body>
+</html>

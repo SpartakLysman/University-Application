@@ -1,0 +1,114 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Students List</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<style>
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+ .content {
+    margin-left: 25px;
+}
+.btn:hover {
+	background-color: #0056b3;
+}
+.btn.coursesAvailableView {
+	background-color: #28a745;
+}
+.btn.viewStudentsInGroup {
+	background-color: #28a745;
+}
+.btn.assignG {
+	  background-color: #17a2b8;
+}
+.btn.viewSchedule {
+	background-color: rgb(255, 87, 0);
+}
+.btn.findById {
+	background-color: #28a745;
+}
+.btn.update {
+	background-color: #ffc107;
+}
+.btn.delete {
+	background-color: #dc3545;
+}
+.btn.assignC {
+    background-color: #17a2b8;
+}
+</style>
+</head>
+<body class="content">
+<br>
+<h4>Logged in as:</h4>
+	<h1>Students List</h1>
+	    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+		<a href="/students/coursesAvailableView" class="btn coursesAvailableView">View Available Courses</a>
+		<a href="/students/studentsInGroup" class="btn viewStudentsInGroup">View Students in Group</a>
+		
+		<button class="btn findById" onclick="findById()">Find by ID</button>
+		<input type="text" id="studentIdInput" placeholder="Enter Student ID">	
+	<br>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Group_id</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="student : ${students}">
+				<td th:text="${student.id}">ID</td>
+				<td th:text="${student.group != null ? student.group.id : 'N/A'}">Group_id</td>
+				<td th:text="${student.name}">Name</td>
+				<td th:text="${student.surname}">Surname</td>
+				<td th:text="${student.login}">Login</td>
+				<td>
+				    <a th:href="@{/students/{studentId}/schedule(studentId=${student.id})}" class="btn viewSchedule">View your schedule</a>
+                    <a th:href= "@{/students/{id}/update(id=${student.id})}" class="btn update"> Update</a>
+				    <a th:href="@{/students/{id}/delete(id=${student.id})}" class="btn delete">Delete</a>
+					<a th:href="@{'/students/' + ${student.id} + '/assignCourse'}" class="btn assignC">Assign Course</a>
+					<a th:href="@{'/students/' + ${student.id} + '/assignGroup'}" class="btn assignG">Assign Student to a Group</a>
+				 </td>
+			</tr> 
+		</tbody>
+	</table>
+	<br>
+	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<br>
+	<a href="/students/create" class="btn">Create new Student</a>
+	<script>
+        function findById() {
+            var studentId = document.getElementById("studentIdInput").value;
+            window.location.href = "/students/getById/" + studentId;
+        }
+    </script>

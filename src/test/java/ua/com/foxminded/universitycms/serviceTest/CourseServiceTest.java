@@ -12,11 +12,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import ua.com.foxminded.universitycms.model.Course;
+import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.service.CourseService;
 
 @SpringBootTest(classes = { CourseService.class })
@@ -25,6 +27,9 @@ class CourseServiceTest {
 	@MockBean
 	@Autowired
 	CourseService courseService;
+
+	@Mock
+	private CourseRepository courseRepository;
 
 	private List<Course> coursesList;
 	private Course courseTest;
@@ -53,14 +58,14 @@ class CourseServiceTest {
 	void createCourseTest() {
 		Course course = new Course(5L, "Math", "Algebra");
 
-		when(courseService.create(course)).thenReturn(course);
+		when(courseService.create(course, 3L)).thenReturn(course);
 
-		Course createdCourse = courseService.create(course);
+		Course createdCourse = courseService.create(course, 3L);
 
 		assertNotNull(createdCourse);
 		assertEquals(course, createdCourse);
 
-		verify(courseService).create(course);
+		verify(courseService).create(course, 3L);
 	}
 
 	@Test
@@ -103,6 +108,17 @@ class CourseServiceTest {
 		verify(courseService).delete(courseTest);
 	}
 
+//	@Test
+//	void testDeleteById() {
+//		Course courseOne = new Course(123L, "Biology", "Animals");
+//
+//		// When
+//		courseService.deleteById(courseOne.getId());
+//
+//		// Then
+//		verify(courseRepository, times(1)).deleteById(courseOne.getId());
+//	}
+
 	@Test
 	void updateCourseTest() {
 		Course courseForCheck = courseTest;
@@ -110,7 +126,7 @@ class CourseServiceTest {
 		when(courseService.update(courseTest)).thenReturn(courseTest);
 
 		courseTest = new Course(50L, "Swimming", "Fast");
-		Course updated = courseService.update(courseTest);
+		courseService.update(courseTest);
 
 		assertNotEquals(courseForCheck, courseTest);
 

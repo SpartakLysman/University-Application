@@ -1,10 +1,25 @@
 package ua.com.foxminded.universitycms.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import java.io.Serializable;
 
-@MappedSuperclass
-public abstract class User extends Entity<Long> {
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Table(name = "users")
+@jakarta.persistence.Entity
+public class User extends Entity<Long> implements Serializable {
+
+	private static final long serialVersionUID = 3435155961633998707L;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "group_id")
+	private Group group;
 
 	@Column(name = "name")
 	private String name;
@@ -18,8 +33,21 @@ public abstract class User extends Entity<Long> {
 	@Column(name = "password")
 	private String password;
 
-	public User(Long key, String name, String surname, String login, String password) {
-		super(key);
+	@Column(name = "role")
+	@Enumerated(EnumType.STRING)
+	private UserRole role;
+
+	public User(Long id, String name, String surname, String login, String password, UserRole role) {
+		super(id);
+		this.name = name;
+		this.surname = surname;
+		this.login = login;
+		this.password = password;
+		this.role = role;
+	}
+
+	public User(Long id, String name, String surname, String login, String password) {
+		super(id);
 		this.name = name;
 		this.surname = surname;
 		this.login = login;
@@ -35,6 +63,10 @@ public abstract class User extends Entity<Long> {
 
 	public User() {
 
+	}
+
+	public Group getGroup() {
+		return group;
 	}
 
 	public String getName() {
@@ -53,6 +85,14 @@ public abstract class User extends Entity<Long> {
 		return password;
 	}
 
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setGroup(Group newGroup) {
+		this.group = newGroup;
+	}
+
 	public void setName(String newName) {
 		this.name = newName;
 	}
@@ -69,7 +109,12 @@ public abstract class User extends Entity<Long> {
 		this.password = newPassword;
 	}
 
+	public void setRole(UserRole role) {
+		this.role = role;
+	}
+
 	public String toString() {
-		return "Name: " + name + ",  Surname: " + surname + ",  Login: " + login + ",  Password: " + password;
+		return "Group id: " + group.getId() + ", Name: " + name + ",  Surname: " + surname + ",  Login: " + login
+				+ ",  Password: " + password + ", Role: " + role;
 	}
 }

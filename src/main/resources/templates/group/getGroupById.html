@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Details</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+.content {
+    margin-left: 25px;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+</style>  
+</head>
+<body class="content">
+    <h1>Group Details</h1>
+    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+    <div th:if="${group != null}">
+        <p><strong>ID:</strong> <span th:text="${group.id}"></span></p>
+        <p><strong>Title:</strong> <span th:text="${group.title}"></span></p>
+    </div>
+    <div th:if="${group == null}">
+        <p>Group not found.</p>
+    </div>
+</body>
+</html>

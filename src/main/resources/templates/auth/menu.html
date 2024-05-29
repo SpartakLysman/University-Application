@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MENU</title>
+<style>
+.logout-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+	margin-left: 50px;
+}
+.content {
+    margin-left: 25px;
+}
+.logout-btn:hover {
+	background-color: #c82333;
+}
+#logout-item {
+	list-style-type: none;
+}
+#courses, #students, #groups, #teachers, #admins {
+	margin-left: 38px;
+}
+</style>
+</head>
+
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<body th:fragment="body" class="content">
+<br>
+<h4>Logged in as:</h4>
+	<h1>MENU</h1>
+
+	<div sec:authorize="isAuthenticated()">
+		This content is only shown to authenticated users.
+		<h2>Welcome, User!</h2>
+	</div>
+
+	<div sec:authorize="hasRole('ADMIN')">
+		This content is only shown to administrators.
+		<h2>Welcome, Admin!</h2>
+	</div>
+
+	<div sec:authorize="hasRole('TEACHER')">
+		This content is only shown to teachers.
+		<h2>Welcome, Teacher!</h2>
+	</div>
+
+	<div sec:authorize="hasRole('STUDENT')">
+		This content is only shown to students.
+		<h2>Welcome, Student!</h2>
+	</div>
+
+ <form method="post" th:action="@{/auth/logout}" id="logoutForm">
+	<nav>
+		<ul>
+			<li id="courses"><a th:href="@{/courses}">Courses</a></li>
+			<li id="groups"><a th:href="@{/groups}">Groups</a></li>
+			<li id="students"><a th:href="@{/students}">Students</a></li>
+			<li id="teachers"><a th:href="@{/teachers}">Teachers</a></li>
+			<li id="admins"><a th:href="@{/admins}">Admins</a></li>
+
+			<br>
+			<br>
+
+			<li id="logout-item"><a href="/auth/logout" class="logout-btn">Logout</a></li>
+		</ul>
+	</nav>
+	</form>
+</body>
+</html>

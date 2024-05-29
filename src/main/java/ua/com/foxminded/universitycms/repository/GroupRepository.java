@@ -19,7 +19,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 	boolean deleteGroup(@Param("group") Group group);
 
 	@Query("SELECT DISTINCT g FROM Group g LEFT JOIN FETCH g.courses WHERE g.id = :id")
-	Optional<Group> findByIdWithCourses(@Param("id") Long id);
+	Optional<Group> findByIdWithCourses(Long id);// @Param("id")
 
 	List<Group> findByTitle(String title);
 }

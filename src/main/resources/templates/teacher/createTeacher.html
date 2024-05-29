@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Teacher</title>
+    <style>
+.container {
+	text-align: center;
+}
+.create-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.create-btn:hover {
+	background-color: #c82333;
+}
+</style>
+</head>
+<body>
+    <h1>Create New Teacher</h1>
+    <form th:action="@{/teachers/create}" method="post">
+    	<br>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname"><br><br>
+        
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login"><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password"><br><br>
+        <br>     
+        <button type="submit" class="create-btn">Create New Teacher</button>
+     </form>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Student</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+    <style>
+.container {
+	text-align: center;
+}
+
+.create-btn {
+	background-color: #dc3545;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.create-btn:hover {
+	background-color: #c82333;
+}
+</style>
+</head>
+<body>
+    <h1>Create New Student</h1>
+    <form th:action="@{/students/create}" method="post">
+    	<br>
+        <label for="group_id">Group id:</label>
+        <input type="text" id="group_id" name="group_id"><br><br>
+        
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name"><br><br>
+        
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname"><br><br>
+        
+        <label for="login">Login:</label>
+        <input type="text" id="login" name="login"><br><br>
+        
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password"><br><br>
+        <br>
+       <button type="submit" class="create-btn">Create New Student</button>
+    </form>
+</body>
+</html>

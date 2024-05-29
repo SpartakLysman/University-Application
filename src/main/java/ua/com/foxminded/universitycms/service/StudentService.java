@@ -13,7 +13,6 @@ import ua.com.foxminded.universitycms.model.Course;
 import ua.com.foxminded.universitycms.model.Student;
 import ua.com.foxminded.universitycms.repository.CourseRepository;
 import ua.com.foxminded.universitycms.repository.StudentRepository;
-import ua.com.foxminded.universitycms.util.LoggingController;
 
 @Service
 public class StudentService {
@@ -22,7 +21,7 @@ public class StudentService {
 
 	private final CourseRepository courseRepository;
 
-	private final static Logger LOGGER = LoggerFactory.getLogger(LoggingController.class);
+	private final static Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
 
 	@Autowired
 	public StudentService(StudentRepository studentRepository, CourseRepository courseRepository) {
@@ -31,44 +30,50 @@ public class StudentService {
 	}
 
 	public Student create(Student student) {
-		LOGGER.debug("Student creating...");
-
+		LOGGER.debug("Student creating... ");
 		Student newStudent = studentRepository.save(student);
-		LOGGER.info("Students was successfully created" + student.toString());
+		LOGGER.info("Student was successfully created: " + student.toString());
 
 		return newStudent;
 	}
 
 	public List<Student> createAll(List<Student> studentsList) {
-		LOGGER.debug("Student creating...");
-
+		LOGGER.debug("Students creating... ");
 		List<Student> newStudents = studentRepository.saveAll(studentsList);
-		LOGGER.info("All students were successfully created" + studentsList.toString());
+		LOGGER.info("All students were successfully created: " + studentsList.toString());
 
 		return newStudents;
 	}
 
 	@Transactional
-	public boolean addStudentToCourse(Student student, long courseId) {
+	public boolean enrollStudentInCourse(Student student, long courseId) {
 		try {
 			Optional<Course> courseOptional = courseRepository.findById(courseId);
-			Optional<Student> studentOptional = studentRepository.findById(student.getId());
-
-			if (courseOptional.isPresent() && studentOptional.isPresent()) {
-				Course course = courseOptional.get();
-				Student updatedStudent = studentOptional.get();
-
-				course.addStudent(updatedStudent);
-				courseRepository.save(course);
-
-				LOGGER.info("Student added to the course successfully.");
-				return true;
-			} else {
-				LOGGER.error("Course or student not found.");
+			if (courseOptional.isEmpty()) {
+				LOGGER.error("Course not found");
 				return false;
 			}
+			Course course = courseOptional.get();
+
+			if (course.getStudents().contains(student)) {
+				LOGGER.warn("Student is already enrolled in the course");
+				return false;
+			}
+
+			Optional<Student> studentOptional = studentRepository.findById(student.getId());
+			if (studentOptional.isEmpty()) {
+				LOGGER.error("Student not found");
+				return false;
+			}
+			Student managedStudent = studentOptional.get();
+
+			course.addStudent(managedStudent);
+			courseRepository.save(course);
+
+			LOGGER.info("Student added to the course successfully");
+			return true;
 		} catch (Exception e) {
-			LOGGER.error("Error adding student to the course.", e);
+			LOGGER.error("Error adding student to the course ", e);
 			return false;
 		}
 	}
@@ -77,40 +82,46 @@ public class StudentService {
 	public boolean deleteStudentFromCourse(Student student, long courseId) {
 		try {
 			Optional<Course> courseOptional = courseRepository.findById(courseId);
-			Optional<Student> studentOptional = studentRepository.findById(student.getId());
-
-			if (courseOptional.isPresent() && studentOptional.isPresent()) {
-				Course course = courseOptional.get();
-				Student updatedStudent = studentOptional.get();
-
-				// Remove the student from the course and save the changes
-				course.deleteStudent(updatedStudent);
-				courseRepository.save(course);
-
-				LOGGER.info("Student removed from the course successfully.");
-				return true;
-			} else {
-				LOGGER.error("Course or student not found.");
+			if (courseOptional.isEmpty()) {
+				LOGGER.error("Course not found");
 				return false;
 			}
+			Course course = courseOptional.get();
+
+			Optional<Student> studentOptional = studentRepository.findById(student.getId());
+			if (studentOptional.isEmpty()) {
+				LOGGER.error("Student not found");
+				return false;
+			}
+			Student managedStudent = studentOptional.get();
+
+			course.deleteStudent(managedStudent);
+			courseRepository.save(course);
+
+			LOGGER.info("Student removed from the course successfully");
+			return true;
 		} catch (Exception e) {
-			LOGGER.error("Error removing student from the course.", e);
+			LOGGER.error("Error removing student from the course ", e);
 			return false;
 		}
 	}
 
 	public boolean delete(Student student) {
-		LOGGER.debug("Student deleting - " + student.toString());
-
+		LOGGER.debug("Student deleting... " + student.toString());
 		boolean deleted = studentRepository.deleteStudent(student);
 		LOGGER.info("Student was successfully deleted with id - " + student.getId());
 
 		return deleted;
 	}
 
-	public Student update(Student student) {
-		LOGGER.debug("Student updating - " + student.toString());
+	public void deleteById(Long id) {
+		LOGGER.debug("Student with id deleteng... ");
+		studentRepository.deleteById(id);
+		LOGGER.info("Student with id- " + id + " was successfully deleted");
+	}
 
+	public Student update(Student student) {
+		LOGGER.debug("Student updating... " + student.toString());
 		Student newStudent = studentRepository.save(student);
 		LOGGER.info("Student was successfully updated with id - " + student.getId());
 
@@ -118,32 +129,55 @@ public class StudentService {
 	}
 
 	public List<Student> findByName(String name) {
-		LOGGER.debug("Student findind by name");
+		LOGGER.debug("Students finding by name... ");
 		List<Student> studentsList = studentRepository.findByName(name);
 		LOGGER.info("Students were successfully found by name - " + name);
 
 		return studentsList;
 	}
 
-	public Optional<Student> findStudentWithMaxKey() {
-		LOGGER.debug("The latest student id findind...");
-		Optional<Student> latestId = studentRepository.findFirstByOrderByIdDesc();
-		LOGGER.info("The latest student id was found");
+	public List<Student> findByGroupId(Long groupId) {
+		LOGGER.debug("Student finding by group id... ");
+		List<Student> students = studentRepository.findByGroupId(groupId);
+		LOGGER.info("Student was successfully found by group id - " + groupId);
 
-		return latestId;
+		return students;
 	}
 
-	public Optional<Student> findById(long key) {
-
-		LOGGER.debug("Student finding by id");
-		Optional<Student> student = studentRepository.findById(key);
-		LOGGER.info("Student was successfully found by id - " + key);
+	public Optional<Student> findById(long id) {
+		LOGGER.debug("Student finding by id... ");
+		Optional<Student> student = studentRepository.findById(id);
+		LOGGER.info("Student was successfully found by id - " + id);
 
 		return student;
 	}
 
+	public Optional<Student> findByLogin(String login) {
+		LOGGER.debug("Student finding by login... ");
+		Optional<Student> student = studentRepository.findByLogin(login);
+		LOGGER.info("Student was successfully founded by login - " + login);
+
+		return student;
+	}
+
+	public Optional<Student> findByLoginAndPassword(String login, String password) {
+		LOGGER.debug("Student finding by login and password... ");
+		Optional<Student> student = studentRepository.findByLoginAndPassword(login, password);
+		LOGGER.info("Student was successfully founded by login and password - " + login);
+
+		return student;
+	}
+
+	public Optional<Student> findStudentWithMaxKey() {
+		LOGGER.debug("Student with max key findind... ");
+		Optional<Student> studentWithMaxKey = studentRepository.findFirstByOrderByIdDesc();
+		LOGGER.info("Student with max key was found");
+
+		return studentWithMaxKey;
+	}
+
 	public List<Student> findAll() {
-		LOGGER.debug("All student findind...");
+		LOGGER.debug("All students findind... ");
 		List<Student> studentsList = studentRepository.findAll();
 		LOGGER.info("All students were successfully found");
 

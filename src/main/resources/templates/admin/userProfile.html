@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>User Profile</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+	<h1>User Profile</h1>
+	<form method="get" th:action="@{/users}">
+		<div>
+			<p th:text="'Name: ' + ${user.name}"></p>
+			<p th:text="'Surname ' + ${user.surname}"></p>
+			<p th:text="'Login: ' + ${user.login}"></p>
+			<p th:text="'Role: ' + ${user.role}"></p>
+			<!-- Add more user details here -->
+		</div>
+	</form>
+</body>
+</html>

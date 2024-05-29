@@ -1,0 +1,18 @@
+package ua.com.foxminded.universitycms.service;
+
+import java.util.List;
+
+import ua.com.foxminded.universitycms.model.ScheduleEntry;
+
+public interface ScheduleService {
+
+	List<ScheduleEntry> getGroupSchedule(Long groupId);
+
+	List<ScheduleEntry> getTeacherSchedule(Long teacherId);
+
+	List<ScheduleEntry> findAll();
+
+	ScheduleEntry findById(Long id);
+
+	void save(ScheduleEntry scheduleEntry);
+}

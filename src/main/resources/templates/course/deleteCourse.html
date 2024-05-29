@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Course Confirmation</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h2>Delete Course Confirmation</h2>
+    <p>Are you sure you want to delete the following course?</p>
+    <br>
+    <p th:text="${course.title}"></p>
+          <form th:action="@{/courses/{id}/delete(id=${course.id})}" th:object="${course}" method="post">
+        <input type="hidden" name="id" th:value="${course.id}" />
+        <button type="submit">Yes, Delete Course</button>
+    </form>
+     <br> 
+     <br>
+    <a href="/courses">Cancel</a>
+</body>
+</html>

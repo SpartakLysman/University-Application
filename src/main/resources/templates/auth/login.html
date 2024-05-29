@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Please, Log In</title>
+<style>
+
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh; 
+	margin: 0;
+	flex-direction: column; 
+}
+
+form {
+	width: 300px;
+	padding: 20px;
+	border: 1px solid #ccc; 
+	border-radius: 5px; 
+	background-color: #f9f9f9;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+}
+
+form>div {
+	margin-bottom: 10px;
+	text-align: center;
+}
+
+input[type="submit"] {
+	display: block;
+	margin: 0 auto;
+}
+</style>
+</head>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" /><body>
+	<h1>Please, Log In</h1>
+
+	<div th:if="${param.login}">You are logged in.</div>
+	<div th:if="${param.error}">Invalid username or password.</div>
+	<div th:if="${param.logout}">You have been logged out.</div>
+
+	<form method="post" th:action="@{/auth/login}" role="form">
+
+		<div>
+			<input name="username" placeholder="Username" type="text" />
+		</div>
+		<div>
+			<input name="password" placeholder="Password" type="password" />
+		</div>
+		<input type="submit" value="Log in" />
+
+	</form>
+</body>
+</html>

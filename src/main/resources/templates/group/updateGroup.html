@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Group</title>
+    <link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+</head>
+<body>
+    <h1>Edit Group</h1>
+      <form th:action="@{/groups/{id}/update(id=${group.id})}" th:object="${group}" method="post">
+        
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" th:value="${group.title}"><br>
+        
+        <button type="submit">Save Changes</button>
+    </form>
+</body>
+</html>

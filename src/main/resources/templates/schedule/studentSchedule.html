@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}" />
+<head>
+    <title>Student Schedule</title>
+<style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .deep-orange-bg {
+            background-color: #FF5733;
+        }
+		.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+		}
+		.back-to-menu:hover {
+         background-color: #138496;
+		}
+		
+		.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.btn:hover {
+	background-color: #0056b3;
+}
+</style>
+</head>
+<body>
+<h1>Student Schedule</h1>
+  		<a href="/students" class="back-to-menu">Back to Students</a>
+  		<br>
+  		<br>
+<table>
+    <thead>
+        <tr>
+            <th>Teacher</th>
+            <th>Course</th>
+            <th>Group</th>
+            <th>Date and Time</th>
+            <th>Classroom</th>    
+        </tr>
+    </thead>
+    <tbody>
+        <tr th:each="schedule : ${schedules}">
+            <td th:text="${schedule.teacher.name}"></td>
+            <td th:text="${schedule.course.title}"></td>
+            <td th:text="${schedule.group.title}"></td>
+            <td th:text="${schedule.dateTime}"></td>
+            <td th:text="${schedule.classroom}"></td>         
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>

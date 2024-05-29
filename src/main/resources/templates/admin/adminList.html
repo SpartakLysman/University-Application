@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Admins List</title>
+<link rel="stylesheet" href="css/main.css" th:href="@{/css/main.css}"/>
+<style>
+.assingRole-btn {
+	background-color: #dc7935;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-decoration: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.assingRole-btn:hover {
+	background-color: #c82333;
+}
+#assingRole-item {
+	list-style-type: none;
+}
+.btn {
+	display: inline-block;
+	padding: 8px 16px;
+	margin: 5px;
+	border: none;
+	border-radius: 4px;
+	background-color: #007bff;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+.back-to-menu {
+         position: absolute;
+         top: 20px;
+         right: 18px;
+         background-color: #17a2b8;
+         color: white;
+         padding: 8px 16px;
+         border: none;
+         border-radius: 4px;
+         text-decoration: none;
+}
+.back-to-menu:hover {
+         background-color: #138496;
+}
+ .content {
+    margin-left: 25px;
+}
+.btn:hover {
+	background-color: #0056b3;
+}
+.btn.view {
+	background-color: #28a745;
+}
+.btn.update {
+	background-color: #ffc107;
+}
+.btn.delete {
+	background-color: #dc3545;
+}
+</style>
+</head>
+<body class="content">
+<br>
+<h4>Logged in as:</h4>
+	<h1>Admins List</h1>
+	    <a href="/auth/menu" class="back-to-menu">Back to Menu</a>
+		<button class="btn findById" onclick="getAdminById()">Find by ID</button>
+		<input type="text" id="adminIdInput" placeholder="Enter Admin ID">
+
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Surname</th>
+				<th>Login</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="admin : ${admins}">
+				<td th:text="${admin.id}">ID</td>
+				<td th:text="${admin.name}">Name</td>
+				<td th:text="${admin.surname}">Surname</td>
+				<td th:text="${admin.login}">Login</td>
+				<td>				
+				<a th:href= "@{/admins/{id}/update(id=${admin.id})}" class="btn update"> Update</a>
+				<a th:href="@{/admins/delete/{id}(id=${admin.id})}" class="btn delete">Delete</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<br>
+	<a href="/admins/createUser" class="btn">Create User</a>
+	<a href="/admins/deleteUser" class="btn">Delete User</a>
+	<a href="/admins/updateUser" class="btn">Update User</a>
+	<a href="/admins/getAllUsers" class="btn">Get All Users</a>
+	<a href="/admins/getUserById" class="btn">Get User By Id</a>
+	<br>
+	---------------------------------------------------------------------------------------------------------------
+	<br>
+	<br>
+	<br>
+	<h2>more actions:</h2>
+	<form method="post" th:action="@{/admins/assingRole}"
+		id="assingRole-item">
+		<nav>
+			<ul>
+				<li id="assingRole-item"><a href="/admins/assignRole"
+					class="assingRole-btn">Assign Role To User</a></li>
+			</ul>
+		</nav>
+	</form>
+ 	<br>
+	<br>
+	<h3>course actions</h3>
+	<a href="/courses/create" class="btn">Create course</a>
+	<a href="/courses/delete" class="btn">Delete course</a>
+	<a href="/courses/update" class="btn">Update course</a>
+	<a href="/courses/getById" class="btn">Find course by id</a>
+	<br>
+	<br>
+	<h3>group actions</h3>
+	<a href="/groups/create" class="btn">Create group</a>
+	<a href="/groups/delete" class="btn">Delete group</a>
+	<a href="/groups/update" class="btn">Update group</a>
+	<a href="/groups/getById" class="btn">Find group by id</a>
+	<br>
+	<br>
+	<script>
+        function getUserById() {
+            var adminId = document.getElementById("adminIdInput").value;
+            window.location.href = "/admins/getById/" + adminId;
+        }
+    </script>
+</body>
+

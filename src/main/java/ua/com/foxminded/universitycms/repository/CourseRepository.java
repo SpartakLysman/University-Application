@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import ua.com.foxminded.universitycms.dto.CourseBasicInfo;
 import ua.com.foxminded.universitycms.model.Course;
 
 @Repository
@@ -17,5 +18,15 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
 	@Query("DELETE FROM Course c WHERE c = :course")
 	boolean deleteCourse(@Param("course") Course course);
 
+	void deleteById(@Param("id") Long id);
+
 	List<Course> findByTitle(String title);
+
+	List<Course> findByTeacherId(Long teacherId);
+
+	@Query("SELECT c FROM Course c JOIN c.students s WHERE s.id = :studentId")
+	List<Course> findByStudentId(Long studentId);
+
+	@Query("SELECT new ua.com.foxminded.universitycms.dto.CourseBasicInfo(c.id, c.title, c.description) FROM Course c")
+	List<CourseBasicInfo> findAllBasicInfo();
 }

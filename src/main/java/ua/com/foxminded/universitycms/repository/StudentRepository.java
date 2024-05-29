@@ -14,13 +14,17 @@ import ua.com.foxminded.universitycms.model.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-	Optional<Student> findByLoginAndPassword(String login, String password);
-
 	@Modifying
 	@Query("DELETE FROM Student s WHERE s = :student")
 	boolean deleteStudent(@Param("student") Student student);
 
-	Optional<Student> findFirstByOrderByIdDesc();
-
 	List<Student> findByName(String name);
+
+	List<Student> findByGroupId(Long groupId);
+
+	Optional<Student> findByLogin(String login);
+
+	Optional<Student> findByLoginAndPassword(String login, String password);
+
+	Optional<Student> findFirstByOrderByIdDesc();
 }

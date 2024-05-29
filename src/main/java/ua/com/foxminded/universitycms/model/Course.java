@@ -4,19 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@jakarta.persistence.Entity
 @Table(name = "courses")
+@jakarta.persistence.Entity
 public class Course extends Entity<Long> implements Serializable {
+
+	private static final long serialVersionUID = -7353139263354063173L;
 
 	@Column(name = "title")
 	private String title;
@@ -25,20 +23,17 @@ public class Course extends Entity<Long> implements Serializable {
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "teacher_id", insertable = false, updatable = false)
-	private Teacher teacher_id;
+	@JoinColumn(name = "teacher_id")
+	private Teacher teacher;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "students_courses", schema = "application", joinColumns = @JoinColumn(name = "courses_id"), inverseJoinColumns = @JoinColumn(name = "students_id"))
+	@ManyToMany(mappedBy = "courses")
 	private List<Student> students = new ArrayList<>();
 
-	@OneToMany(mappedBy = "courses", fetch = FetchType.LAZY)
+	@ManyToMany(mappedBy = "courses")
 	private List<Group> groups = new ArrayList<>();
 
-	private static final long serialVersionUID = -7353139263354063173L;
-
-	public Course(Long key, String title, String description) {
-		super(key);
+	public Course(Long id, String title, String description) {
+		super(id);
 		this.title = title;
 		this.description = description;
 	}
@@ -53,11 +48,17 @@ public class Course extends Entity<Long> implements Serializable {
 	}
 
 	public void addStudent(Student student) {
-		this.students.add(student);
+		if (!this.students.contains(student)) {
+			this.students.add(student);
+			student.getCourses().add(this);
+		}
 	}
 
 	public void deleteStudent(Student student) {
-		this.students.remove(student);
+		if (this.students.contains(student)) {
+			this.students.remove(student);
+			student.getCourses().remove(this);
+		}
 	}
 
 	public void addGroup(Group group) {
@@ -92,12 +93,16 @@ public class Course extends Entity<Long> implements Serializable {
 		return groups;
 	}
 
-	public Teacher getTeacher_id() {
-		return teacher_id;
+	public void setGroups(List<Group> newGroups) {
+		groups = newGroups;
 	}
 
-	public void setTeacher_id(Teacher teacher_id) {
-		this.teacher_id = teacher_id;
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
 	}
 
 	@Override
