@@ -1,5 +1,6 @@
 package ua.com.foxminded.universitycms.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpServletResponse;
 import ua.com.foxminded.universitycms.dto.CourseBasicInfo;
 import ua.com.foxminded.universitycms.service.CourseService;
 
@@ -27,8 +29,18 @@ public class PublicPageController {
 		return "public/courses";
 	}
 
-//	@GetMapping("/")
-//	public String homePage(Model model) {
-//		return "redirect:/public/courses";
-//	}
+	@RequestMapping("/error")
+	public void handleErrorWithRedirect(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/courses");
+	}
+
+	@RequestMapping(value = "/")
+	public void redirect(HttpServletResponse response) throws IOException {
+		response.sendRedirect("/courses");
+	}
+
+	@GetMapping("/")
+	public String homePage(Model model) {
+		return "redirect:/public/courses";
+	}
 }
