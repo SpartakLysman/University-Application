@@ -1,4 +1,6 @@
-📌This web-project is a university application. Here you are allowed to login as a student and see your current courses, teachers and your groups on schedule view. It is also posible to login as a Teacher and manage your current schedule or as an Admin who are able to add new users in the app.
+### 📌 University application, can be used as a universal platform for students
+- **Description:** This application allows you to log in as a student, teacher, or admin. Each role has a specific functionality. Students can see schedules, marks, their teachers, enroll in courses, and join groups. Teachers can see their schedule, groups and give marks. Admins can assign roles, delete, create, update, etc. 
+- **Technologies:** Java, Spring(Data, Security, Web), Hibernate, Flyway, Auth0, Maven, Mockito, JUnit, PostgreSQL, H2, HTML, CSS.
 
 
 <br>
