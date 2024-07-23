@@ -68,13 +68,13 @@ Scenario: Student can unenroll from a course
 When the student views their enrolled courses <br>
 And the student selects a course to unenroll <br>
 Then the student should be removed from the course schedule <br>
-And the course slots should be available for other students <br>
+And the course slots should be available for other students. <br>
 
 <br>
 
-### Here's the schedule plan :calendar:
+<!--### Here's the schedule plan :calendar:
 
-![schedule](UniversitySchedule.png)
+<!-- ![schedule](UniversitySchedule.png)  -->
 
-### ...
-...
+<!--### ...
+<!--...
